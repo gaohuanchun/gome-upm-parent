@@ -1,0 +1,85 @@
+<script type="text/javascript">
+$(function () {
+	initOms();
+	initOmsData();
+});
+
+function initOmsData(){
+	//开始时间
+	var startDate = new Date();
+ 	var startTimeStr=startDate.Format('yyyy-MM-dd');
+ 	reloadOmsData(startTimeStr);
+}
+var highChart_oms;
+var options_oms;
+var config_oms={};
+function initOms(){
+	options_oms = {
+        chart: {
+            type: 'column',
+            renderTo: 'highchart_oms'
+        },
+        title: {
+            text: 'OMS'
+        },
+        credits:{
+            enabled:false
+        },
+        xAxis: {
+            categories: [
+                'DRG正向订单状态差异',
+                'DRG逆向订单状态差异',
+                'POP正向订单状态差异',
+                'POP逆向订单状态差异'
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 个</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '订单',
+            data: []
+        }]
+	}
+	copy(config_oms,options_oms);
+}
+function searchOmsData(){
+	var startTimeStr=$('#startTimeOms').val();
+ 	reloadOmsData(startTimeStr);
+}
+function reloadOmsData(stOms){
+	var url="${rc.contextPath}/monitoBusiness/getOmsDataList.do";
+	$.ajax({
+		url: url,
+		type:"POST",
+		data:{'startTime':stOms},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			copy(options_oms,config_oms);
+			options_oms.series[0].data=dataList;
+			highChart_oms = new Highcharts.Chart(options_oms);
+     	},
+     	error : function(){
+     	}
+	});
+}
+</script>

@@ -1,0 +1,49 @@
+                    
+                    <table id="example1" class="table table_data table-striped" >
+                        <thead>
+                        <tr>
+                        <th>报警时间</th>
+                        <th>部门</th>
+                        <th>应用名</th>
+                        <th>IP:端口</th>
+                        <th>服务器名称</th>
+                        <th>健康页</th>
+                        <th>状态</th>
+                        <!--
+                        	<th>负责人</th>
+                        	<th>操作</th>
+                        -->
+                    </tr>
+                        </thead>
+                        <tbody>
+                             #if($!page.totalResult > 0)
+                        	#set($i = ($page.pageNo - 1) * $page.pageSize)
+                        	#foreach($serverInfo in $!page.data)
+                        		#set($i = $i + 1)
+                        		<tr>
+                        <td>$!serverInfo.bjsj</td>
+                        <td>$!serverInfo.ssz</td>
+                        <td><a href="${rc.contextPath}/system/getSystemApp?xmm=$!serverInfo.xmm" class="link_a">$!serverInfo.xmm</a></td>
+                        <td>$!serverInfo.ida</td>
+                        <td>$!serverInfo.xmip</td>
+                        <td>$!serverInfo.ymz</td>
+                        <td>$!serverInfo.bjzt</td>
+                        <!--
+                        	<td>admin</td>
+                        <td>
+							<a class="operation" href="javascript:;">已处理</a>
+							<a class="operation" href="javascript:;">忽略</a>
+						</td>
+                        -->
+                    </tr>
+                       		#end
+                        
+                         #end
+                        </tbody>
+                    </table>
+                          #parse("common/pageToolbar.vm")
+                          <input type="hidden" value="$!page.conditions.startTime" id="hiddenStartTime"/>
+                          <input type="hidden" value="$!page.conditions.endTime" id="hiddenEndTime"/>
+                       
+                          
+                          

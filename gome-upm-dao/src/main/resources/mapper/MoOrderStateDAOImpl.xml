@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoOrderStateDAO">
+	<select id="searchMoOrderStateList" resultType="MoOrderStateBO" parameterType="MoOrderStateBO">
+	    select t.id,t.start_time startTime,t.mo_count count
+		from mo_order_state t
+		WHERE 1=1
+	    <if test="startTime != null and startTime != ''" >
+	      and t.start_time &gt;= #{startTime}
+	    </if>
+		<if test="endTime != null and endTime != ''" >
+	      and t.end_time &lt;= #{endTime}
+	    </if>
+		<if test="state != null and state != ''" >
+	      and t.state = #{state}
+	    </if>
+	    <if test="minute != null and minute != ''" >
+	      and t.minute%#{minute}=0
+	    </if>
+	</select>
+	<select id="searchCountByTime" resultType="java.lang.Integer" parameterType="MoOrderStateBO">
+	    select t.mo_count count
+		from mo_order_state t
+		WHERE 1=1
+		<if test="startTime != null and startTime != ''" >
+	      and t.start_time &gt;= #{startTime}
+	    </if>
+		<if test="endTime != null and endTime != ''" >
+	      and t.end_time &lt;= #{endTime}
+	    </if>
+		<if test="state != null and state != ''" >
+	      and t.state = #{state}
+	    </if>
+	</select>
+	<insert id="saveMoOrderState" parameterType="MoOrderStateBO">
+		INSERT INTO mo_order_state(id,start_time,end_time,mo_count,minute,state)
+		VALUES(#{id},#{startTime},#{endTime},#{count},#{minute},#{state})
+	</insert>
+</mapper>

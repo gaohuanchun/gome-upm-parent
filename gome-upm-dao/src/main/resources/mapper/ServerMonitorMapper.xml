@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.ServerMonitorMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.ServerHost" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="hostId" property="hostId" jdbcType="VARCHAR" />
+    <result column="hostStr" property="host" jdbcType="VARCHAR" />
+    <result column="cpuValue" property="cpu" jdbcType="VARCHAR" />
+    <result column="memoryValue" property="memory" jdbcType="VARCHAR" />
+    <result column="loadValue" property="load" jdbcType="VARCHAR" />
+    <result column="hostname" property="name" jdbcType="VARCHAR" />
+    <result column="groupName" property="groupName" jdbcType="VARCHAR" />
+    <result column="statusFlag" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, hostId,hostStr ,cpuValue,memoryValue,loadValue ,groupName,hostname,statusFlag
+  </sql>
+  <select id="queryHost" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from gm_host
+    where hostId = #{hostId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryHostList" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page" >
+    select 
+    <include refid="Base_Column_List" />
+    from gm_host
+    where 1=1 
+     <if test="conditions.groupName != null and conditions.groupName != ''" >
+      and groupName like CONCAT('%',#{conditions.groupName,jdbcType=VARCHAR},'%')
+    </if>
+     <if test="conditions.host != null and conditions.host != ''" >
+      and hostStr like CONCAT('%',#{conditions.host,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="conditions.orderBy=='1'.toString()">
+    	order by cpuValue*1 asc
+    </if>
+    <if test="conditions.orderBy=='2'.toString()">
+    	order by cpuValue*1 desc
+    </if>
+    <if test="conditions.orderBy=='3'.toString()">
+    	order by memoryValue*1 asc
+    </if>
+    <if test="conditions.orderBy=='4'.toString()">
+    	order by memoryValue*1 desc
+    </if>
+    <if test="conditions.orderBy=='5'.toString()">
+    	order by loadValue*1 asc
+    </if>
+    <if test="conditions.orderBy=='6'.toString()">
+    	order by loadValue*1 desc
+    </if>
+    <if test="conditions.orderBy == null or conditions.orderBy == ''">
+    	ORDER BY cpuValue*1 desc
+    </if>
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  
+  <insert id="addHost" parameterType="com.gome.upm.domain.ServerHost" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_host (hostId, hostStr,cpuValue,memoryValue,loadValue,groupName,hostname,statusFlag)
+    values (#{hostId,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, #{load,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  
+     <!-- 查询总数量 -->
+   <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ServerHost">
+	    select count(*) from gm_host
+	    where 1=1 
+	     <if test="groupName != null and groupName != ''" >
+	      and groupName like CONCAT('%',#{groupName,jdbcType=VARCHAR},'%')
+	    </if>
+	     <if test="host != null and host != ''" >
+	      and hostStr like CONCAT('%',#{host,jdbcType=VARCHAR},'%')
+	    </if>
+  </select>
+  
+  <update id="updateHost" parameterType="com.gome.upm.domain.ServerHost" >
+    update gm_host set
+    <if test="hostId != null" >
+      hostId = #{hostId,jdbcType=BIGINT} 
+    </if>
+    <if test="cpu != null" >
+      , cpuValue = #{cpu,jdbcType=VARCHAR} 
+    </if>
+    <if test="memory != null" >
+      , memoryValue = #{memory,jdbcType=VARCHAR}
+    </if>
+    <if test="load != null" >
+      , loadValue = #{load,jdbcType=VARCHAR}
+    </if>
+    <if test="groupName != null" >
+      , groupName = #{groupName,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      , hostname = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      , statusFlag = #{status,jdbcType=VARCHAR}
+    </if>
+    where hostId = #{hostId,jdbcType=BIGINT}
+  </update>
+    <!-- 查询host -->
+   <select id="queryHostName" resultType="java.lang.String" parameterType="com.gome.upm.domain.ServerHost">
+	    SELECT hostname FROM gm_host 
+	     <if test="groupName != null and groupName != ''">
+      	where groupName = #{groupName,jdbcType=VARCHAR}
+  		  </if>
+ 	</select>
+    <!-- 查询groupName -->
+   <select id="queryHostGroup" resultType="java.lang.String">
+	   SELECT groupName FROM gm_host  GROUP BY groupName ORDER BY groupName
+   </select>
+   
+    <!-- 查询host -->
+   <select id="queryHostNameNew" resultType="java.lang.String" parameterType="com.gome.upm.domain.ServerHost">
+	   SELECT HOST FROM gm_server_alarm_record
+	     <if test="groupName != null and groupName != ''">
+      	where groupName = #{groupName,jdbcType=VARCHAR}
+  		  </if>
+  		  GROUP BY HOST
+ 	</select>
+    <!-- 查询groupName -->
+   <select id="queryHostGroupNew" resultType="java.lang.String">
+	  SELECT groupName FROM gm_server_alarm_record  GROUP BY groupName
+   </select>
+   
+   
+   
+   <resultMap id="BaseResultMapAlarm" type="com.gome.upm.domain.ServerAlarmRecord" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="groupName" property="groupName" jdbcType="VARCHAR" />
+	    <result column="host" property="host" jdbcType="VARCHAR" />
+	    <result column="alarmTime" property="alarmTime" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="alarmValue" property="alarmValue" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="VARCHAR" />
+	    <result column="updateAlarmTime" property="updateAlarmTime" jdbcType="VARCHAR" />
+	    <result column="key_" property="key_" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- 查询报警记录 -->
+  <select id="queryAlarmRecord"  resultMap="BaseResultMapAlarm"  parameterType="com.gome.upm.domain.ServerAlarmRecord">
+   SELECT id,groupName,host,alarmTime,content,status,alarmValue,type,updateAlarmTime,key_
+    FROM gm_server_alarm_record
+    where 1=1
+    <if test="host != null and host != ''">
+    	and host = #{host,jdbcType=VARCHAR}
+	 </if>
+    <if test="key_ != null and key_ != ''">
+    	and key_ = #{key_,jdbcType=VARCHAR}
+	 </if>
+    <if test="status != null and status != ''">
+    	and status = #{status,jdbcType=VARCHAR}
+	 </if>
+    <if test="type != null and type != ''">
+   	 and type = #{type,jdbcType=VARCHAR}
+	 </if>
+  </select>
+  <insert id="addAlarmRecord" parameterType="com.gome.upm.domain.ServerAlarmRecord" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_server_alarm_record (groupName,host,alarmTime,content,status,alarmValue,type,key_)
+    values (#{groupName,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{alarmTime,jdbcType=VARCHAR}, 
+    #{content,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+    #{alarmValue,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{key_,jdbcType=VARCHAR})
+  </insert>
+   <update id="updateAlarmRecord" parameterType="com.gome.upm.domain.ServerAlarmRecord" >
+    update gm_server_alarm_record set
+    <if test="id != null and id != ''" >
+      id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="status != null and status != ''" >
+      ,status = #{status,jdbcType=BIGINT} 
+    </if>
+    <if test="updateAlarmTime != null and updateAlarmTime != ''" >
+      , updateAlarmTime = #{updateAlarmTime,jdbcType=VARCHAR}
+    </if>
+    <if test="content != null and content != ''" >
+      , content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmValue != null and alarmValue != ''" >
+      , alarmValue = #{alarmValue,jdbcType=VARCHAR}
+    </if>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectAlarmRecordListByPage" resultType="com.gome.upm.domain.ServerAlarmRecord" parameterType="com.gome.upm.common.Page">
+  	select id,groupName,host,alarmTime,content,status,alarmValue,type,updateAlarmTime,key_
+  	from gm_server_alarm_record
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>  
+    <if test="conditions.groupName != null and conditions.groupName != ''" >
+      and groupName like CONCAT('%',#{conditions.groupName,jdbcType=VARCHAR},'%')
+    </if>
+     <if test="conditions.host != null and conditions.host != ''" >
+      and host like CONCAT('%',#{conditions.host,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and alarmTime between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    <if test="conditions.content != null and conditions.content != ''" >
+      and content like CONCAT('%',#{conditions.content,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="conditions.status != null and conditions.status != ''" >
+      and status = #{conditions.status,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.type != null and conditions.type != ''" >
+      and type = #{conditions.type,jdbcType=VARCHAR}
+    </if>
+    order by alarmTime desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditionsA" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ServerAlarmRecord">
+  	select count(*) from gm_server_alarm_record
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>  
+    <if test="groupName != null and groupName != ''" >
+      and groupName like CONCAT('%',#{groupName,jdbcType=VARCHAR},'%')
+    </if>
+     <if test="host != null and host != ''" >
+      and host like CONCAT('%',#{host,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and alarmTime between #{startTime} and #{endTime}
+    </if>
+    <if test="content != null and content != ''" >
+      and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="status != null and status != ''" >
+      and status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="type != null and type != ''" >
+      and type = #{type,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

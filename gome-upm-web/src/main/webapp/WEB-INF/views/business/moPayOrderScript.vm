@@ -1,0 +1,260 @@
+<script type="text/javascript">
+
+var waitPayRun;
+var timePayflg = false; //启动及关闭按钮  
+function timePayRun(){
+	if(timePayflg){return ;}
+	addPayData();
+	waitPayRun=setTimeout(timePayRun,1000*60*5); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+}
+//等待时间----时间价格为intervalTime分钟
+function waitTimePay(){
+	//获取结束时间
+	var endTimeNow=new Date();
+	var endTimeStr=endTimeNow.Format('yyyy/MM/dd HH:m5:s0');
+	var wwww=new Date(endTimeStr);
+	//下个触发查询时间--5分钟后
+	wwww=wwww.DateAdd('n',5);
+	//alert(wwww.Format('yyyy-MM-dd HH:mm:ss'));
+	//计算当前时间和下个查询时间的时间差
+	var waitTime=wwww-new Date();
+	//等待时间差
+	setTimeout(function(){
+		timePayRun();
+	},waitTime);
+}
+var payDate;
+var payHighChart;
+var timePayCon=false;
+function initPayData(){
+	var obj=getSearchHour(1);
+    var startTimeStr=obj.startTime;
+    var endTimeStr=obj.endTime;
+    reloadPayData(startTimeStr,endTimeStr,false);
+}
+$(function () {
+	initPay();
+	initPayData();
+	totalPayData();
+});
+function addPayData(){
+	var url="${rc.contextPath}/monitoPay/getPayOrderForTime.do";
+	var data='';
+	$.ajax({ 
+		url: url,
+		type:"POST",
+		data:{startTime:payDate},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			payDate=obj[0][0];
+			payHighChart.series[0].addPoint([obj[0][0], obj[0][1]], false, true);
+			payHighChart.series[1].addPoint([obj[1][0], obj[1][1]], false, true);
+			payHighChart.series[2].addPoint([obj[2][0], obj[2][1]], false, true);
+			payHighChart.redraw();
+     	},
+     	error : function(){
+     	}
+	});
+}
+var options_pay;
+var config_pay={};
+function initPay(){
+	Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    //colors: ["red","#00EC00","blue"],
+	options_pay = {
+        chart: {
+            type: 'line',
+            renderTo: 'container_pay',  //图表放置的容器，一般在html中放置一个DIV，获取DIV的id属性值
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10, //对容器的右内边距
+            shadow:true, //外框阴影
+            animation:true,
+            events: {
+                load: function () {
+                	waitTimePay();
+                }
+            }
+        },
+        title: {
+            text: '充值订单'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 5,
+            //gridLineWidth:1,
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+            gridLineWidth: 0,
+    		title: {
+    			style: {
+    				color: '#AAA',
+    				font: 'bolder 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+                }
+            }
+
+        },
+        yAxis: {
+            title: {
+	                     text: ''
+	                 }
+        },
+        tooltip: {
+            formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 0);
+            },
+            backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgba(96, 96, 96, .8)'],
+    				[1, 'rgba(16, 16, 16, .8)']
+    			]
+    		},
+    		borderWidth: 0,
+    		style: {
+    			color: '#FFF'
+    		}
+        },
+        credits:{ //右下角超链接设置
+            enabled: false
+        },
+        legend: {//设置图例
+            enabled:true,
+            layout : 'horizontal',//显示形式，支持水平horizontal(默认)和垂直vertical
+            align : 'center',// left/right/center/
+            verticalAlign : 'bottom',//bottom  top
+            itemStyle: {
+    			color: '#666'
+    		},
+    		itemHoverStyle: {
+    			color: 'blue'
+    		},
+    		itemHiddenStyle: {
+    			color: '#333'
+    		}
+        },
+        labels: {
+    		style: {
+    			color: '#CCC'
+    		}
+    	},
+        exporting: {
+            enabled: true
+            
+        },
+        series:[{
+        	name: '当前5分钟充值订单',
+        	data:[]
+        },{
+        	name: '昨天5分钟充值订单',
+        	data:[]
+        },{
+        	name: '7天前5分钟充值订单',
+        	data:[]
+        }]
+	}
+	copy(config_pay,options_pay);
+}
+function searchPayData(){
+	timePayflg=true;
+	//停止5分钟查询
+	clearTimeout(waitPayRun);
+	
+	var startTimeStr=$('#startTimePay').val();
+	var endTimeStr=$('#endTimePay').val();
+	
+	startTimeStr=startTimeStr.replace(/-/g,"/");
+ 	var oDate1 = new Date(startTimeStr);
+ 	startTimeStr=oDate1.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	endTimeStr=endTimeStr.replace(/-/g,"/");
+ 	var oDate2 = new Date(endTimeStr);
+ 	endTimeStr=oDate2.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	reloadPayData(startTimeStr,endTimeStr,true);
+}
+function reloadPayData(stPay,etPay,waitTimeReload){
+	var url="${rc.contextPath}/monitoPay/findPayOrderList.do";
+	$.ajax({
+		url: url,
+		type:"POST",
+		data:{'startTime':stPay,'endTime':etPay},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			payDate=dataList[0][dataList[0].length-1][0];
+			copy(options_pay,config_pay);
+			options_pay.series[0].data=dataList[0];
+			options_pay.series[1].data=dataList[1];
+			options_pay.series[2].data=dataList[2];
+			if(waitTimeReload){
+				options_pay.chart.events.load==function(){};
+			}
+			payHighChart = new Highcharts.Chart(options_pay);
+     	},
+     	error : function(){
+     	}
+	});
+}
+function totalPayData(){
+	var startTime=new Date();
+	var startTimeStr=startTime.Format('yyyy-MM-dd');
+	var payUrl="${rc.contextPath}/monitoPay/getPayOrderForCount.do";
+	$.ajax({
+		url: payUrl,
+		type:"POST",
+		data:{'startTime':startTimeStr},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			var today=dataList[0][1];
+			var yesterday=dataList[1][1];
+			var weekDay=dataList[2][1];
+			countDiffer(today,yesterday,weekDay,'Pay');
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+function Percentage(num, total) { 
+    return (Math.round(num / total * 10000) / 100.00 + "%");// 小数点后两位百分比
+}
+function countDiffer(today,yesterday,weekDay,type){
+	//今天数量
+	$('#today_'+type).text(today);
+	//今天和昨天的差值
+	var yDiffer=today-yesterday;
+	var ycss=yDiffer>0?'fa fa-caret-up':'fa fa-caret-down';
+	var yDiffern=Math.abs(yDiffer);
+	
+	$('#yDiffer_'+type).text(yDiffern);
+	$('#ydc_'+type).removeClass();
+	$("#ydc_"+type).addClass(ycss);
+	//比昨天增加或减少的百分比
+	var yb=Percentage(yDiffern,yesterday);
+	$('#yb_'+type).text(yb);
+	
+	//今天和昨天的差值
+	var wDiffer=today-weekDay;
+	var wcss=wDiffer>0?'fa fa-caret-up':'fa fa-caret-down';
+	var wDiffern=Math.abs(wDiffer);
+	
+	$('#wDiffer_'+type).text(wDiffern);
+	$('#wdc_'+type).removeClass();
+	$("#wdc_"+type).addClass(wcss);
+	//比昨天增加或减少的百分比
+	var wb=Percentage(wDiffern,weekDay);
+	$('#wb_'+type).text(wb);
+}
+</script>

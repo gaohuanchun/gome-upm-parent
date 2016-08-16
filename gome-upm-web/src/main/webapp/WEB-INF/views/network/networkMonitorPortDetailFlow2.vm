@@ -1,0 +1,30 @@
+<table class="table table-striped table_data">
+    <tbody>
+		<tr>
+		  <th>日期时间</th>
+		  <th>通信量合计 (卷)</th>
+		  <th>通信量合计 (速度)</th>
+		  <th>入站通信量 (卷)</th>
+		  <th>入站通信量 (速度)</th>
+		  <th>出站通信量 (卷)</th>
+		  <th>出站通信量 (速度)</th>
+		  <th>停机时间</th>
+		  <th>覆盖率</th>
+		</tr>
+        #foreach($historyData in $!list)
+		<tr>
+		  <td>$!historyData.datetime</td>
+		  <td>$!historyData.communication_roll</td>
+		  <td>$!historyData.communication_speed</td>
+		  <td>$!historyData.in_communication_roll</td>
+		  <td>$!historyData.in_communication_speed</td>
+		  <td>$!historyData.out_communication_roll</td>
+		  <td>$!historyData.out_communication_speed</td>
+		  <td>$!historyData.halt_time</td>
+		  <td>$!historyData.coverage</td>
+		</tr>
+		#end
+		
+	</tbody>
+</table>
+#parse("network/pagePlugin2.vm")

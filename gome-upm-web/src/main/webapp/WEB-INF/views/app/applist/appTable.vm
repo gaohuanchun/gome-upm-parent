@@ -1,0 +1,47 @@
+<table id="example1" class="table table_data table-striped" >
+    <thead>
+	    <tr>
+	        <th></th>
+	        <!-- <th><input type="checkbox" id="checkAll"/></th> -->
+	        <th>应用编码</th>
+	        <th>业务线</th>
+	        <th>创建时间</th>
+	        <th>更新时间</th>
+	        <th>状态</th>
+	        <th>描述</th>
+	        <th>操作</th>
+	    </tr>
+    </thead>
+    <tbody>
+		#if($!page.totalResult > 0)
+		#set($i = ($page.pageNo - 1) * $page.pageSize)
+			#foreach($app in $!page.data)
+			#set($i = $i + 1)
+				<tr>
+					<td>$!i</td>
+					<!-- <td><input type="checkbox" name="checkbox" value="$!app.appId" /></td> -->
+					<td>$!app.appCode</td>
+					<td>$!app.businessLine</td>
+					<td>$!app.createTime</td>
+					<td>$!app.updateTime</td>
+					#if($!app.sts == 'A')
+					<td>新增</td>
+					#else
+					<td>更新</td>
+					#end
+					<td>$!app.appDesc</td>
+                    <td class="operate-td">
+                         <!-- <a href="javascript:void(0);" onclick="update();" style="margin-right: 8px;"><i class="fa fa-edit"></i>update</a> -->
+                         <a href="javascript:void(0);" onclick="deleteApp('$!app.appId','$!app.appCode');" style="margin-right: 8px;"><i class="fa fa-edit"></i>delete</a>
+                         <a href="javascript:void(0);" onclick="fileDownLoad('$!app.appCode');"><i class="fa fa-download"></i>Download auth File</a>
+                     </td>
+				</tr>
+			#end
+		#end
+    </tbody>
+</table>
+#parse("common/pagePlugin.vm")
+ <input type="hidden" value="$!page.conditions.sts" id="hiddenSts"/>
+ <input type="hidden" value="$!page.conditions.appCode" id="hiddenAppCode"/>
+
+ 

@@ -1,0 +1,148 @@
+						
+							
+			  <div class="pie_item">
+		             <div class="item_info">
+		                 <span class="item_info_tag">$!xmm</span>
+		                 <h5>累计编译：$!ljbycs次</h5>
+		                 <h5>累计发版：$!ljfbcs次</h5>
+		             </div><!--item_info-->
+			  </div><!--pie_item-->
+              <div class="pie_item">
+               <ul>
+                   <li>
+                       <p class="blue-txt">应用服务器统计信息</p>
+                       <p>服务器数量:$!instanceCount 个</p>
+                       <p>鹏博士: $!pbs 台 M5: $!m5 台</p>
+                       <p>物理机: $!m 台 虚拟机: $!v 台</p>
+                   </li>
+                   <li>
+                       <p class="blue-txt">应用程基本包信息</p>
+                       <p>实例数:$!instanceCount 个 最后启动：$!yyqdsj</p>
+                       <p>包大小: $!bdx 包日期: $!brq</p>
+                       <p>包MD5一致性验证: $!md5</p>
+                   </li>
+                   
+               </ul>
+            </div><!--pie_item-->
+
+
+            <div class="pie_item" style="margin-bottom: 50px;">
+            	#if($!serverInfos.size() > 0)
+            		#set($i = 0)
+                     #foreach($serverInfo in $!serverInfos)
+                       #set($i = $i + 1)
+		                <div class="system_appItem fl">
+		                   <div class="system_appItem_con">
+		                       <div class="system_appItem_con_up">
+		                           <strong class="fl">$!i</strong>
+		                           <div class="con_left fl">
+		                               <p>$!xmm</p>
+		                               <p>$!serverInfo.ida</p>
+		                               <p>容器:$!serverInfo.xmrq 配置内存:$!serverInfo.yyznc G</p>
+		                           </div>
+		                           <div class="con_left fl">
+		                               <p>已用:$!serverInfo.yyncsy G/可用:$!serverInfo.ncfpzs G</p>
+		                               <p>使用率:$!serverInfo.yyncb%</p>
+		                               
+		                               <!--
+		                               <div class="progress" style="width: 100%;">
+		                                   <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yyncb%">
+		                                       <span class="sr-only">$!serverInfo.yyncb% Complete (success)</span>
+		                                   </div>
+		                               </div>
+		                               -->
+		                               <!---->
+		                               <div class="progress" style="width: 100%;">
+		                               #if($!serverInfo.yyncb <=60)
+										  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yyncb%">
+										    <span class="sr-only">35% Complete (success)</span>
+										  </div>
+										  #elseif($!serverInfo.yyncb >60 && $!serverInfo.yyncb <=90)
+										  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yyncb%">
+										    <span class="sr-only">20% Complete (warning)</span>
+										  </div>
+										  #elseif($!serverInfo.yyncb >90)
+										  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yyncb%">
+										    <span class="sr-only">10% Complete (danger)</span>
+										  </div>
+										  #end
+										</div>
+											                           </div>
+		                       </div><!--system_appItem_con_up-->
+		                       <div class="system_appItem_con_up">
+		                           <div class="con_left fl">
+		                               <p>PID:$!serverInfo.yypid 线程:$!serverInfo.yyxc 监控:$!serverInfo.yylogjk $!serverInfo.jkcja</p>
+		                               <p>JDK:$!serverInfo.yyjdk 网络连接数:$!serverInfo.yynets</p>
+		                               <p>筑:$!serverInfo.yycjsj 启:$!serverInfo.yyqdsj 包:$!serverInfo.brq</p>
+		                           </div>
+		                           <div class="con_left fl">
+		                               <p>CPU整体核心</p>
+		                               <p>使用率：$!serverInfo.yycpu%</p>
+		                               
+		                               
+		                               <!--
+		                               <div class="progress" style="width: 100%;">
+		                                   <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yycpu%">
+		                                       <span class="sr-only">$!serverInfo.yycpu% Complete (success)</span>
+		                                   </div>
+		                               </div>
+		                               -->
+		                               
+		                               <div class="progress" style="width: 100%;">
+		                               #if($!serverInfo.yycpu <=60)
+										  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yycpu%">
+										    <span class="sr-only">$!serverInfo.yycpu% Complete (success)</span>
+										  </div>
+										  #elseif($!serverInfo.yycpu >60 && $!serverInfo.yycpu <=90)
+										  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yycpu%">
+										    <span class="sr-only">$!serverInfo.yycpu% Complete (warning)</span>
+										  </div>
+										  #elseif($!serverInfo.yycpu >90)
+										  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: $!serverInfo.yycpu%">
+										    <span class="sr-only">$!serverInfo.yycpu% Complete (danger)</span>
+										  </div>
+										  #end
+										</div>
+		                               
+		                           </div>
+		                       </div><!--system_appItem_con_up-->
+		                   </div><!--system_appItem_con-->
+							
+							#if($!serverInfo.jkyz == 'no')
+							
+							<!--添加一个板式-->
+									<div>无监控 信息更新时间： $!serverInfo.gxsj</div>
+									
+								<div class="bg-gray info-box-system">
+			                        <div>此实例没有提供健康页地址</div>
+			                 	</$!serverInfo.gxsjdiv>
+			                 		
+			                    </div><!--info-box-system-->
+									
+								#elseif($!serverInfo.sfyx =='N' || $!serverInfo.ymz == '404')
+								
+								<div>健康页超链 信息更新时间： $!serverInfo.gxsj</div>
+			                 	<div class="bg-red info-box-system">
+			                    </div><!--info-box-system-->
+								
+			                 #else
+			                 
+			                 <!--暂时去掉超链接
+			                 
+			                 	<div><a href="$!serverInfo.ipLast" target="_black" style="color:green">健康页超链</a> 信息更新时间： $!serverInfo.gxsj</div>
+			                 	
+			                 -->
+			                 <div>健康页超链 信息更新时间： $!serverInfo.gxsj</div>
+			                 	<div class="bg-green info-box-system">
+			                 		
+			                        <div><iframe style="border:0" src="$!serverInfo.ipLast" width="100%" height="100%"></iframe> </div>
+			                    </div><!--info-box-system-->
+			                 	
+			                  #end
+		                    
+		                </div><!--system_appItem-->
+
+                		#end
+                	#end
+            </div><!--pie_item-->
+												

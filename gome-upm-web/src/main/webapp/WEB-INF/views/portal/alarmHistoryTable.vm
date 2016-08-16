@@ -1,0 +1,39 @@
+                            <i class="icon fa fa-bullhorn"></i>
+                            <span style="color:orange">Key：</span>ump.web&nbsp;&nbsp;
+                            <span style="color:orange">URL：</span>http://gome.cn&nbsp;&nbsp;<span style="color:orange">监控类型：</span>URL存活监控&nbsp;&nbsp;
+                            <span style="color:orange">配置状态：</span>有效&nbsp;&nbsp;<span style="color:orange">监控频率(分钟)：</span>5&nbsp;&nbsp;
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>工单流水号</th>
+                                    <th>报警级别</th>
+                                    <th>报警时间</th>
+                                    <th>报警内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>20160615181320</td>
+                                    <td>3</td>
+                                    <td>2016-06-15 18:25:00</td>
+                                    <td>内存使用率超过85%</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>20160615181320</td>
+                                    <td>3</td>
+                                    <td>2016-06-15 18:25:00</td>
+                                    <td>内存使用率超过90%</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>20160615181320</td>
+                                    <td>3</td>
+                                    <td>2016-06-15 18:25:00</td>
+                                    <td>内存使用率超过88%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            #parse("common/pagePlugin.vm")

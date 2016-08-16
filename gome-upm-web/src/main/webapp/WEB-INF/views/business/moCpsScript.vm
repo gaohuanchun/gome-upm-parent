@@ -1,0 +1,175 @@
+<script type="text/javascript">
+function getSearchHourCps(){
+	var obj=new Object();
+	var endTime=new Date();
+	obj.endTime=endTime.Format('yyyy-MM-dd HH:m5:s0');
+	var startTime=endTime.DateDiff('h',5);
+	obj.startTime=startTime.Format('yyyy-MM-dd HH:m5:s0');
+	return obj;
+}
+//每XX时间后加载新节点
+var waitCpsRun;
+var timeCpsflg = false; //启动及关闭按钮  
+function timeCpsRun(){
+	if(timeCpsflg){return ;}
+	addCpsData();
+	waitCpsRun=setTimeout(timeCpsRun,1000*60*30); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+}
+//等待时间----时间价格为intervalTime分钟
+function waitTimeCps(){
+	//获取结束时间
+	var endTimeNow=new Date();
+	var endTimeStr=endTimeNow.Format('yyyy/MM/dd HH:m5:s0');
+	var wwww=new Date(endTimeStr);
+	//下个触发查询时间--5分钟后
+	wwww=wwww.DateAdd('n',30);
+	//alert(wwww.Format('yyyy-MM-dd HH:mm:ss'));
+	//计算当前时间和下个查询时间的时间差
+	var waitTime=wwww-new Date();
+	//waitTime=1000*5*1;
+	//等待时间差
+	setTimeout(function(){
+		timeCpsRun();
+	},waitTime);
+}
+
+var cpsDate;
+var cpsHighChart;
+var timeCpsCon=false;
+function initCpsData(){
+	var obj=getSearchHourCps(5);
+    var startTimeStr=obj.startTime;
+    var endTimeStr=obj.endTime;
+    reloadCpsData(startTimeStr,endTimeStr,false);
+}
+$(function () {
+	initCps();
+	initCpsData();
+});
+function addCpsData(){
+	var url="${rc.contextPath}/monitoBusiness/getCpsDataForTime.do";
+	var data='';
+	$.ajax({ 
+		url: url,
+		type:"POST",
+		data:{startTime:cpsDate},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			cpsDate=obj[0];
+			cpsHighChart.series[0].addPoint([obj[0], obj[1]], false, true);
+			cpsHighChart.redraw();
+     	},
+     	error : function(){
+     	}
+	});
+}
+var options_cps;
+var config_cps={};
+function initCps(){
+	Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+	options_cps = {
+		chart: {
+            type: 'spline',
+            renderTo: 'container_cps',  //图表放置的容器，一般在html中放置一个DIV，获取DIV的id属性值
+            events: {
+                load: function () {
+                	waitTimeCps();
+                }
+            }
+        },
+        title: {
+            text: '半小时内CPS订单数'
+        },
+        xAxis: {
+        	type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+        },
+        yAxis: {
+	        title: {
+	            text: ''
+	        }
+        },
+        //显示头
+        tooltip: {
+            formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 0);
+            },
+            backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgba(96, 96, 96, .8)'],
+    				[1, 'rgba(16, 16, 16, .8)']
+    			]
+    		},
+    		borderWidth: 0,
+    		style: {
+    			color: '#FFF'
+    		}
+        },
+        credits:{ //右下角超链接设置
+            enabled: false
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series:[{
+        	name: '订单',
+        	data:[]
+        }]
+	}
+	copy(config_cps,options_cps);
+}
+function searchCpsData(){
+	//停止5分钟查询
+	clearTimeout(waitCpsRun);
+	var startTimeStr=$('#startTimeCps').val();
+	var endTimeStr=$('#endTimeCps').val();
+	
+	startTimeStr=startTimeStr.replace(/-/g,"/");
+ 	var oDate1 = new Date(startTimeStr);
+ 	startTimeStr=oDate1.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	endTimeStr=endTimeStr.replace(/-/g,"/");
+ 	var oDate2 = new Date(endTimeStr);
+ 	endTimeStr=oDate2.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	reloadCpsData(startTimeStr,endTimeStr,true);
+}
+function reloadCpsData(stCps,etCps,waitTimeReload){
+	var payUrl="${rc.contextPath}/monitoBusiness/findCpsDataList.do";
+	$.ajax({
+		url: payUrl,
+		type:"POST",
+		data:{'startTime':stCps,'endTime':etCps},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			cpsDate=dataList[dataList.length-1][0];
+			copy(options_cps,config_cps);
+			options_cps.series[0].data=dataList;
+			if(waitTimeReload){
+				options_cps.chart.events.load=function(){};
+			}
+			cpsHighChart = new Highcharts.Chart(options_cps);
+     	},
+     	error : function(){
+     	}
+	});
+}
+</script>

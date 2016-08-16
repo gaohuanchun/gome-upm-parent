@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoNetGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.prtg.MoNetGroup" >
+    <id column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="probe" property="probe" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    group_id groupId, probe, group_name groupName, name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllIds" resultType="java.lang.Integer" >
+     select group_id from mo_net_group 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mo_net_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByIds" >
+    delete from mo_net_group where group_id in
+    	<foreach collection="list" item="groupId" index="index"
+	         open="(" close=")" separator=",">
+	         #{groupId,jdbcType=INTEGER}
+        </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.gome.upm.domain.prtg.MoNetGroup" >
+    insert into mo_net_group (group_id, probe, group_name, 
+      name)
+    values (#{groupId,jdbcType=INTEGER}, #{probe,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gome.upm.domain.prtg.MoNetGroup" >
+    insert into mo_net_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="probe != null" >
+        probe,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="probe != null" >
+        #{probe,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gome.upm.domain.prtg.MoNetGroup" >
+    update mo_net_group
+    <set >
+      <if test="probe != null" >
+        probe = #{probe,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gome.upm.domain.prtg.MoNetGroup" >
+    update mo_net_group
+    set probe = #{probe,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+</mapper>

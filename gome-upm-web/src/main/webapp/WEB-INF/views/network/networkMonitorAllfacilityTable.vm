@@ -1,0 +1,37 @@
+	<table id="serverDetailList" class="table able-striped table_data">
+		<thead>
+			<tr>
+				<th><!--<input type="checkbox"/>-->序号</th>
+				<th>所属IDC</th>
+				<th>设备名称</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+	        #if($!page.totalResult > 0)
+	    	#set($i = ($page.pageNo - 1) * $page.pageSize)
+			#foreach($device in $!page.data)
+			#set($i = $i + 1)
+		 	<tr>
+				<td>$!i</td>
+				<td>$!device.groupName</td>
+				<td>$!device.deviceName</td>
+				#if($!device.state == 0)
+					<td>正常运行</td>
+				#else
+				    <td>故障</td>
+				#end
+				<td class="operate-td">
+					<a href="javascript:void(0)" deviceId="$!device.deviceId" class="operation deviceDetail">明细</a>
+				</td>
+			</tr>
+			#end
+			#end
+		
+		 </tbody>
+	</table>
+#parse("common/pagePlugin.vm")
+<input type="hidden" value="$!page.conditions.state" id="hiddenDeviceStatus" />
+<input type="hidden" value="$!page.conditions.groupId" id="hiddenGroupId" />
+<input type="hidden" value="$!page.conditions.deviceId" id="hiddenDeviceId" />	

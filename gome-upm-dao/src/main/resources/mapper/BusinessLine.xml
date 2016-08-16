@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.BusinessLineDao" >
+	<resultMap id="bResultMap" type="com.gome.upm.domain.BusinessLine" >
+	    <id column="bcode" property="bcode" jdbcType="VARCHAR" />
+	    <result column="bname" property="bname" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="data_order" property="data_order" jdbcType="BIGINT" />
+	    <result column="operator" property="operator" jdbcType="VARCHAR" />
+	    <result column="bdesc" property="bdesc" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 基础字段 -->
+	<sql id="Base_Column_List" >
+    	bcode,bname,create_time,update_time,data_order,operator,bdesc
+    </sql>
+    
+    <!-- 列表查询-->
+    <select id="selectBusinessLineListByPage" resultMap="bResultMap" parameterType="com.gome.upm.common.Page">
+    	select
+	  	<include refid="Base_Column_List"></include>
+	  	from business_line
+	  	where 1=1 
+		<if test="conditions.bcode != null" >
+	      and bcode = #{conditions.bcode, jdbcType=VARCHAR} 
+	    </if>  
+	    <if test="conditions.bname != null" >
+	      and bname = #{conditions.bname, jdbcType=VARCHAR} 
+	    </if> 
+	     order by data_order desc
+	    <if test="start != null and pageSize != null">
+	    	LIMIT #{start},#{pageSize}
+	    </if>
+    </select>
+    
+   <!-- 查询总数量 -->
+   <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.BusinessLine">
+	    select count(*) from business_line
+	 	where 1=1
+	 	<if test="bcode != null" >
+	      and bcode = #{bcode, jdbcType=VARCHAR} 
+	    </if>
+	    <if test="bname != null" >
+	      and bname = #{bname, jdbcType=VARCHAR} 
+	    </if>
+  </select>
+    
+  <!-- 批量删除 -->
+  <delete id="batchDeleteAppByIds" parameterType="java.lang.reflect.Array" >
+	    delete from business_line
+	    where bcode in
+	    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">  
+	            #{item} 
+	    </foreach>  
+  </delete>
+  
+  <!-- 根据主键查询 -->
+  <select id="selectResultByCode" parameterType="java.lang.String" resultMap="bResultMap">
+	  select 
+	  <include refid="Base_Column_List"></include>
+	  from business_line 
+	  where bcode = #{bcode} 
+  </select>
+  
+  <!-- 是否存在 -->
+  <select id="selectCountByCode" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	select count(*) from business_line
+ 	where bcode = #{bcode} 
+  </select>
+  
+  <insert id="insertBusinessLine" parameterType="com.gome.upm.domain.BusinessLine" useGeneratedKeys="true" keyProperty="bcode">
+	    insert into business_line (bcode, bname, create_time, update_time, data_order, operator, bdesc)
+	    values (#{bcode,jdbcType=VARCHAR}, #{bname,jdbcType=VARCHAR},
+	      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+	      #{data_order,jdbcType=BIGINT}, #{operator,jdbcType=VARCHAR}, #{bdesc,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 批量删除 -->
+  <delete id="batchDeleteBusinessLineByIds" parameterType="java.lang.reflect.Array" >
+    delete from business_line
+    where bcode in
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">  
+            #{item} 
+    </foreach>  
+  </delete>
+  
+  <!-- 查询list -->
+  <select id="getSelectData" resultMap="bResultMap">
+		${paramSQL} 
+  </select>
+</mapper>

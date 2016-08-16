@@ -1,0 +1,35 @@
+<table class="table table-bordered">
+   <thead>
+		<tr>
+		  <th>日期时间</th>
+		  <th>通信量合计 (卷)</th>
+		  <th>通信量合计 (速度)</th>
+		  <th>入站通信量 (卷)</th>
+		  <th>入站通信量 (速度)</th>
+		  <th>出站通信量 (卷)</th>
+		  <th>出站通信量 (速度)</th>
+		  <th>停机时间</th>
+		  <th>覆盖率</th>
+		</tr>
+   </thead>
+   <tbody>
+        #if($!page.totalResult > 0)
+    	#set($i = ($page.pageNo - 1) * $page.pageSize)
+		#foreach($historyData in $!page.data)
+		#set($i = $i + 1)
+		<tr>
+		  <td>$!historyData.datetime</td>
+		  <td>$!historyData.communication_roll</td>
+		  <td>$!historyData.communication_speed</td>
+		  <td>$!historyData.in_communication_roll</td>
+		  <td>$!historyData.in_communication_speed</td>
+		  <td>$!historyData.out_communication_roll</td>
+		  <td>$!historyData.out_communication_speed</td>
+		  <td>$!historyData.halt_time</td>
+		  <td>$!historyData.coverage</td>
+		</tr>
+		#end
+		#end
+ 	</tbody>
+ 	#parse("common/pagePlugin.vm")
+</table>

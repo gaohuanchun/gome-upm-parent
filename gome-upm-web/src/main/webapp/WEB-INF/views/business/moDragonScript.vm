@@ -1,0 +1,77 @@
+<script type="text/javascript">
+$(function () {
+	initDragon();
+	initDragonData();
+});
+
+function initDragonData(){
+	//开始时间
+	var startDate = new Date();
+ 	var startTimeStr=startDate.Format('yyyy-MM-dd');
+ 	reloadDragonData(startTimeStr);
+}
+var highChart_dragon;
+var options_dragon;
+var config_dragon={};
+function initDragon(){
+	options_dragon = {
+        chart: {
+            type: 'column',
+            renderTo: 'highchart_DRAGON'
+        },
+        title: {
+            text: 'DRAGON'
+        },
+        credits:{
+            enabled:false
+        },
+        xAxis: {
+            categories: [
+                '正向单停在OD的订单',
+                '逆向单停在OD的订单'
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 个</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        series: [{
+            name: '订单',
+            data: []
+        }]
+	}
+	copy(config_dragon,options_dragon);
+}
+function searchDragonData(){
+	var startTimeStr=$('#startTimeDragon').val();
+ 	reloadDragonData(startTimeStr);
+}
+function reloadDragonData(st){
+	var url="${rc.contextPath}/monitoBusiness/getDragonDataList.do";
+	$.ajax({
+		url: url,
+		type:"POST",
+		data:{'startTime':st},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			copy(options_dragon,config_dragon);
+			options_dragon.series[0].data=dataList;
+			highChart_dragon = new Highcharts.Chart(options_dragon);
+     	},
+     	error : function(){
+     	}
+	});
+}
+</script>

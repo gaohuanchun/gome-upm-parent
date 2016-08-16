@@ -1,0 +1,632 @@
+<script>
+$(function(){
+	//商品属性分类
+	drowPie_commodity_property();
+    //城市销售TOP5
+    drowMap_city_sales();
+    //在线支付成功率
+    drowLine_pay_success_rate();
+    //加载数据
+    reloadPaySuccessData();
+    
+    
+    laydate({
+	    elem: '#startTime_HotCity',
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    //min: laydate.now(), //设定最小日期为当前日期
+	    //max: '2099-06-16 23:59:59', //最大日期
+	    istime: true,
+	    istoday: true,
+	    choose: function(date){
+	         //end.min = datas; //开始日选好后，重置结束日的最小日期
+	         //end.start = datas //将结束日的初始值设定为开始日
+	    	//alert("startTime:" + date);
+	    }
+	});
+	
+	laydate({
+	    elem: '#endTime_HotCity',
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    //min: laydate.now(), //设定最小日期为当前日期
+	    //max: '2099-06-16 23:59:59', //最大日期
+	    istime: true,
+	    istoday: true,
+	    choose: function(date){
+	         //end.min = datas; //开始日选好后，重置结束日的最小日期
+	         //end.start = datas //将结束日的初始值设定为开始日
+	    	//alert("endTime:" + date);
+	    }
+	});
+});
+
+
+
+
+</script>
+
+<script>
+//热销商品排行榜
+function searchGoodKindSort(){
+	var url="${rc.contextPath}/monitoBusiness/searchGoodKindSort.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			for(var i=0;i<obj.length;i++){
+				var value;
+				if(i==0){
+					value='<tr><td style="text-align: center;"><img style="margin-left: -16px;" src="../image/no1.png"></img></td><td style="color: #9c8ade;font-weight: 600;line-height: 30px;">'+obj[i].name+'</td><td style="color: #9c8ade;font-weight: 600;line-height: 30px;float: right;margin-top: -45px;">¥ '+obj[i].amount+'</td></tr>'
+				}else{
+					value='<tr><td><div class="circle">'+(i+1)+'</div></td><td class="hostsellPhone">'+obj[i].name+'</td><td class="hostsellprice">¥ '+obj[i].amount+'</td></tr>';
+				}
+				$('#hotGood').append(value);
+			}
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+
+//品牌排行榜
+function searchGoodBrandSort(){
+	var url="${rc.contextPath}/monitoBusiness/searchGoodBrandSort.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			for(var i=0;i<obj.length;i++){
+				var value='<h1 class="top'+(i+1)+'">'+obj[i].name+'</h1>';
+				$('#GoodBrand').append(value);
+			}
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+//订单量
+function searchOrderCount(){
+	var url="${rc.contextPath}/monitoBusiness/searchOrderCount.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			$('#order_tal').text(obj[0].count);
+			$('#order_pay').text(obj[1].count);
+			$('#order_notpay').text(obj[2].count);
+			$('#order_relpay').text(obj[3].count);
+			$('#order_delivery').text(obj[4].count);
+			drowPie_order_analysis(obj[5])
+     	},
+     	error : function(){
+     	}
+	});
+}
+function drowPie_order_analysis(dataList){
+	$('#order_analysis').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        colors:[
+          	'#4c288b',
+          	'#6842ac',
+          	'#b09df3',
+          	'#9c8ade'
+        ],
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '订单',
+            data: dataList
+        }]
+    });
+}
+
+
+//商品属性分类
+function searttt(){
+	var url="${rc.contextPath}/monitoBusiness/searchGoodProperty.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			drowPie.series[0].data=obj;
+			new Highcharts.Chart(drowPie);
+     	},
+     	error : function(){
+     	}
+	});
+}
+var drowPie
+function drowPie_commodity_property(){
+	drowPie={
+        chart: {
+	    renderTo: 'commodity_property',
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        colors:[
+          	'#4c288b',
+          	'#6842ac',
+          	'#b09df3',
+          	'#9c8ade'
+        ],
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size : 160,
+                showInLegend: true,
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '商品类别',
+            data: []
+        }]
+    }
+}
+//城市销售榜
+function searchHotCity(){
+	var startTime=$('#startTime_HotCity').val();
+	var endTime=$('#endTime_HotCity').val();
+	//判断  如果开始时间-结束时间》1年  提示不符合要求
+	var endLogTimeDate = new Date(Date.parse(endTime.replace(/-/g, "/")));  
+	var startLogTimeDate = new Date(Date.parse(startTime.replace(/-/g, "/")));  
+	var ddddd=endLogTimeDate.getTime()-startLogTimeDate.getTime();
+	var time = parseInt(ddddd / (1000 * 60 * 60 * 24));
+	if(time>30){
+		alert('查询时间不能大于1个月');
+		return ;
+	}
+	var url="${rc.contextPath}/monitoBusiness/getCityBySales.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		data:{'startTime':startTime,'endTime':endTime},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var objList=eval(data);
+			$('#hotCity').html("");
+			for(var i=0;i<objList[0].length;i++){
+				var obj=objList[0];
+				var value;
+				if(i==0){
+					value='<span class="titleNo" style="padding-top: 12px;"><span style="padding: 0px 25px;">'+(i+1)+'</span><span>'+obj[i].name+'</span></span><br>';
+				}else{
+					value='<span class="titleNo"><span style="padding: 0px 25px;">'+(i+1)+'</span><span>'+obj[i].name+'</span></span><br>';
+				}
+				$('#hotCity').append(value);
+			}
+			showMap(objList);
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+
+
+function getCityBySales(){
+	var url="${rc.contextPath}/monitoBusiness/getCityBySales.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var objList=eval(data);
+			for(var i=0;i<objList[0].length;i++){
+				var obj=objList[0];
+				var value;
+				if(i==0){
+					value='<span class="titleNo" style="padding-top: 12px;"><span style="padding: 0px 25px;">'+(i+1)+'</span><span>'+obj[i].name+'</span></span><br>';
+				}else{
+					value='<span class="titleNo"><span style="padding: 0px 25px;">'+(i+1)+'</span><span>'+obj[i].name+'</span></span><br>';
+				}
+				$('#hotCity').append(value);
+			}
+			showMap(objList);
+     	},
+     	error : function(){
+     	}
+	});
+}
+function showMap(list){
+	var value1=list[0];
+	var value2=list[1];
+	copy(optionMap,optionMapTem);                                                                                                                                                                                    
+	optionMap.series[1].markPoint.data=value1;
+	optionMap.series[0].markPoint.data=value1;
+	optionMap.series[0].geoCoord=value2;
+	myMapChart= echarts.init(document.getElementById('city_sales'));
+	myMapChart.setOption(optionMap);
+}
+//显示地图亮点
+var optionMap
+var optionMapTem={};
+var myMapChart=null;
+function drowMap_city_sales(){
+		optionMap = {
+			backgroundColor: '#FFF',
+		    title : {
+		        text: ''
+		    },
+		    tooltip : {
+		        trigger: 'item'
+		    },
+		    dataRange: {
+		        min : 0,
+		        max : 500,
+		        calculable : true,
+		        color: ['maroon','purple','red','orange','yellow','lightgreen']
+		    },
+		    series : [
+		        {
+		            name: 'pm2.5',
+		            type: 'map',
+		            mapType: 'china',
+		            hoverable: false,
+		            roam:true,
+		            data : [],
+		            markPoint : {
+		                symbolSize: 5,       // 标注大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2
+		                itemStyle: {
+		                    normal: {
+		                        borderColor: '#87cefa',
+		                        borderWidth: 1,            // 标注边线线宽，单位px，默认为1
+		                        label: {
+		                            show: false
+		                        }
+		                    },
+		                    emphasis: {
+		                        borderColor: '#1e90ff',
+		                        borderWidth: 5,
+		                        label: {
+		                            show: false
+		                        }
+		                    }
+		                },
+		                data : []
+		            },
+		            geoCoord: {}
+		        },
+		        {
+		            name: 'Top5',
+		            type: 'map',
+		            mapType: 'china',
+		            data:[],
+		            markPoint : {
+		                symbol:'emptyCircle',
+		                symbolSize : function (v){
+		                    return 10 + v/100
+		                },
+		                effect : {
+		                    show: true,
+		                    shadowBlur : 0
+		                },
+		                itemStyle:{
+		                    normal:{
+		                        label:{show:true}
+		                    }
+		                },
+		                data : []
+		            }
+		        }
+		    ]
+		};
+	copy(optionMapTem,optionMap);
+}
+//查询订单支付历史
+function addPayPercentageData(){
+	var url="${rc.contextPath}/monitoLogin/searchPayPercentageHistory.do";
+	var data='';
+	$.ajax({ 
+		url: url,
+		type:"POST",
+		data:{startTime:headLoginInfoDate},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			headLoginInfoDate=obj[0];
+			headLoginInfoHighChart.series[0].addPoint([obj[0], obj[1]], false, true);
+			headLoginInfoHighChart.redraw();
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+var headPaySuccessChart;
+function reloadPaySuccessData(){
+	var payUrl="${rc.contextPath}/monitoBusiness/searchPayPercentageHistory.do";
+	$.ajax({
+		url: payUrl,
+		type:"GET",
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			options_paySuccess.series[0].data=dataList;
+			headPaySuccessChart = new Highcharts.Chart(options_paySuccess);
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+//在线支付成功率
+var options_paySuccess;
+var config_paySuccess={};
+function drowLine_pay_success_rate(){
+	options_paySuccess={
+        chart: {
+            type: 'line',
+            renderTo: 'pay_success_rate',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: ''
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+        	type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '支付成功率',
+            color:'#9c8ade',
+            data: []
+        }]
+    }
+    copy(config_paySuccess,options_paySuccess);
+}
+
+//5分钟登录
+var waitHeadLoginInfoRun;
+var timeHeadLoginInfoflg = false; //启动及关闭按钮  
+function timeHeadLoginInfoRun(){
+	if(timeHeadLoginInfoflg){return ;}
+	addHeadLoginInfoData();
+	waitHeadLoginInfoRun=setTimeout(timeHeadLoginInfoRun,1000*60*5); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+}
+//等待时间----时间价格为intervalTime分钟
+function waitTimeHeadLoginInfo(){
+	//获取结束时间
+	var endTimeNow=new Date();
+	var endTimeStr=endTimeNow.Format('yyyy/MM/dd HH:m5:s0');
+	var wwww=new Date(endTimeStr);
+	//下个触发查询时间--5分钟后
+	wwww=wwww.DateAdd('n',5);
+	//alert(wwww.Format('yyyy-MM-dd HH:mm:ss'));
+	//计算当前时间和下个查询时间的时间差
+	var waitTime=wwww-new Date();
+	//等待时间差
+	setTimeout(function(){
+		timeHeadLoginInfoRun();
+	},waitTime);
+}
+
+
+var headLoginInfoDate;
+var headLoginInfoHighChart;
+var timeHeadLoginInfoCon=false;
+function initHeadLoginInfoData(){
+	var obj=getSearchHour(1);
+    var startTimeStr=obj.startTime;
+    var endTimeStr=obj.endTime;
+    reloadHeadLoginInfoData(startTimeStr,endTimeStr,false);
+}
+function addHeadLoginInfoData(){
+	var url="${rc.contextPath}/monitoLogin/getLoginInfoForTime.do";
+	var data='';
+	$.ajax({ 
+		url: url,
+		type:"POST",
+		data:{startTime:headLoginInfoDate},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			headLoginInfoDate=obj[0];
+			headLoginInfoHighChart.series[0].addPoint([obj[0], obj[1]], false, true);
+			headLoginInfoHighChart.redraw();
+     	},
+     	error : function(){
+     	}
+	});
+}
+var options_headLoginInfo;
+var config_headLoginInfo={};
+function initHeadLoginInfo(){
+	Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+	options_headLoginInfo = {
+		chart: {
+            type: 'line',
+            backgroundColor:"#FFF",
+            renderTo: 'container_headLoginInfo',  //图表放置的容器，一般在html中放置一个DIV，获取DIV的id属性值
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 0, //对容器的右内边距
+            animation:true,
+            events: {
+                load: function () {
+                	waitTimeHeadLoginInfo();
+                }
+            }
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+        	type: 'datetime',
+            tickPixelInterval: 5,
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+            title: {
+    			style: {
+    				color: '#AAA',
+    				font: 'bolder 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+	                     text: ''
+	                 }
+        },
+        //显示头
+        tooltip: {
+            formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 0);
+            },
+            backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgba(96, 96, 96, .8)'],
+    				[1, 'rgba(16, 16, 16, .8)']
+    			]
+    		},
+    		borderWidth: 0,
+    		style: {
+    			color: '#FFF'
+    		}
+        },
+        credits:{ //右下角超链接设置
+            enabled: false
+        },
+        series:[{
+        	name: '订单',
+        	color:'#9c8ade',
+        	data:[]
+        }]
+	}
+	copy(config_headLoginInfo,options_headLoginInfo);
+}
+
+function reloadHeadLoginInfoData(stLogin,etLogin,waitTimeReload){
+	var payUrl="${rc.contextPath}/monitoLogin/findLoginInfoList.do";
+	$.ajax({
+		url: payUrl,
+		type:"POST",
+		data:{'startTime':stLogin,'endTime':etLogin},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			headLoginInfoDate=dataList[dataList.length-1][0];
+			copy(options_headLoginInfo,config_headLoginInfo);
+			options_headLoginInfo.series[0].data=dataList;
+			if(waitTimeReload){
+				options_headLoginInfo.chart.events.load=function(){};
+			}
+			headLoginInfoHighChart = new Highcharts.Chart(options_headLoginInfo);
+     	},
+     	error : function(){
+     	}
+	});
+}
+$(function(){
+	//商品热销
+	searchGoodKindSort();
+	searchGoodBrandSort();
+	searchOrderCount();
+	getCityBySales();
+	//5分钟订单
+	initHeadLoginInfo();
+	initHeadLoginInfoData();
+	//商品属性分类
+	searttt();
+}) 
+</script>

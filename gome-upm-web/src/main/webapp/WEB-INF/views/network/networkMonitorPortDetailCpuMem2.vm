@@ -1,0 +1,20 @@
+<table class="table table-striped table_data">
+    <tbody>
+		<tr>
+		  <th>日期时间</th>
+		  <th>值</th>
+		  <th>停机时间</th>
+		  <th>覆盖率</th>
+		</tr>
+        #foreach($historyData in $!list)
+		<tr>
+		  <td>$!historyData.datetime</td>
+		  <td>$!historyData.cpuMemVal</td>
+		  <td>$!historyData.halt_time</td>
+		  <td>$!historyData.coverage</td>
+		</tr>
+		#end
+		
+	</tbody>
+</table>
+#parse("network/pagePlugin2.vm")

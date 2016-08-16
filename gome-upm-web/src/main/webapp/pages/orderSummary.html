@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+    <header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="treeview active">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview currentli"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        	<a href="#">总览 / 订单一览</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content" style="height: 1280px;">
+        	<div class="orderSummarySty">
+	        	<div class="leftlayout">
+	        		<div class="lefttopLayout">
+	        			<h2 style="">热销商品排行榜</h2>
+	        			<table class="table hotsellTable">
+	        				<tbody>
+	        					<tr>
+	        						<td style="text-align: center;"><img style="margin-left: -16px;" src="../image/no1.png"></img></td>
+	        						<td style="color: #9c8ade;font-weight: 600;line-height: 30px;">手机</td>
+	        						<td style="color: #9c8ade;font-weight: 600;line-height: 30px;float: right;margin-top: -45px;">¥ 123456</td>
+	        					</tr>
+	        					<tr>
+	        						<td><div class="circle">2</div></td>
+	        						<td class="hostsellPhone">手机</td>
+	        						<td class="hostsellprice">¥ 123456</td>
+	        					</tr>
+	        					<tr>
+	        						<td><div class="circle">3</div></td>
+	        						<td class="hostsellPhone">手机</td>
+	        						<td class="hostsellprice">¥ 123456</td>
+	        					</tr>
+	        					<tr>
+	        						<td><div class="circle">4</div></td>
+	        						<td class="hostsellPhone">手机</td>
+	        						<td class="hostsellprice">¥ 123456</td>
+	        					</tr>
+	        					<tr>
+	        						<td><div class="circle">5</div></td>
+	        						<td class="hostsellPhone">手机</td>
+	        						<td class="hostsellprice">¥ 123456</td>
+	        					</tr>
+	        				</tbody>
+	        			</table>
+	        			<h2 style="font-size: 15px;">品牌排行榜</h2>
+						<div class="rankingList" style="text-align: center;padding: 33px 0px;">
+							<img src="../image/top1.png" />
+							<img style="padding: 0px 13px;" src="../image/top2.png" />
+							<img src="../image/top3.png" />
+							<h1 class="top1">美的美的</h1>
+							<h1 class="top2">华为美</h1>
+							<h1 class="top3">海尔美美的</h1>
+						</div>	 	        			
+	        		</div>
+	        	</div>
+	        	<div class="centerLayout">
+	        		<div class="centertoplayout">
+	        			<h2 style="font-size: 15px;">订单解析</h2>
+	        			<span style="color:#999999;display: block;text-align: center;margin-top: 10px;font-size:18px;">订单量：<span style="color:#9c8ade;">939393</span></span>
+	        			<div style="width: 300px;height: 200px;margin: auto;" id="order_analysis"></div>
+						<p style="color:#999999">
+							充值订单：<span style="color:#9c8ade;font-weight: 600;">123456</span>
+							<span style="padding: 23px;">
+								非充值订单：<span style="color:#9c8ade;font-weight: 600;">1234</span>
+							</span><br>
+							支付成功订单：<span style="color:#9c8ade;font-weight: 600;">123</span>
+							<span style="padding: 20px;">
+								妥投成功订单：<span style="color:#9c8ade;font-weight: 600;">123</span>
+							</span>
+						</p>
+	        		</div>
+	        		<div class="centertoplayout" style="margin-left: 66%;margin-top: -358px;">
+	        			<h2 style="font-size: 15px;">商品属性分类</h2>
+	        			<div style="width: 300px;height: 230px;margin: auto;" id="commodity_property"></div>
+	        			<p style="color:#999999">
+							<span>B3PP：<span style="color:#9c8ade;font-weight: 600;">1234</span></span>
+							<span style="padding: 23px;">
+								SMI：<span style="color:#9c8ade;font-weight: 600;">12</span>
+							</span><br>
+							<span style="padding-right: 12px;">G3PP：<span style="color:#9c8ade;font-weight: 600;">123</span></span>
+							<span style="padding: 20px;">
+								3PP：<span style="color:#9c8ade;font-weight: 600;">123</span>
+							</span>
+						</p>
+	        		</div>
+	        		<div class="centerbottomLayout">
+	        			<div class="city_title">
+		        			<h2>城市销售TOP5</h2>
+		        			<div class="pull-right">
+								<div class="form-group" style="margin-right: 15px;">
+									<input type="text" class="form-control" id="startTime">
+									<label>至</label>
+									<input type="text" class="form-control lastInput" id="endTime">
+									<i class="fa fa-search" ></i>
+								</div>
+							</div>
+	        			</div>
+	        			
+	        			<div id="city_sales" style="border-radius: 0px 0px 0px 3px;height:85%;width:70%;padding-left: 30px;background-color:#FFF"></div>
+	        			<div class="hottest">
+	        				<h2>最热城市</h2>
+	        				<div style="width: 159px;background: #f9f9f9;margin: 0px 90px;height: 212px;">
+	        					<span class="titleNo" style="padding-top: 12px;"><span style="padding: 0px 25px;">1</span><span>北京</span></span><br>
+	        					<span class="titleNo"><span style="padding: 0px 25px;">2</span><span>上海</span></span><br>
+	        					<span class="titleNo"><span style="padding: 0px 25px;">3</span><span>重庆</span></span><br>
+	        					<span class="titleNo"><span style="padding: 0px 25px;">4</span><span>广州</span></span><br>
+	        					<span class="titleNo"><span style="padding: 0px 25px;">5</span><span>南京</span></span><br>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div class="rightlayout">
+	        		<div class="righttoplayout">
+	        			<h2>5分钟订单</h2>
+	        			<div id="five_order" style="height:300px;"></div>
+	        		</div>
+	        		<div class="rightbottomlayout">
+	        			<h2>在线支付成功率</h2>
+	        			<div id="pay_success_rate" style="height:300px;"></div>
+	        		</div>
+	        	</div>
+	        </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/highcharts.js" type="text/javascript"></script>
+<script src="../js/plugins/echarts/echarts-all.js" type="text/javascript"></script>
+<script>
+$(function(){
+	//订单解析
+	drowPie_order_analysis();
+	//商品属性
+	drawPie_commodity_property();
+    //城市销售TOP5
+    drowMap_city_sales();
+    //5分钟订单
+    drowLine_five_order();
+    //在线支付成功率
+    drowLine_pay_success_rate();
+});
+function drowPie_order_analysis(){
+	$('#order_analysis').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        colors:[
+          	'#4c288b',
+          	'#6842ac',
+          	'#b09df3',
+          	'#9c8ade'
+        ],
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '订单',
+            data: [
+                ['App端', 50.8],
+                {
+                    name: 'Web端',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                {name:'Wap端',
+                 y:20.5,
+                 sliced: true,
+                 selected: true}
+            ]
+        }]
+    });
+}
+function drawPie_commodity_property(){
+	$('#commodity_property').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        colors:[
+          	'#4c288b',
+          	'#6842ac',
+          	'#b09df3',
+          	'#9c8ade'
+        ],
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size : 160,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '商品类别',
+            data: [
+                ['SMI  1234',   30.0],
+                ['B3PP 12',       32.8],
+                {
+                    name: 'G3PP 123',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                {name:'3PP 123',
+                 y:20.5,
+                 sliced: true,
+                 selected: true}
+            ]
+        }]
+    });
+}
+function drowMap_city_sales(){
+	var myChart = echarts.init(document.getElementById('city_sales')); 
+	var option = {
+			backgroundColor: '#FFF',
+		    title : {
+		        text: ''
+		    },
+		    tooltip : {
+		        trigger: 'item'
+		    },
+		    dataRange: {
+		    	x: 'left',
+		 		y: 'bottom',
+		        min : 0,
+		        max : 10000,
+		        calculable : true,
+		        color: ['maroon','purple','red','orange','yellow','lightgreen']
+		    },
+		    series : [
+		        {
+		            name: 'pm2.5',
+		            type: 'map',
+		            mapType: 'china',
+		            hoverable: false,
+		            //roam:true,
+		            data : [],
+		            markPoint : {
+		                symbolSize: 5,       // 标注大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2
+		                itemStyle: {
+		                    normal: {
+		                        borderColor: '#87cefa',
+		                        borderWidth: 1,            // 标注边线线宽，单位px，默认为1
+		                        label: {
+		                            show: false
+		                        }
+		                    },
+		                    emphasis: {
+		                        borderColor: '#1e90ff',
+		                        borderWidth: 5,
+		                        label: {
+		                            show: false
+		                        }
+		                    }
+		                },
+		                data : [
+		                    {name: "上海", value: 25},
+		                    {name: "广州", value: 38},
+		                    {name: "重庆", value: 66},
+		                    {name: "南京", value: 67},
+		                    {name: "北京", value: 79}                 
+		                ]
+		            },
+		            geoCoord: {
+		                "上海":[121.48,31.22],
+		                "广州":[113.23,23.16],
+		                "重庆":[106.54,29.59],
+		               	'南京':[118.8062,31.9208],
+		                "北京":[116.46,39.92]
+		            }
+		        },
+		        {
+		            name: 'Top5',
+		            type: 'map',
+		            mapType: 'china',
+		            data:[],
+		            markPoint : {
+		                symbol:'emptyCircle',
+		                symbolSize : function (v){
+		                    return 10 + v/1000
+		                },
+		                effect : {
+		                    show: true,
+		                    shadowBlur : 0
+		                },
+		                itemStyle:{
+		                    normal:{
+		                        label:{show:true}
+		                    }
+		                },
+		                data : [
+		                   {name: "上海", value: 255},
+		                    {name: "广州", value: 1850},
+		                    {name: "重庆", value: 1650},
+		                    {name: "南京", value: 2750},
+		                    {name: "北京", value: 2950}        
+		                ]
+		            }
+		        }
+		    ]
+		};
+	myChart.setOption(option);
+}
+function drowLine_five_order(){
+	$('#five_order').highcharts({
+		chart: {
+            type: 'line',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: ''
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '14:30',
+                '14:45',
+                '15:00',
+                '15:15',
+                '15:30',
+                '15:45'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 个</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '订单',
+            color:'#9c8ade',
+            data: [49, 71, 89,93, 99,105]
+        }]
+    });
+}
+function drowLine_pay_success_rate(){
+	$('#pay_success_rate').highcharts({
+        chart: {
+            type: 'line',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: ''
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+				'14:30',
+				'14:45',
+				'15:00',
+				'15:15',
+				'15:30',
+				'15:45'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '支付成功率',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9,105.8],
+        }]
+    });
+}
+</script>
+</body>
+</html>

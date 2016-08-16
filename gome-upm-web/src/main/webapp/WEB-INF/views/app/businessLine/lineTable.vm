@@ -1,0 +1,35 @@
+<table id="example1" class="table table_data table-striped" >
+    <thead>
+	    <tr>
+	        <th></th>
+	        <th><input type="checkbox" id="checkAll"/></th>
+	        <th>编码</th>
+	        <th>中文</th>
+	        <th>创建时间</th>
+	        <th>更新时间</th>
+	        <th>操作人</th>
+	        <th>描述</th>
+	    </tr>
+    </thead>
+    <tbody>
+		#if($!page.totalResult > 0)
+		#set($i = ($page.pageNo - 1) * $page.pageSize)
+		#foreach($app in $!page.data)
+			#set($i = $i + 1)
+			<tr>
+				<td>$!i</td>
+				<td><input type="checkbox" name="checkbox" value="$!app.bcode" /></td>
+				<td>$!app.bcode</td>
+				<td>$!app.bname</td>
+				<td>$!app.createTime</td>
+				<td>$!app.updateTime</td>
+				<td>$!app.operator</td>
+				<td>$!app.bdesc</td>
+			</tr>		
+		#end
+		#end
+    </tbody>
+</table>
+#parse("common/pagePlugin.vm")
+ <input type="hidden" value="$!page.conditions.bcode" id="hiddenBcode"/>
+ <input type="hidden" value="$!page.conditions.bname" id="hiddenBname"/>

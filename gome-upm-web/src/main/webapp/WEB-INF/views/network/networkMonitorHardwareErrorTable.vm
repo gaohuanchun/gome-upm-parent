@@ -1,0 +1,41 @@
+			<table id="serverDetailList" class="table table-striped table_data">
+				<thead>
+					<tr>
+						<th>报警时间</th>
+						<th>所属IDC</th>
+						<th>设备名称</th>
+						<!--<th>负责人</th>-->
+						<th>状态</th>
+						<!--<th>操作</th>-->
+					</tr>
+					
+				</thead>
+				<tbody>
+				        #if($!page.totalResult > 0)
+				    	#set($i = ($page.pageNo - 1) * $page.pageSize)
+						#foreach($device in $!page.data)
+						#set($i = $i + 1)
+					    <tr>
+						<td>$!device.alarmTimeStr</td>
+						<td>$!device.groupName</td>
+						<td><a href="javascript:void(0)" deviceId="$!device.deviceId" class="link_a deviceDetail">$!device.deviceName</a></td>
+						<!--<td>admin</td>-->
+						<td>故障</td>
+						<!--
+						<td>
+							<a class="operation" href="javascript:;">已处理</a>
+							<a class="operation" href="javascript:;">忽略</a>
+						</td>
+						-->
+					    </tr>
+					#end
+					#end
+					
+				</tbody>
+				 
+			  </table>
+			  #parse("common/pagePlugin.vm")	
+<input type="hidden" value="$!sdate" id="hiddenSdate" />
+<input type="hidden" value="$!edate" id="hiddenEdate" />
+<input type="hidden" value="$!page.conditions.groupId" id="hiddenGroupId" />
+<input type="hidden" value="$!page.conditions.deviceId" id="hiddenDeviceId" />	

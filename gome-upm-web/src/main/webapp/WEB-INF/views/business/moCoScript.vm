@@ -1,0 +1,93 @@
+<script type="text/javascript">
+$(function () {
+	initCo();
+	initCoData();
+});
+function initCoData(){
+	//开始时间
+	var startDate = new Date();
+ 	var startTimeStr=startDate.Format('yyyy-MM-dd');
+ 	reloadCoData(startTimeStr);
+}
+var highChart_co;
+var options_co;
+var config_co={};
+function initCo(){
+	options_co = {
+        chart: {
+            type: 'column',
+            renderTo: 'highchart_Co'
+        },
+        title: {
+            text: '正向单'
+        },
+        credits:{
+            enabled:false
+        },
+        xAxis: {
+            categories: [
+                'G3PP返回状态不正确',
+                '已发送SO至DRG',
+                '已发送SO至POP',
+                '待客服处理',
+                '未发SO至DRG',
+                '未发SO至POP'
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 个</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '订单',
+            data: []
+        }]
+	}
+	copy(config_co,options_co);
+}
+function searchCoData(){
+	var startTimeStr=$('#startTimeCo').val();
+ 	reloadCoData(startTimeStr);
+}
+function reloadCoData(stCo){
+	var url="${rc.contextPath}/monitoBusiness/getCoDataList.do";
+	$.ajax({
+		url: url,
+		type:"POST",
+		data:{'startTime':stCo},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			//总数
+			var tal=dataList[0];
+			$('#co_tal').text(tal);
+			var wwww=[];
+			for(var ttt=1;ttt<dataList.length;ttt++){
+				wwww[ttt-1]=dataList[ttt];
+			}
+			copy(options_co,config_co);
+			options_co.series[0].data=wwww;
+			highChart_co = new Highcharts.Chart(options_co);
+     	},
+     	error : function(){
+     	}
+	});
+}
+</script>

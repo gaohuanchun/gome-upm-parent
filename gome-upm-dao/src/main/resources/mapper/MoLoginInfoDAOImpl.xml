@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoLoginInfoDAO">
+	<select id="searchMoLoginInfoList" resultType="MoLoginInfoBO" parameterType="MoLoginInfoBO">
+	    select t.id,t.start_time startTime,t.mo_count count
+		from mo_login_info t
+		WHERE 1=1
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and t.start_time between #{startTime} and #{endTime}
+	    </if>
+		<if test="minute != null and minute != ''" >
+	      and t.minute%#{minute}=0
+	    </if>
+	</select>
+	<select id="searchCountByTime" resultType="java.lang.Integer" parameterType="MoLoginInfoBO">
+	    select t.mo_count count
+		from mo_login_info t
+		WHERE 1=1
+		<if test="startTime != null and startTime != ''" >
+	      and t.start_time = #{startTime}
+	    </if>
+	</select>
+	<insert id="saveMoLoginInfo" parameterType="MoLoginInfoBO">
+		INSERT INTO mo_login_info(id,start_time,mo_count,minute)
+		VALUES(#{id},#{startTime},#{count},#{minute})
+	</insert>
+	<select id="searchMoCpsList" resultType="MoCpsBO" parameterType="MoCpsBO">
+	    select t.id,t.start_time startTime,t.end_time endTime,t.mo_count count
+		from mo_cps t
+		WHERE 1=1
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and t.start_time between #{startTime} and #{endTime}
+	    </if>
+	</select>
+</mapper>

@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoNetDeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.prtg.MoNetDevice" >
+    <id column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="probe_name" property="probeName" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="host" property="host" jdbcType="VARCHAR" />
+    <result column="downsens" property="downsens" jdbcType="VARCHAR" />
+    <result column="downsens_raw" property="downsensRaw" jdbcType="INTEGER" />
+    <result column="partialdownsens" property="partialdownsens" jdbcType="VARCHAR" />
+    <result column="partialdownsens_raw" property="partialdownsensRaw" jdbcType="INTEGER" />
+    <result column="downacksens" property="downacksens" jdbcType="VARCHAR" />
+    <result column="downacksens_raw" property="downacksensRaw" jdbcType="INTEGER" />
+    <result column="upsens" property="upsens" jdbcType="VARCHAR" />
+    <result column="upsens_raw" property="upsensRaw" jdbcType="INTEGER" />
+    <result column="warnsens" property="warnsens" jdbcType="VARCHAR" />
+    <result column="warnsens_raw" property="warnsensRaw" jdbcType="INTEGER" />
+    <result column="pausedsens" property="pausedsens" jdbcType="VARCHAR" />
+    <result column="pausedsens_raw" property="pausedsensRaw" jdbcType="INTEGER" />
+    <result column="unusualsens" property="unusualsens" jdbcType="VARCHAR" />
+    <result column="unusualsens_raw" property="unusualsensRaw" jdbcType="INTEGER" />
+    <result column="undefinedsens" property="undefinedsens" jdbcType="VARCHAR" />
+    <result column="undefinedsens_raw" property="undefinedsensRaw" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="alarm_content" property="alarmContent" jdbcType="VARCHAR" />
+    <result column="sensor_error" property="sensorError" jdbcType="INTEGER" />
+    <result column="sensor_total" property="sensorTotal" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <sql id="Base_Column_List" >
+    device_id deviceId, probe_name  probeName, group_id groupId, group_name groupName,device_name deviceName,host,downsens,downsens_raw downsensRaw,
+    partialdownsens, partialdownsens_raw partialdownsensRaw,downacksens,downacksens_raw downacksensRaw,upsens,upsens_raw upsensRaw,warnsens, warnsens_raw warnsensRaw,
+    pausedsens,pausedsens_raw pausedsensRaw, warnsens,warnsens_raw warnsensRaw,pausedsens,pausedsens_raw  pausedsensRaw,unusualsens, unusualsens_raw unusualsensRaw,undefinedsens,
+    undefinedsens_raw undefinedsensRaw,state,alarm_time alarmTime,alarm_content alarmContent,sensor_error sensorError, sensor_total sensorTotal,alarm_time alarmTimeStr
+  </sql> 
+  
+  <select id="selectAllIds" resultType="java.lang.Integer" >
+     select device_id from mo_net_device 
+  </select>
+  
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_device
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByIds" >
+    delete from mo_net_device where device_id in
+    	<foreach collection="list" item="deviceId" index="index"
+	         open="(" close=")" separator=",">
+	         #{deviceId,jdbcType=INTEGER}
+        </foreach>
+  </delete>
+  
+    <select id="selectCountByMap" resultType="java.lang.Integer" parameterType="map" >
+     select count(1) from mo_net_device where 1=1
+      <if test="state != null" >
+       and state = #{state,jdbcType=INTEGER}
+      </if>
+	</select>
+  
+  <select id="selectListCommon" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.prtg.MoNetDevice" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_device where 1=1
+      <if test="groupId != null" >
+       and group_id =  #{conditions.groupId,jdbcType=INTEGER}
+      </if>
+      <if test="deviceId != null" >
+       and device_id =  #{conditions.deviceId,jdbcType=INTEGER}
+      </if>
+      <if test="state != null" >
+       and state = #{state,jdbcType=INTEGER}
+      </if>
+  </select>
+  
+  
+  
+  <select id="selectList" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_device where 1=1
+      <if test="conditions.groupId != null" >
+       and group_id =  #{conditions.groupId,jdbcType=INTEGER}
+      </if>
+      <if test="conditions.deviceId != null" >
+       and device_id =  #{conditions.deviceId,jdbcType=INTEGER}
+      </if>
+      <if test="conditions.state != null and conditions.state == 12 " >
+       and (state = 1 or state = 2) 
+      </if>
+      <if test="conditions.state != null and conditions.state == 0 " >
+       and state = 0 
+      </if>
+      <if test="conditions.state != null and conditions.state == 2 " >
+       and state = 2 
+      </if>
+      <if test="conditions.sdate != null and conditions.sdate != '' ">
+      and <![CDATA[ alarm_time >= #{conditions.sdate,jdbcType=TIMESTAMP} ]]>   
+      </if>
+      <if test="conditions.edate != null and conditions.edate != '' ">
+      and <![CDATA[ alarm_time <= #{conditions.edate,jdbcType=TIMESTAMP} ]]>   
+      </if>
+      order by state desc,alarm_time desc
+      <if test="start != null and pageSize != null">
+    	limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+   <select id="selectCount" resultType="java.lang.Integer" parameterType="com.gome.upm.common.Page" >
+    select count(1) from mo_net_device where 1=1
+      <if test="conditions.groupId != null" >
+       and group_id =  #{conditions.groupId,jdbcType=INTEGER}
+      </if>
+      <if test="conditions.deviceId != null" >
+       and device_id =  #{conditions.deviceId,jdbcType=INTEGER}
+      </if>
+      <if test="conditions.state != null and conditions.state == 12 " >
+       and (state = 1 or state = 2) 
+      </if>
+      <if test="conditions.state != null and conditions.state == 0 " >
+       and state = 0 
+      </if>
+      <if test="conditions.state != null and conditions.state == 2 " >
+       and state = 2 
+      </if>
+      <if test="conditions.sdate != null and conditions.sdate != '' ">
+      and <![CDATA[ alarm_time >= #{conditions.sdate,jdbcType=TIMESTAMP} ]]>   
+      </if>
+      <if test="conditions.edate != null and conditions.edate != '' ">
+      and <![CDATA[ alarm_time <= #{conditions.edate,jdbcType=TIMESTAMP} ]]>   
+      </if>
+  </select>
+  
+  
+  <insert id="insert" parameterType="com.gome.upm.domain.prtg.MoNetDevice" >
+    insert into mo_net_device (device_id, probe_name, group_id, 
+      group_name, device_name, host, 
+      downsens, downsens_raw, partialdownsens, 
+      partialdownsens_raw, downacksens, downacksens_raw, 
+      upsens, upsens_raw, warnsens, 
+      warnsens_raw, pausedsens, pausedsens_raw, 
+      unusualsens, unusualsens_raw, undefinedsens, 
+      undefinedsens_raw, state, alarm_time, 
+      alarm_content, sensor_error, sensor_total
+      )
+    values (#{deviceId,jdbcType=INTEGER}, #{probeName,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, 
+      #{groupName,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, 
+      #{downsens,jdbcType=VARCHAR}, #{downsensRaw,jdbcType=INTEGER}, #{partialdownsens,jdbcType=VARCHAR}, 
+      #{partialdownsensRaw,jdbcType=INTEGER}, #{downacksens,jdbcType=VARCHAR}, #{downacksensRaw,jdbcType=INTEGER}, 
+      #{upsens,jdbcType=VARCHAR}, #{upsensRaw,jdbcType=INTEGER}, #{warnsens,jdbcType=VARCHAR}, 
+      #{warnsensRaw,jdbcType=INTEGER}, #{pausedsens,jdbcType=VARCHAR}, #{pausedsensRaw,jdbcType=INTEGER}, 
+      #{unusualsens,jdbcType=VARCHAR}, #{unusualsensRaw,jdbcType=INTEGER}, #{undefinedsens,jdbcType=VARCHAR}, 
+      #{undefinedsensRaw,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{alarmTime,jdbcType=TIMESTAMP}, 
+      #{alarmContent,jdbcType=VARCHAR}, #{sensorError,jdbcType=INTEGER}, #{sensorTotal,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gome.upm.domain.prtg.MoNetDevice" >
+    insert into mo_net_device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="probeName != null" >
+        probe_name,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="deviceName != null" >
+        device_name,
+      </if>
+      <if test="host != null" >
+        host,
+      </if>
+      <if test="downsens != null" >
+        downsens,
+      </if>
+      <if test="downsensRaw != null" >
+        downsens_raw,
+      </if>
+      <if test="partialdownsens != null" >
+        partialdownsens,
+      </if>
+      <if test="partialdownsensRaw != null" >
+        partialdownsens_raw,
+      </if>
+      <if test="downacksens != null" >
+        downacksens,
+      </if>
+      <if test="downacksensRaw != null" >
+        downacksens_raw,
+      </if>
+      <if test="upsens != null" >
+        upsens,
+      </if>
+      <if test="upsensRaw != null" >
+        upsens_raw,
+      </if>
+      <if test="warnsens != null" >
+        warnsens,
+      </if>
+      <if test="warnsensRaw != null" >
+        warnsens_raw,
+      </if>
+      <if test="pausedsens != null" >
+        pausedsens,
+      </if>
+      <if test="pausedsensRaw != null" >
+        pausedsens_raw,
+      </if>
+      <if test="unusualsens != null" >
+        unusualsens,
+      </if>
+      <if test="unusualsensRaw != null" >
+        unusualsens_raw,
+      </if>
+      <if test="undefinedsens != null" >
+        undefinedsens,
+      </if>
+      <if test="undefinedsensRaw != null" >
+        undefinedsens_raw,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time,
+      </if>
+      <if test="alarmContent != null" >
+        alarm_content,
+      </if>
+      <if test="sensorError != null" >
+        sensor_error,
+      </if>
+      <if test="sensorTotal != null" >
+        sensor_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="probeName != null" >
+        #{probeName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null" >
+        #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="downsens != null" >
+        #{downsens,jdbcType=VARCHAR},
+      </if>
+      <if test="downsensRaw != null" >
+        #{downsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="partialdownsens != null" >
+        #{partialdownsens,jdbcType=VARCHAR},
+      </if>
+      <if test="partialdownsensRaw != null" >
+        #{partialdownsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="downacksens != null" >
+        #{downacksens,jdbcType=VARCHAR},
+      </if>
+      <if test="downacksensRaw != null" >
+        #{downacksensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="upsens != null" >
+        #{upsens,jdbcType=VARCHAR},
+      </if>
+      <if test="upsensRaw != null" >
+        #{upsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="warnsens != null" >
+        #{warnsens,jdbcType=VARCHAR},
+      </if>
+      <if test="warnsensRaw != null" >
+        #{warnsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="pausedsens != null" >
+        #{pausedsens,jdbcType=VARCHAR},
+      </if>
+      <if test="pausedsensRaw != null" >
+        #{pausedsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="unusualsens != null" >
+        #{unusualsens,jdbcType=VARCHAR},
+      </if>
+      <if test="unusualsensRaw != null" >
+        #{unusualsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="undefinedsens != null" >
+        #{undefinedsens,jdbcType=VARCHAR},
+      </if>
+      <if test="undefinedsensRaw != null" >
+        #{undefinedsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="alarmTime != null" >
+        #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmContent != null" >
+        #{alarmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorError != null" >
+        #{sensorError,jdbcType=INTEGER},
+      </if>
+      <if test="sensorTotal != null" >
+        #{sensorTotal,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  
+   <update id="updateByPrimaryKeySelective" parameterType="com.gome.upm.domain.prtg.MoNetGroup" >
+    update mo_net_device
+    <set >
+      <if test="probeName != null" >
+        probe_name = #{probeName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+       group_id =  #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null" >
+        host = #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="downsens != null" >
+        downsens = #{downsens,jdbcType=VARCHAR},
+      </if>
+      <if test="downsensRaw != null" >
+        downsens_raw = #{downsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="partialdownsens != null" >
+        partialdownsens = #{partialdownsens,jdbcType=VARCHAR},
+      </if>
+      <if test="partialdownsensRaw != null" >
+        partialdownsens_raw = #{partialdownsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="downacksens != null" >
+        downacksens = #{downacksens,jdbcType=VARCHAR},
+      </if>
+      <if test="downacksensRaw != null" >
+       downacksens_raw = #{downacksensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="upsens != null" >
+        upsens = #{upsens,jdbcType=VARCHAR},
+      </if>
+      <if test="upsensRaw != null" >
+        upsens_raw = #{upsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="warnsens != null" >
+        warnsens = #{warnsens,jdbcType=VARCHAR},
+      </if>
+      <if test="warnsensRaw != null" >
+       warnsens_raw = #{warnsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="pausedsens != null" >
+       pausedsens = #{pausedsens,jdbcType=VARCHAR},
+      </if>
+      <if test="pausedsensRaw != null" >
+       pausedsens_raw  = #{pausedsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="unusualsens != null" >
+       unusualsens  = #{unusualsens,jdbcType=VARCHAR},
+      </if>
+      <if test="unusualsensRaw != null" >
+        unusualsens_raw = #{unusualsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="undefinedsens != null" >
+       undefinedsens  = #{undefinedsens,jdbcType=VARCHAR},
+      </if>
+      <if test="undefinedsensRaw != null" >
+       undefinedsens_raw  = #{undefinedsensRaw,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="alarmTime != null" >
+       alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmContent != null" >
+       alarm_content = #{alarmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sensorError != null" >
+       sensor_error =  #{sensorError,jdbcType=INTEGER},
+      </if>
+      <if test="sensorTotal != null" >
+       sensor_total = #{sensorTotal,jdbcType=INTEGER},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </update>
+</mapper>

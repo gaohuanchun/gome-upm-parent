@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+	<body>
+		<form action="${rc.contextPath}/upload/img" method="post" enctype="multipart/form-data">
+		<input type="file" name="file" value=""/>
+		<input type="submit" value="上传"/>
+		</form>
+		$!{filepath}
+	</body>
+</html>

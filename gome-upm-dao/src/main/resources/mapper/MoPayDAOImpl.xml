@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoPayDAO">
+	<sql id="oms" >
+	oms_uat
+	</sql>
+	<!-- 正式数据库 -->
+	<select id="searchMoPayCountByTime" resultType="java.lang.Integer" parameterType="MoOrderRechargeBO">
+	    select count(1)
+	    FROM order_entity t
+	    WHERE 1=1
+	    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and t.create_time between #{startTime} and #{endTime}
+	    </if>
+	</select>
+	<!-- 查询成功在线支付的订单数量-->
+	<select id="searchOnLineOrderCount" resultType="java.lang.Integer" parameterType="MoOrderRechargeBO">
+	 	select count(distinct sg.shipping_group_id)
+		from <include refid="oms"></include>.oms_order o
+		inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+		inner join <include refid="oms"></include>.oms_payment_group pg on pg.order_id=o.order_id
+		where pg.type  &lt;&gt; 102 and pg.state = 'SETTLED' and o.created_by_order is null
+		
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and o.submitted_date between #{startTime} and #{endTime}
+	    </if>
+	</select>
+	<!-- 查询所有订单数量 -->
+	<select id="searchAllOrderCount" resultType="java.lang.Integer" parameterType="MoOrderRechargeBO">
+		select count(1)
+		from <include refid="oms"></include>.oms_order o
+		inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+		where o.created_by_order is null
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and o.submitted_date between #{startTime} and #{endTime}
+	    </if>
+	</select>
+</mapper>

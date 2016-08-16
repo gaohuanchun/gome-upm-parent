@@ -1,0 +1,39 @@
+.login_warp{width:100%;height:100%; overflow: hidden;}
+.login_bg{width:100%;height:1000px; position: relative;}
+.login_bg img{width:100%;height:100%;}
+.login_area{ position:absolute;left:32%;top:20%; width:600px;height:420px; background: #fff; border-radius: 6px;}
+.login_form{width:250px;height:420px; padding: 0 175px;}
+.login_h1{width:250px;height:40px;line-height: 40px;}
+.login_form .form-group {margin-bottom: 15px;
+    overflow: hidden;}
+.login_form .form-group input.inputborder{width:238px;height:40px; line-height: 40px;border: 1px solid #ccc; border-radius: 3px; padding-left: 10px;}
+.login_form .form-group  input.errorInput{ border: 1px solid #ff0000;width:238px;height:40px; line-height: 40px; border-radius: 3px; padding-left: 10px;}
+.inline {
+    display: inline-block;
+    line-height: 35px;
+    padding-right: 10px;
+    font-size: 12px;
+    vertical-align: middle;
+    margin: 0;
+}
+.form-group a{
+    width:250px;
+    height:40px;
+    line-height: 40px;
+    border: medium none;
+    background: #f2595c;
+    clear: both;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+    text-align: center;
+    /*padding:6px 40px;*/
+    border-radius: 4px;}
+
+.error_span{display:inline-block;height:30px;width:250px; line-height: 30px; color:#ff0000; margin-top: 10px;}
+
+.footer_con{width:600px; margin:0 auto;}
+.footer_con p a{color:#666}
+.footer_con p{text-align: center; line-height: 24px; color:#666}

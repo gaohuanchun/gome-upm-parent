@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="${rc.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="${rc.contextPath}/libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+    <!-- Theme style -->
+    <link href="${rc.contextPath}/libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="${rc.contextPath}/libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${rc.contextPath}/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/common-top.css" type="text/css" />
+    <link rel="stylesheet" href="${rc.contextPath}/css/page.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/gtrace/search.css" type="text/css">
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+    <!-- header start-->
+    #parse("common/header.vm")
+    <!-- header end-->
+    
+    <!-- Left side column. contains the logo and sidebar -->
+    #parse("common/leftMenu.vm")
+    <!-- Left side end -->
+    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        <!--
+            <ol class="breadcrumb">
+                <li><a href="#">统一监控平台</a></li>
+                <li class="active">方法监控</li>
+            </ol>
+            -->
+            <a href="javascript:void(0);">统一监控平台 / 方法监控</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+		    <div style="margin-top: auto; margin-bottom-auto;">
+		        <div class="input-group col-md-4 col-md-offset-3" style="height:120px;margin-top:130px;border:0px solid red;">
+		            <img src="${rc.contextPath}/image/Logo.png" class="img-responsive center-block" width="270" height="129"/>
+		        </div>
+		        <div class="input-group col-md-6 col-md-offset-3">
+					<span id="s_kw_wrap" class="bg s_ipt_wr quickdelete-wrap">
+						<input id="key" class="easyui-searchbox"  data-options="prompt:'Please Input Value',menu:'#menu',searcher:doSearch" style="height:34px; width:550px;ime-mode:disabled;" />
+						    <div id="menu">
+						        <div data-options="name:'traceId',iconCls:'icon-key'">TraceId</div>
+						        <div data-options="name:'other',iconCls:'icon-other'">businessKey检索</div>
+						    </div>
+				    </span>
+		        </div>
+		    </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    
+     <!-- footer start -->
+      #parse("common/footer.vm")
+    <!-- footer end -->
+
+
+    <!-- Control Sidebar -->
+      #parse("common/controlSidebar.vm")
+    <!-- Control Sidebar end-->
+    
+</div><!-- ./wrapper -->
+<!-- jQuery 2.1.3 -->
+<script src="${rc.contextPath}/js/jQuery/jQuery-2.1.3.min.js"></script>
+<script src="${rc.contextPath}/js/appMonitor/jquery-easyui/jquery.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/appMonitor/jquery-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+<link href="${rc.contextPath}/js/appMonitor/jquery-easyui/themes/easyui.css" rel="stylesheet" type="text/css" />
+<link href="${rc.contextPath}/js/appMonitor/jquery-easyui/themes/icon.css" rel="stylesheet" type="text/css" />
+<!-- AdminLTE App -->
+<script src="${rc.contextPath}/libs/js/app.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/appMonitor/appmonitor.js" type="text/javascript"></script>
+<script>
+
+function doSearch(value,name){
+	if(value == ""){
+		return;
+	}
+	
+	// 全文检索
+	searchAll(value, name);
+}
+</script>
+</body>
+</html>

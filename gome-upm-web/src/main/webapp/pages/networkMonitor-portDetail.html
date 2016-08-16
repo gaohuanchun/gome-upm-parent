@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>统一监控平台</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+    <header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+            	<li class="treeview">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview active">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview currentli">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="min-height:1150px !important;margin-bottom: -30px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        	<a href="#">统一监控平台 / 网络监控</a>
+        	<a href="javascript:;" class="newbtn pull-right btnDetailBack backBtn">返回</a>
+        </section>
+        <!-- Main content -->
+        <section class="content contentSty">
+        	<ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">端口</a></li>
+                <li role="presentation"><a href="#sceneData" aria-controls="sceneData" role="tab" data-toggle="tab">实况数据</a></li>
+                <li role="presentation"><a href="#twoDay" aria-controls="twoDay" role="tab" data-toggle="tab">2天</a></li>
+                <li role="presentation"><a href="#thirtyDay" aria-controls="thirtyDay" role="tab" data-toggle="tab">30天</a></li>
+                <li role="presentation"><a href="#oneYear" aria-controls="oneYear" role="tab" data-toggle="tab">365天</a></li>
+                <li role="presentation"><a href="#historyData" aria-controls="historyData" role="tab" data-toggle="tab">历史数据</a></li>
+                <li role="presentation"><a href="#logs" aria-controls="logs" role="tab" data-toggle="tab">日志</a></li>
+            </ul>
+            <div class="tab-content" style="margin-bottom: 50px;">
+                <div role="tabpanel" class="tab-pane active" id="summary">
+		              <div class="box portDetail" style="border-top:none;">
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">端口信息</h3>
+		                </div>
+		                <div class="box-body list_table">
+		                  <table class="table table-striped table_data">
+		                    <tbody>
+		                    <tr>
+		                      <td>端口</td>
+		                      <td>(004) lsi (ID 2660)</td>
+		                    </tr>
+		                    <tr>
+		                      <td>类型 (时间间隔)</td>
+		                      <td>SNMP 通信量 64bit (60 秒)</td>
+		                    </tr>
+		                    <tr>
+		                      <td>优先级</td>
+		                      <td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></td>
+		                    </tr>
+		                  </tbody>
+		                 </table>
+		                </div>
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">端口状态</h3>
+		                </div>
+		                <div class="box-body list_table">
+		                  <table class="table table-striped table_data">
+		                    <tbody>
+		                    <tr>
+		                      <td>上次消息</td>
+		                      <td>确定</td>
+		                    </tr>
+		                    <tr>
+		                      <td>上次结果</td>
+		                      <td>0 KB/秒</td>
+		                    </tr>
+		                    <tr>
+		                      <td>上次扫描</td>
+		                      <td>2016/6/17 15:17:42 [48 秒 以前]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>上次正常运行</td>
+		                      <td>2016/6/17 15:17:42 [48 秒 以前]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>上次停机</td>
+		                      <td>2016/6/3 13:35:08 [14 d 1 小时 以前]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>正常运行时间</td>
+		                      <td>99.9902% [139 d 7 小时]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>停机时间</td>
+		                      <td>0.0098% [19 分钟 45 秒]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>正常运行时间与停机时间合计</td>
+		                      <td>139 d 7 小时 [=63% 覆盖率]</td>
+		                    </tr>
+		                    <tr>
+		                      <td>正常运行时间覆盖率始于</td>
+		                      <td>2015/11/9 16:43:18 [220 d 22 小时 以前]</td>
+		                    </tr>
+		                  </tbody>
+		                 </table>
+		                </div>
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">端口通道</h3>
+		                </div>
+		                <div class="box-body list_table">
+		                  <table class="table table-striped table_data">
+		                    <tbody>
+		                    <tr>
+		                      <th>通道</th>
+		                      <th>上次值 (卷)</th>
+		                      <th>上次值 (速度)</th>
+		                    </tr>
+		                    <tr>
+		                      <td>出站通信量</td>
+		                      <td>0 KB</td>
+		                      <td>0 KB/秒</td>
+		                    </tr>
+		                    <tr>
+		                      <td>入站通信量</td>
+		                      <td>0 KB</td>
+		                      <td>0 KB/秒</td>
+		                    </tr>
+		                    <tr>
+		                      <td>通信量合计</td>
+		                      <td>0 KB</td>
+		                      <td>0 KB/秒</td>
+		                    </tr>
+		                  </tbody>
+		                 </table>
+		                </div>
+		              </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="sceneData">
+                	<div class="box" style="border-top:none;">
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">端口图表</h3>
+		                </div>
+		                <div id="sceneDataContainer"></div>
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">端口数据</h3>
+		                </div>
+		                <div class="box-body list_table">
+		                	<table class="table table-striped table_data">
+			                    <tbody>
+				                    <tr>
+				                      <th>日期时间</th>
+				                      <th>通信量合计 (卷)</th>
+				                      <th>通信量合计 (速度)</th>
+				                      <th>入站通信量 (卷)</th>
+				                      <th>入站通信量 (速度)</th>
+				                      <th>出站通信量 (卷)</th>
+				                      <th>出站通信量 (速度)</th>
+				                      <th>停机时间</th>
+				                      <th>覆盖率</th>
+				                    </tr>
+				                    <tr>
+				                      <td>2016/6/18 16:07:42</td>
+				                      <td>0 KB</td>
+				                      <td>0 KB/秒</td>
+				                      <td>0 KB</td>
+				                      <td>0 KB/秒</td>
+				                      <td>0 KB</td>
+				                      <td>0 KB/秒</td>
+				                      <td>0%</td>
+				                      <td>100%</td>
+				                    </tr>
+			                  	</tbody>
+			                </table>
+		                </div>
+		            </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="historyData">
+                	<div class="box box-info" style="border-top:none;">
+                		<div class="box-header with-border" style="margin-bottom: 20px;">
+			                <h3 class="box-title">检查或下载历史端口数据</h3>
+			            </div>
+			            <div class="box-body">
+		                	<div style="width: 800px;">
+					           <form class="form-horizontal">
+					                 <div class="form-group">
+					                   <label for="onstart" class="col-sm-3 control-label">启动</label>
+					                   <div class="col-sm-9">
+					                     <input type="text" class="form-control" id="onstart" placeholder="" value="2016/6/17 00:00">
+					                   </div>
+					                 </div>
+					                 <div class="form-group">
+					                   <label for="onstop" class="col-sm-3 control-label">终止</label>
+					                   <div class="col-sm-9">
+					                     <input type="text" class="form-control" id="onstop" placeholder="" value="2016/6/17 00:00">
+					                   </div>
+					                 </div>
+					                 <div class="form-group">
+					                   <label class="col-sm-3 control-label">快速范围</label>
+					                   <div class="col-sm-9">
+					                   	<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1天 
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2天
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 7天
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 14天
+										</label>
+					                  </div>
+					                 </div>
+					                 <div class="form-group">
+					                   <label class="col-sm-3 control-label"></label>
+					                   <div class="col-sm-9">
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 今天
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 昨天
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 上周（星期一-星期日）
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 上周（星期日-星期六）
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 上个月</label>
+					                   </div>
+					                 </div>
+					                 <div class="form-group">
+					                   <label class="col-sm-3 control-label"></label>
+					                   <div class="col-sm-9">
+					                   	<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 2个月
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 6个月
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 12个月
+										</label>
+					                  </div>
+					                 </div>
+					                 <div class="form-group" style="margin-right: 20px;">
+		                                <label class="col-sm-3 control-label">平均时间间隔</label>
+		                                <div class="col-sm-9">
+		                                	<select class="form-control">
+		                                    	<option>无时间间隔(显示原始数据)</option>
+		                                    	<option>15秒</option>
+		                                    	<option>30秒</option>
+		                                	</select>
+		                                	<p style="color: crimson;">选择计算平均值的时间间隔。对于 40 天时间跨度来说最小间隔是 60 分钟。如果设置成低于此值, 则自动增长</p>
+		                                </div>
+		                            </div>
+		                            <div class="form-group fileFormat">
+					                   <label class="col-sm-3 control-label">文件格式</label>
+					                   <div class="col-sm-9">
+					                   	<label class="radio-inline">
+										  <input type="radio" name="fileType" id="inlineRadio1" value="html"> HTML web page
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="fileType" id="inlineRadio2" value="xml"> XML file
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="fileType" id="inlineRadio3" value="csv"> CSV file
+										</label>
+					                  </div>
+					                 </div>
+					             </form>
+					       	</div>
+				       	</div>
+                	</div>
+			       	<div class="box box-info" style="border-top:none;">
+		                <div class="box-header with-border">
+		                  <h3 class="box-title">包含百分位数</h3>
+		                </div>
+		                <form class="form-horizontal">
+		                  <div class="box-body">
+		                    <div class="form-group">
+			                   <label class="col-sm-3 control-label">百分位数结果</label>
+			                   <div class="col-sm-9">
+			                   	<label class="radio-inline">
+								  <input type="radio" name="results" id="inlineRadio1" value="option1" checked> 关
+								</label>
+								<label class="radio-inline">
+								  <input type="radio" name="results" id="inlineRadio2" value="option2"> 开
+								</label>
+								<p style="color: crimson;">'开'在概述表上 (具有每个通道的平均值/总计)显示每个通道的百分位数计算</p>
+			                  </div>
+			                 </div>
+		                  </div>
+		                  <div class="box-footer">
+		                  	<a href="javascript:;" id="startActive" class="newbtn">启动</a>
+		                    <a href="javascript:;" class="newbtn">取消</a>
+		                  </div>
+		                </form>
+		              </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="logs">
+                	<div class="box box-info" style="border-top:none;">
+                		<div class="box-header with-border" style="margin-bottom: 20px;border: none;">
+			                <h3 class="box-title">日志</h3>
+			                <div class="form-group" style="float: right;margin: 20px;">
+			                   <label class="col-sm-3 control-label" style="margin-left: 80px;position: absolute;">时间范围</label>
+			                   <div class="col-sm-9" style="margin-top: -7px;margin-bottom: 20px;margin-left: 150px;">
+			                   	<label class="control-label">
+			                   	  <input type="text" class="form-control" id="startTime" placeholder="" value="2016/6/17 00:00">
+								</label> 至 
+								<label class="control-label">
+								  <input type="text" class="form-control" id="endTime" placeholder="" value="2016/6/17 00:00">
+								</label>
+			                  </div>
+		                 	</div>
+			            </div>
+			            
+			            <div class="box-body">
+			            	<div class="box-body list_table" style="margin-top: -50px;">
+			                	<table class="table table-striped table_data">
+				                    <tbody>
+					                    <tr>
+					                      <th>日期时间</th>
+					                      <th>传感器</th>
+					                      <th>状态</th>
+					                      <th>消息</th>
+					                    </tr>
+					                    <tr>
+					                      <td>2016/6/16 14:45:42</td>
+					                      <td>(004) lsi</td>
+					                      <td>正常运行</td>
+					                      <td>0 KB/秒</td>
+					                    </tr>
+				                  	</tbody>
+				                </table>
+			                </div>
+			            </div>
+			        </div>
+			   </div>			
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/highcharts.js" type="text/javascript"></script>
+<script>
+    $(function () {
+    	var obj = {},url=location.search.substr(1).split("=");
+		obj[url[0]]=url[1];
+		$('.btnDetailBack').on('click',function(){
+			if(!obj.id){
+				window.location.href = 'networkMonitor-detail.html';
+			} else if(obj.id=='allfacility') {
+				window.location.href = 'networkMonitor-detail.html?id=allfacility';
+			} else {
+				window.location.href = 'networkMonitor-detail.html?id=columnGraph';
+			}
+		});
+		//文件格式为html点击启动的modal
+		$('#startActive').on('click',function(){
+			var fileFormat = $('.fileFormat input:radio:checked').val();
+			if(fileFormat == 'html') {
+				window.location.href = 'networkMonitor-historyData.html';
+			}
+		});
+        $('#sceneDataContainer').highcharts({
+        	chart: {
+                backgroundColor:"#FFF"
+            },
+            title: {
+                text: '(004) lsi'
+            },
+            credits:{
+                enabled:false
+            },
+            xAxis: {
+                categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+            },
+            yAxis: {
+                title: {
+                    text: 'kb/秒'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                valueSuffix: '秒'
+            },
+            series: [{
+                name: 'ump',
+                color:'#9c8ade',
+                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            }]
+        });
+    });
+</script>
+</body>
+</html>

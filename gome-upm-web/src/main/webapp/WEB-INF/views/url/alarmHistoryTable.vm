@@ -1,0 +1,31 @@
+                           <input type="hidden" value="$!page.conditions.startTime" id="hiddenAlarmStartTime" />
+                           <input type="hidden" value="$!page.conditions.endTime" id="hiddenAlarmEndTime" />
+                           <input type="hidden" value="$!page.conditions.content" id="hiddenAlarmContent" />
+                            <i class="icon fa fa-bullhorn"></i>
+                            <!-- <span style="color:orange">Key：</span>ump.web&nbsp;&nbsp; -->
+                            <span style="color:orange">URL：</span>$!url.url&nbsp;&nbsp;<span style="color:orange">监控类型：</span>URL存活监控&nbsp;&nbsp;
+                            <span style="color:orange">配置状态：</span>#if($!url.status == 1)有效#else无效#end&nbsp;&nbsp;<span style="color:orange">监控频率(分钟)：</span>$!url.frequency&nbsp;&nbsp;
+                            <table id="example1" class="table table_data  table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>报警时间</th>
+                                    <th>报警内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            #if($!page.totalResult > 0)
+                        	#set($i = ($page.pageNo - 1) * $page.pageSize)
+                        	  #foreach($alarm in $!page.data)
+                        		#set($i = $i + 1)
+                        	   <tr>
+                                    <td>$!i</td>
+                                    <td>$!alarm.sendTimeStr</td>
+                                    <td>$!alarm.content</td>
+                                </tr>
+                        		#end
+                            #end
+                           
+                                </tbody>
+                            </table>
+                            #parse("common/pagePlugin.vm")

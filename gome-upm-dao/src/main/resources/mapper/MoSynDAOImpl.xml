@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoSynDAO">
+	<insert id="saveMoSyn" parameterType="MoSynBO">
+		INSERT INTO mo_syn(id,type,name,mo_count,syn_time,re_time)
+		VALUES(#{id},#{type},#{name},#{count},#{synTime},#{reTime})
+	</insert>
+	<select id="searchMoSynList" resultType="MoSynBO" parameterType="MoSynBO">
+	    select t.id,t.type,t.name,t.mo_count count,t.syn_time synTime
+		from mo_syn t
+		WHERE 1=1
+		<if test="synTime != null and synTime != ''" >
+	      and t.syn_time = #{synTime}
+	    </if>
+	    <if test="type != null and type != ''" >
+	      and t.type = #{type}
+	    </if>
+	</select>
+</mapper>

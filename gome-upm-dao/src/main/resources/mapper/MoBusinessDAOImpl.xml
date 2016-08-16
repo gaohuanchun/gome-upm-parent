@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoBusinessDAO">
+	<!-- 热销商品排行榜 -->
+	<sql id="oms" >
+	oms_uat
+	</sql>
+	<sql id="catb" >
+	UAT_CATB_6
+	</sql>
+	<sql id="drg" >
+	DRG_CORE_UAT
+	</sql>
+	<sql id="drg_suffix" >
+	@DBLK_UAT_DRAGON
+	</sql>
+	
+	<select id="searchGoodKindSort" resultType="MoBusiness" parameterType="MoBusiness">
+		SELECT *
+	  	FROM (SELECT OS.ITEM_THREE_CATEGORY_NAME name, SUM(OI.AMOUNT) amount
+	          FROM <include refid="oms"></include>.OMS_ORDER OO
+	         INNER JOIN <include refid="oms"></include>.OMS_ITEM OI ON OI.ORDER_ID = OO.ORDER_ID
+	         INNER JOIN <include refid="oms"></include>.OMS_ITEM_CATEGORY OS ON OS.COMMERCE_ITEM_ID =
+	                                                         OI.COMMERCE_ITEM_ID
+	         WHERE 1=1
+	         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		       and OO.SUBMITTED_DATE between #{startTime} and #{endTime}
+		     </if>
+	         GROUP BY OS.ITEM_THREE_CATEGORY_NAME
+	         ORDER BY SUM(OI.AMOUNT) DESC) tab
+	 	WHERE ROWNUM &lt; 6
+	</select>
+	<!-- 品牌排行 -->
+	<select id="searchGoodBrandSort" resultType="MoBusiness" parameterType="MoBusiness">
+	SELECT *
+	FROM (SELECT gb.BRAND_NAME name,
+	               SUM(OI.AMOUNT) amount
+	         FROM <include refid="oms"></include>.OMS_ORDER OO
+	         INNER JOIN <include refid="oms"></include>.OMS_ITEM OI ON OI.ORDER_ID = OO.ORDER_ID
+	         INNER JOIN <include refid="oms"></include>.OMS_SKU OS ON OS.COMMERCE_ITEM_ID =OI.COMMERCE_ITEM_ID
+	         inner join <include refid="catb"></include>.gome_dcs_prd_brand pb on pb.product_id=os.product_id
+	         inner join <include refid="catb"></include>.gome_brand gb on gb.brand_id=pb.prd_brand
+	         WHERE OI.TYPE = 0
+	         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and OO.SUBMITTED_DATE between #{startTime} and #{endTime}
+		     </if>
+	         GROUP BY gb.BRAND_NAME, gb.BRAND_CODE
+	         ORDER BY SUM(OI.AMOUNT) DESC)
+	 WHERE ROWNUM &lt; 4
+	</select>
+	<!-- 订单量 -->
+		<!-- 充值订单量 -->
+		<select id="getOrderAmountForPay" resultType="java.lang.Integer" parameterType="MoOrderRechargeBO">
+		    select count(1)
+		    FROM order_entity t
+		    WHERE 1=1
+		    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and t.create_time between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- 非充值订单量 -->
+		<select id="getOrderAmountForNotPay" resultType="Integer" parameterType="MoBusiness">
+			select count(1)
+			from <include refid="oms"></include>.oms_order t
+			WHERE t.created_by_order IS NULL AND t.state NOT IN ('INCOMPLETE','INVISIBLE')
+			and t.site_id &lt;&gt;  'chongzhiSite'
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and t.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+
+		<!-- 支付成功订单量 -->
+		<select id="getOrderAmountForAlreadyPay" resultType="Integer" parameterType="MoBusiness">
+			select count(distinct sg.shipping_group_id) amount
+			from <include refid="oms"></include>.oms_order o
+			inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+			left join <include refid="oms"></include>.oms_payment_transaction t on t.trans_order_id=o.order_id
+			left join <include refid="oms"></include>.oms_payment_transaction t1 on t1.trans_order_id=sg.shipping_group_id
+			left join <include refid="oms"></include>.oms_payment_group pg on pg.payment_group_id=nvl(t.payment_group_id,t1.payment_group_id)
+			where o.created_by_order is null and pg.state = 'SETTLED'
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and o.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- 妥投成功订单量 -->
+		<select id="getOrderAmountForDelivery" resultType="Integer" parameterType="MoBusiness">
+			select count(1) amount
+			from <include refid="oms"></include>.oms_order o
+			inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+			where o.created_by_order is null and sg.state='NO_PENDING_ACTION'
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and o.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- Web端 -->
+		<select id="getOrderAmountForWeb" resultType="Integer" parameterType="MoBusiness">
+			select count(1) amount
+			from <include refid="oms"></include>.oms_order o
+			inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+			where o.created_by_order is null 
+			and o.site_id not in (
+			'wapRushBuySite','wapGroupOnSite','wapSite','wapVirtualCardSite','wapEntityCardSite','wapPresellSite','wapGiftSite','gomeLotteryWapSite','discountTicketWapSite','discountTicketWap','haiwaigouWapSite',
+			'mobileSite','mobileGroupOnSite','mobileRushBuySite','mobileVirtualCardSite','mobileEntityCardSite','mobilePresellSite','mobileGiftSite','haiwaigouMobileSite'
+			)
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and o.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- Wap端 -->
+		<select id="getOrderAmountForWap" resultType="Integer" parameterType="MoBusiness">
+			select count(1) amount
+			from <include refid="oms"></include>.oms_order o
+			inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+			where o.created_by_order is null 
+			and o.site_id in (
+			'wapRushBuySite','wapGroupOnSite','wapSite','wapVirtualCardSite','wapEntityCardSite','wapPresellSite','wapGiftSite','gomeLotteryWapSite','discountTicketWapSite','discountTicketWap','haiwaigouWapSite'
+			)
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and o.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- App端 -->
+		<select id="getOrderAmountForApp" resultType="Integer" parameterType="MoBusiness">
+			select count(1) amount
+			from <include refid="oms"></include>.oms_order o
+			inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+			where o.created_by_order is null 
+			and o.site_id in (
+			'mobileSite','mobileGroupOnSite','mobileRushBuySite','mobileVirtualCardSite','mobileEntityCardSite','mobilePresellSite','mobileGiftSite','haiwaigouMobileSite'
+			)
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and o.submitted_date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+	<!-- 商品属性分类 -->
+	<select id="searchGoodProperty" resultType="MoBusiness" parameterType="MoBusiness">
+	SELECT DECODE(OI.MAS_LOC_TYPE,
+			1,'SMI',
+			2,'3PP',
+			3,'G3PP',
+			6,'B3PP',
+			OI.MAS_LOC_TYPE) name,
+	       SUM(OI.QUANTITY) amount
+	 FROM <include refid="oms"></include>.OMS_ORDER OO
+	 INNER JOIN <include refid="oms"></include>.OMS_ITEM OI ON OI.ORDER_ID = OO.ORDER_ID
+	 WHERE 1=1
+	 	<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and OO.SUBMITTED_DATE between #{startTime} and #{endTime}
+	     </if>
+	 GROUP BY OI.MAS_LOC_TYPE
+	 ORDER BY SUM(OI.QUANTITY) DESC
+	</select>
+	<!-- 城市坐标 -->
+	<select id="getCityCoordinateList" resultType="MapCoordinate">
+		SELECT mc.id id,mc.`name` name,mc.x_axis xaxis,mc.y_axis yaxis
+		from mo_map_coordinate mc
+	</select>
+	<!-- 热门城市 -->
+	<select id="getCityBySales" resultType="MoBusiness" parameterType="MoBusiness">
+		select * from(
+		  select ga.city_name name,count(1) amount
+		  from <include refid="oms"></include>.oms_order o
+		  inner join <include refid="oms"></include>.oms_shipping_group sg on sg.order_id=o.order_id
+		  inner join <include refid="oms"></include>.oms_shipping_group_address ga on ga.shipping_group_id=sg.shipping_group_id
+		  where o.created_by_order is null
+		  <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      	and o.submitted_date between #{startTime} and #{endTime}
+		  </if>
+		  group by ga.city_name
+		  order by count(1) desc
+		)tab 
+		where rownum &lt; 6
+	</select>
+	<!-- 在线支付成功率 -->
+		<!-- 查询所有订单数量 -->
+		<select id="searchAllOrderCountHistory" resultType="MoBusiness" parameterType="MoBusiness">
+			SELECT mp.start_time startTime,mp.end_time endTime,mp.mo_count amount
+			from mo_payratio mp
+			where 1=1 and mp.type='all'
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			<![CDATA[ and #{startTime} <= mp.end_time  &&  #{endTime} > mp.end_time ]]>
+			</if>
+			order by mp.start_time
+		</select>
+		<!-- 查询成功在线支付的订单数量 -->
+		<select id="searchOneLineOrderCountHistory" resultType="MoBusiness" parameterType="MoBusiness">
+			SELECT mp.start_time startTime,mp.end_time endTime,mp.mo_count amount
+			from mo_payratio mp
+			where 1=1 and mp.type='onLine'
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			<![CDATA[ and #{startTime} <= mp.end_time  &&  #{endTime} > mp.end_time ]]>
+			</if>
+			order by mp.start_time
+		</select>
+	<!--  -->
+		<!-- OMS-DRG正向订单状态差异 -->
+			<select id="getOms_Drg_forward_state_error" resultType="Integer" parameterType="MoBusiness">
+				SELECT COUNT(distinct g.shipping_group_id) amount
+				FROM   <include refid="oms"></include>.oms_shipping_group G
+				LEFT   join <include refid="oms"></include>.oms_item_details ids on ids.shipping_group_id=g.shipping_group_id
+				left join <include refid="oms"></include>.oms_sku os on os.commerce_item_id=ids.commerce_item_id
+				left join <include refid="catb"></include>.gome_sku_shop ss on ss.sku_id=os.sku_id
+				LEFT   JOIN <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> T ON T.Order_Num =G.SHIPPING_GROUP_ID AND t.current_status  <![CDATA[  <>  ]]> 'MS'
+				left join <include refid="oms"></include>.oms_order o on g.order_id=o.order_id
+				WHERE   g.GOME_STATE <![CDATA[  <>  ]]> T.current_status and t.current_status not in ('MS','SRV')
+				AND    t.current_status_date BETWEEN TRUNC(SYSDATE) - 30 AND sysdate - 1 / 24
+				and g.state_update_date  <![CDATA[  <  ]]> sysdate-1/24/2
+				and not exists(select 'x' from <include refid="oms"></include>.oms_shipping_group sG
+				inner   JOIN <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> h ON h.Order_Num =sG.SHIPPING_GROUP_ID
+				where h.current_status='RT' and sg.gome_state='CL' and sg.state='REMOVED'
+				and h.order_num=g.shipping_group_id
+				) and ss.shop_no is null 
+				<!-- 
+				and g.state_update_date  <![CDATA[  <  ]]>sysdate - 1 / 24/2
+				 -->
+				<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			      	and g.state_update_date between #{startTime} and #{endTime}
+				</if>
+			</select>
+		
+		<!-- OMS-POP正向订单状态差异 -->
+			<select id="getOms_Pop_forward_state_error" resultType="Integer" parameterType="MoBusiness">
+				SELECT COUNT(distinct g.shipping_group_id) amount
+				FROM   <include refid="oms"></include>.oms_shipping_group G
+				LEFT JOIN <include refid="oms"></include>.oms_shop_info si ON si.shipping_group_id=g.shipping_group_id
+				LEFT   JOIN tbl_sub_order so ON so.sub_order_id =G.SHIPPING_GROUP_ID
+				left  join <include refid="oms"></include>.oms_order o on g.order_id=o.order_id
+				WHERE   si.shop_id IS NOT NULL
+				AND g.GOME_STATE <![CDATA[  <>  ]]> so.order_state AND so.order_state NOT IN ('CWC','CWS')
+				AND   o.submitted_date  <![CDATA[  >  ]]> to_date('2016-05-30 23:00:00','yyyy-mm-dd hh24:mi:ss')
+				AND so.order_state_time <![CDATA[  <  ]]> trunc(SYSDATE)-1
+				AND  not exists(select * from <include refid="oms"></include>.oms_shipping_group sg
+				inner   JOIN tbl_sub_order tso ON to_char(tso.sub_order_id)=sG.SHIPPING_GROUP_ID
+				where tso.order_state IN ('RCC','DFC') and sg.gome_state='CL' and sg.state='REMOVED'
+				and sg.shipping_group_id=g.shipping_group_id
+				)
+				and not exists(select 'x' from <include refid="oms"></include>.oms_shipping_group sg
+				inner   JOIN tbl_sub_order tso ON tso.sub_order_id =sG.SHIPPING_GROUP_ID
+				where tso.order_state IN ('EX') and sg.gome_state='3AP'
+				and sg.shipping_group_id=g.shipping_group_id
+				) 
+				
+				<!-- 
+				and g.state_update_date <![CDATA[  <  ]]> sysdate - 1 / 24/2
+				 -->
+				<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			      	and g.state_update_date between #{startTime} and #{endTime}
+				</if>
+			</select>
+		<!-- OMSDRG逆向订单状态差异 -->
+			<select id="getOms_Drg_state_error" resultType="Integer" parameterType="MoBusiness">
+				SELECT  COUNT(1) amount
+				from (select ro.id,ro.order_id,ro.state,oh.current_status, ro.created_date 
+				        from <include refid="oms"></include>.ROMS_ORDER ro, <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> oh
+				        where ro.id = oh.order_num
+				        <!-- 
+				        and oh.order_date <![CDATA[   >  ]]> trunc(sysdate)-60
+				        and oh.order_date <![CDATA[   <  ]]> sysdate-1/24/2
+				         -->
+				        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+					      	and oh.order_date between #{startTime} and #{endTime}
+						</if>
+				        
+				        and oh.quotation_prefix in ('PR', 'RO', 'EO')         
+				        ) c
+				        left join <include refid="oms"></include>.ROMS_SHIPGROUP rsg ON c.id = rsg.return_request_id
+				        LEFT JOIN <include refid="oms"></include>.roms_item ri ON ri.return_request_id=rsg.return_request_id
+				        LEFT JOIN <include refid="oms"></include>.oms_sku os ON os.commerce_item_id=ri.ancestor_item_id
+				        LEFT JOIN <include refid="catb"></include>.gome_sku_shop ss ON ss.sku_id=os.sku_id
+				        left join <include refid="oms"></include>.oms_order oo ON oo.order_id = c.order_id
+				 	where ss.shop_no is null and c.created_date <![CDATA[  >  ]]> trunc(sysdate)-60
+				   and rsg.gome_state <![CDATA[   <>  ]]> c.current_status AND rsg.gome_state <![CDATA[   <>  ]]> 'RPS' AND c.current_status <![CDATA[   <>  ]]> 'MS'
+				   and  not exists(select 'x' from <include refid="oms"></include>.ROMS_SHIPGROUP d 
+				                  where d.return_request_id=rsg.return_request_id and d.return_shipping_method='4' and d.gome_state in ('DL','CL'))
+				                  
+				   and not exists (select 'x' from <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> oh
+				                   left join <include refid="drg"></include>.ord_detail<include refid="drg_suffix"></include> od on od.order_num=oh.order_num
+				                   left join <include refid="oms"></include>.ROMS_SHIPGROUP d on oh.order_num=d.return_request_id
+				                   where d.gome_state='CL' and oh.current_status='R2C' and oh.order_num=rsg.return_request_id)
+			</select>
+		
+		<!-- OMS-POP逆向订单状态差异 -->
+			<select id="getOms_Pop_state_error" resultType="Integer" parameterType="MoBusiness">
+				SELECT COUNT(1) amount
+				  from <include refid="oms"></include>.ROMS_ORDER ro
+				  left join <include refid="oms"></include>.ROMS_SHIPGROUP rsg  ON ro.id = rsg.return_request_id
+				  LEFT JOIN tbl_return_order rso ON to_char(rso.order_no)=rsg.return_request_id
+				  LEFT JOIN <include refid="oms"></include>.roms_item ri ON ri.return_request_id=rsg.return_request_id
+				  LEFT JOIN <include refid="oms"></include>.oms_sku os ON os.commerce_item_id=ri.ancestor_item_id
+				  LEFT JOIN <include refid="catb"></include>.gome_sku_shop ss ON ss.sku_id=os.sku_id
+				  left join <include refid="oms"></include>.oms_order oo ON oo.order_id = ro.order_id
+				  where ss.shop_no IS NOT NULL AND rsg.gome_state  &lt;&gt; rso.status
+				  <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			      	and ro.created_date between #{startTime} and #{endTime}
+				  </if>
+				  and not exists(
+				  select 'x' from <include refid="oms"></include>.ROMS_SHIPGROUP sg
+				  inner   JOIN tbl_return_order tso ON tso.order_no =sG.Return_Request_Id
+				  where tso.status IN ('RRF','RBGC','R2C') and sg.gome_state='CL'
+				  and sg.return_request_id=rsg.return_request_id
+				)
+			</select>
+		
+		<!-- 正向单停在CO的订单总数 -->
+				<select id="getCoCount" resultType="Integer" parameterType="MoBusiness">
+					SELECT COUNT(1) amount
+					FROM   <include refid="oms"></include>.oms_order DO
+					INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+					WHERE  DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+					AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+					AND    DO.CREATED_BY_ORDER IS NULL
+					AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite', 'gomeLotteryAppSite','depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+					AND    DO.LAST_MODIFIED_DATE &lt; (SYSDATE - 1 / 24 / 2)
+					<!-- 
+					and do.submitted_date <![CDATA[  >=  ]]>  to_date('20150410','yyyymmdd')
+					 -->
+					<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+				      and do.submitted_date between #{startTime} and #{endTime}
+				    </if>
+				</select>
+		
+		<!-- 正向单停在CO的订单G3PP返回状态不正确 -->
+				<select id="getCoG3ppErrorState" resultType="Integer" parameterType="MoBusiness">
+					SELECT COUNT(1) amount
+					FROM   <include refid="oms"></include>.oms_order DO
+					INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+					INNER  JOIN <include refid="oms"></include>.oms_g3pp_true_reserve R ON R.Shipping_Group_Id = sg.SHIPPING_GROUP_ID                                                 
+					WHERE  DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+					AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+					AND    DO.CREATED_BY_ORDER IS NULL
+					AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite', 'gomeLotteryAppSite','depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+					<!-- 
+					AND    DO.LAST_MODIFIED_DATE &lt; (SYSDATE - 1 / 24 / 2)
+					 -->
+					<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+				      and do.submitted_date between #{startTime} and #{endTime}
+				    </if>
+					
+					AND    (R.SAP_RESERVE_STATE &lt;&gt; 'PR' OR R.SAP_RESERVE_STATE IS NULL)
+				</select>
+				
+		
+		
+		<!-- 正向单停在CO的订单    未发SO至DRG -->
+		<select id="getCO_Not_So_OrderForDrg" resultType="Integer" parameterType="MoBusiness">
+				SELECT COUNT(1) amount
+				FROM   <include refid="oms"></include>.oms_order DO
+				INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+				left join <include refid="oms"></include>.oms_shop_info oi on oi.shipping_group_id=sg.shipping_group_id                                           
+				WHERE  oi.shop_name is null and DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+				AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+				AND    DO.CREATED_BY_ORDER IS NULL
+				AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite', 'gomeLotteryAppSite','depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+				AND    DO.LAST_MODIFIED_DATE <![CDATA[   <  ]]> (SYSDATE - 1 / 24 / 2) 
+				<!-- 
+				and do.submitted_date>=to_date('20150410','yyyymmdd')
+				 -->
+				<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			      and do.submitted_date between #{startTime} and #{endTime}
+			    </if>
+				
+				AND    not exists(select 1 from <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> tl
+				                   where tl.order_num = sg.SHIPPING_GROUP_ID)
+				AND    not exists(select 1 from <include refid="oms"></include>.oms_g3pp_true_reserve r 
+                  where r.shipping_group_id = sg.shipping_group_id
+                  and (r.sap_reserve_state <![CDATA[   <>  ]]> 'PR' or r.sap_reserve_state is null)) 
+		</select>
+                  
+		
+		<!-- 正向单停在CO的订单    未发SO至POP -->
+		<select id="getCO_Not_So_OrderForPop" resultType="Integer" parameterType="MoBusiness">
+			SELECT  COUNT(1) amount
+			FROM   <include refid="oms"></include>.oms_order DO
+			INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+			left join <include refid="oms"></include>.oms_shop_info oi on oi.shipping_group_id=sg.shipping_group_id                                           
+			WHERE  oi.shop_name is not null 
+			and DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+			AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+			AND    DO.CREATED_BY_ORDER IS NULL
+			AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite', 'gomeLotteryAppSite','depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+			AND    DO.LAST_MODIFIED_DATE <![CDATA[   <  ]]> (SYSDATE - 1 / 24 / 2) 
+			
+			<!-- 
+			and do.submitted_date   <![CDATA[   >=  ]]>  to_date('20160530230000','yyyy-mm-dd hh24:mi:ss')
+			 -->
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and do.submitted_date between #{startTime} and #{endTime}
+		    </if>
+			
+			AND    not exists(select 1 from  tbl_sub_order tl
+            where to_char(tl.sub_order_id)= sg.SHIPPING_GROUP_ID)
+		</select>
+		<!-- 正向单停在CO的订单   已发送SO至DRG -->
+		<select id="getCO_So_OrderForDrg" resultType="Integer" parameterType="MoBusiness">
+			SELECT COUNT(1) amount
+			FROM   <include refid="oms"></include>.oms_order DO
+			INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+			INNER  JOIN <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> tl ON tl.order_num = sg.SHIPPING_GROUP_ID                                 
+			WHERE  DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+			AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+			AND    DO.CREATED_BY_ORDER IS NULL
+			AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite','gomeLotteryAppSite', 'depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+			<!-- 
+			AND    DO.LAST_MODIFIED_DATE <![CDATA[   <  ]]> (SYSDATE - 1 / 24 / 2)
+			 -->
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and DO.LAST_MODIFIED_DATE between #{startTime} and #{endTime}
+		    </if>
+		</select>
+
+		<!-- 正向单停在CO的订单     已发送SO至POP -->
+		<select id="getCO_So_OrderForPop" resultType="Integer" parameterType="MoBusiness">
+			SELECT COUNT(1) amount
+			FROM   <include refid="oms"></include>.oms_order DO
+			INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+			INNER  JOIN tbl_sub_order  t2 ON to_char(t2.sub_order_id)= sg.SHIPPING_GROUP_ID                                 
+			WHERE  DO.STATE = 'PROCESSING' and sg.state not in ('NO_PENDING_ACTION','PENDING_MERCHANT_ACTION','REMOVED')
+			AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+			AND    DO.CREATED_BY_ORDER IS NULL
+			AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite','gomeLotteryAppSite', 'depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+			<!-- 
+			AND    DO.LAST_MODIFIED_DATE <![CDATA[   <  ]]> (SYSDATE - 1 / 24 / 2)
+			 -->
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and DO.LAST_MODIFIED_DATE between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- 正向单停在CO的订单   待客服处理 -->
+			<select id="getCOOrderForPending" resultType="Integer" parameterType="MoBusiness">
+				SELECT COUNT(1) amount
+				FROM   <include refid="oms"></include>.oms_order DO
+				INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID                                               
+				WHERE  DO.STATE = 'PROCESSING'
+				AND    SG.STATE='PENDING_MERCHANT_ACTION'
+				AND    (sg.GOME_STATE = 'CO' OR sg.GOME_STATE IS NULL)
+				AND    DO.CREATED_BY_ORDER IS NULL
+				AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite',
+				        'gomeLotteryAppSite','depositSite','gomeMovieSite','mobileGiftSite','wapGiftSite')
+				<!-- 
+				AND    DO.LAST_MODIFIED_DATE &lt; (SYSDATE - 1 / 24 / 2)
+				 -->
+				<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+			      and DO.LAST_MODIFIED_DATE between #{startTime} and #{endTime}
+			    </if>
+				
+				AND    not exists(select 1 from <include refid="drg"></include>.ord_header<include refid="drg_suffix"></include> tl
+				                   where tl.order_num = sg.SHIPPING_GROUP_ID)
+				AND    not exists(select 1 from <include refid="oms"></include>.oms_g3pp_true_reserve r 
+                  where r.shipping_group_id = sg.shipping_group_id
+                  and r.reserve_state = 'Y'
+                  and (r.sap_reserve_state <![CDATA[   <>  ]]> 'PR' or r.sap_reserve_state is null) )   
+			</select>
+                  
+		<!-- DRAGON 逆向单停在OD的订单  ok-->
+		<select id="getDragonReverseODOrder" resultType="Integer" parameterType="MoBusiness">
+			SELECT COUNT(1) amount
+			FROM   <include refid="oms"></include>.roms_order  C
+			LEFT   JOIN  <include refid="oms"></include>.ROMS_SHIPGROUP rg on rg.return_request_id=c.id
+			LEFT   JOIN (select ch.return_request_id,ch.Gome_State_Date 
+			from  <include refid="oms"></include>.ROMS_SG_HISTORY ch 
+			where ch.Gome_State_Date is not NULL and ch.gome_state='OD'
+			) his ON his.return_request_id=rg.return_request_id
+			WHERE  rg.gome_state='OD'
+			<!-- 
+			AND    his.Gome_State_Date &lt; SYSDATE - 2
+			 -->
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and his.Gome_State_Date between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		<!-- DRAGON 正向单停在OD的订单 ok-->
+		<select id="getDragonForwardODOrder" resultType="Integer" parameterType="MoBusiness">
+			SELECT COUNT(1) amount
+			FROM   <include refid="oms"></include>.oms_order DO
+			INNER  JOIN <include refid="oms"></include>.oms_shipping_group SG ON DO.ORDER_ID = SG.ORDER_ID
+			WHERE  DO.STATE = 'PROCESSING'
+			AND    sg.GOME_STATE = 'OD'
+			AND    DO.CREATED_BY_ORDER IS NULL
+			AND    DO.SITE_ID NOT IN ('chongzhiSite', 'gomeLotterySite',
+			        'gomeLotteryAppSite', 'depositSite','gomeMovieSite')
+			<!-- 
+			AND    DO.LAST_MODIFIED_DATE  &lt;  (SYSDATE - 1 / 24 / 2)
+			 -->
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and DO.LAST_MODIFIED_DATE between #{startTime} and #{endTime}
+		    </if>
+		</select>
+		
+		
+		<!-- 查询CPS数据 -->
+		<select id="searchCpsCount" resultType="java.lang.Integer" parameterType="MoOrderRechargeBO">
+			select count(1)
+			from <include refid="oms"></include>.oms_order_info tt
+			where tt.from_cps  =1
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+		      and tt.reserve_time between #{startTime} and #{endTime}
+		    </if>
+		</select>
+</mapper>

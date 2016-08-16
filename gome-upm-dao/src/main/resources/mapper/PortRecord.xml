@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.PortRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.PortRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="visitTime" property="visitTime" jdbcType="TIMESTAMP" />
+    <result column="visitTake" property="visitTake" jdbcType="INTEGER" />
+    <result column="survival" property="survival" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, visitTime, visitTake, survival, pid
+  </sql>
+  
+  <select id="selectPortRecordListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	from gm_port_record
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>  
+    <if test="conditions.pid != null" >
+      and pid = #{conditions.pid,jdbcType=BIGINT}
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and visitTime between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+	<if test="conditions.survival != null" >
+      and survival = #{conditions.survival,jdbcType=INTEGER}  
+    </if>
+    order by visitTime desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.PortRecord">
+  	select count(*) from gm_port_record
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>  
+    <if test="pid != null" >
+      and pid = #{pid,jdbcType=BIGINT}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and visitTime between #{startTime} and #{endTime}
+    </if>
+	<if test="survival != null" >
+      and survival = #{survival,jdbcType=INTEGER}  
+    </if>
+  </select>
+  <select id="selectPortRecordById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_port_record 
+ 	where id = #{id} 
+  </select>
+  <select id="selectPortRecordListByPortRecord" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.PortRecord">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_port_record 
+  	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>  
+    <if test="pid != null" >
+      and pid = #{pid,jdbcType=BIGINT}
+    </if>
+    <if test="startTime != null and startTime != ''" >
+      and visitTime &lt; #{startTime}
+    </if>
+	<if test="survival != null" >
+      and survival = #{survival,jdbcType=INTEGER}  
+    </if>
+  </select>
+  <delete id="deleteByTime" parameterType="java.lang.String">
+  	delete from gm_port_record
+  	where 1=1 
+  	and visitTime &lt; #{startTime}
+  </delete>
+  <delete id="batchDeleteByPids" parameterType="java.lang.reflect.Array">
+  	delete from gm_port_record
+    where pid in
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">  
+            #{item} 
+    </foreach> 
+  </delete>
+</mapper> 

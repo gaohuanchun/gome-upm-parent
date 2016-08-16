@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+        ">
+	<dubbo:application name="gome-upm-web" />
+
+	<dubbo:registry protocol="zookeeper"
+		address="10.58.50.206:2181,10.58.50.207:2181,10.58.50.208:2181" id="memberZookeeper"/>
+	
+		<!-- 新版发短信 -->
+ 	<dubbo:reference registry="memberZookeeper" id="sendSmsFacade"  interface="com.gome.loom.facade.ISendSmsFacade"/>  
+</beans>

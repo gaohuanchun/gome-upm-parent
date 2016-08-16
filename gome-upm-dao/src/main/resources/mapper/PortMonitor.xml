@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.PortMonitorMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.PortMonitor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <!-- 
+    <result column="access_key" property="key" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+     -->
+    <result column="portAddr" property="port" jdbcType="VARCHAR" />
+    <result column="monitorType" property="monitorType" jdbcType="VARCHAR" />
+    <result column="frequency" property="frequency" jdbcType="INTEGER" />
+    <result column="timeout" property="timeout" jdbcType="INTEGER" />
+    <result column="overtimes" property="overtimes" jdbcType="INTEGER" />
+    <result column="alarmInterval" property="interval" jdbcType="INTEGER" />
+    <result column="alarmMethod" property="alarmMethod" jdbcType="VARCHAR" />
+    <result column="alarmTime" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="survival" property="survival" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, portAddr, monitorType, frequency,
+    timeout, overtimes, alarmInterval, alarmMethod, alarmTime, createTime, updateTime, status, survival  
+  </sql>
+  
+  <insert id="insertPortMonitor" parameterType="com.gome.upm.domain.PortMonitor" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_port_param (id, portAddr, monitorType, frequency,
+    timeout, overtimes, alarmInterval, alarmMethod, alarmTime, createTime, updateTime, status, survival)
+    values (#{id,jdbcType=BIGINT}, #{port,jdbcType=VARCHAR}, #{monitorType,jdbcType=VARCHAR}, #{frequency,jdbcType=INTEGER},
+      #{timeout,jdbcType=INTEGER}, #{overtimes,jdbcType=INTEGER},
+      #{interval,jdbcType=INTEGER}, #{alarmMethod,jdbcType=VARCHAR},
+      #{alarmTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},
+      #{survival,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="batchAddPortMonitor" parameterType="java.util.List" useGeneratedKeys="true">
+  	<selectKey resultType="long" keyProperty="id" order="AFTER">  
+        SELECT  
+        LAST_INSERT_ID()  
+    </selectKey> 
+    insert into gm_port_param ( portAddr, monitorType, frequency,
+    timeout, overtimes, alarmInterval, alarmMethod, alarmTime, createTime, updateTime, status, survival)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+    ( #{item.port,jdbcType=VARCHAR}, #{item.monitorType,jdbcType=VARCHAR}, #{item.frequency,jdbcType=INTEGER},
+      #{item.timeout,jdbcType=INTEGER}, #{item.overtimes,jdbcType=INTEGER},
+      #{item.interval,jdbcType=INTEGER}, #{item.alarmMethod,jdbcType=VARCHAR},
+      #{item.alarmTime,jdbcType=TIMESTAMP}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateTime,jdbcType=TIMESTAMP},#{item.status,jdbcType=INTEGER},
+      #{item.survival,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  
+  <select id="selectPortMonitorListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	from gm_port_param
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>
+    <if test="conditions.port != null" >
+      and portAddr like CONCAT('%',#{conditions.port,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="conditions.monitorType != null" >
+      and monitorType = #{conditions.monitorType,jdbcType=VARCHAR}
+    </if>
+	<if test="conditions.frequency != null" >
+      and frequency = #{conditions.frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="conditions.timeout != null" >
+      and timeout = #{conditions.timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="conditions.overtimes != null" >
+      and overtimes = #{conditions.overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.interval != null" >
+      and alarmInterval = #{conditions.interval,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.alarmMethod != null" >
+      and alarmMethod = #{conditions.alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.status != null" >
+      and status = #{conditions.status,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.survival != null" >
+      and survival = #{conditions.survival,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and alarmTime between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    order by createTime desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.PortMonitor">
+  	select count(*) from gm_port_param
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="port != null" >
+      and portAddr like CONCAT('%',#{port,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="monitorType != null" >
+      and monitorType = #{monitorType,jdbcType=VARCHAR}
+    </if>
+	<if test="frequency != null" >
+      and frequency = #{frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="timeout != null" >
+      and timeout = #{timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="overtimes != null" >
+      and overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      and alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="alarmMethod != null" >
+      and alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="survival != null" >
+      and survival = #{survival,jdbcType=INTEGER}
+    </if>
+   <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and alarmTime between #{startTime} and #{endTime}
+    </if>
+  </select>
+  <select id="selectPortMonitorById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_port_param 
+ 	where id = #{id} 
+  </select>
+  <select id="selectPortMonitorListByPortMonitor" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.PortMonitor">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_port_param 
+  	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="port != null" >
+      and portAddr like CONCAT('%',#{port,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="monitorType != null" >
+      and monitorType = #{monitorType,jdbcType=VARCHAR}
+    </if>
+	<if test="frequency != null" >
+      and frequency = #{frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="timeout != null" >
+      and timeout = #{timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="overtimes != null" >
+      and overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      and alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="alarmMethod != null" >
+      and alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="survival != null" >
+      and survival = #{survival,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and createTime between #{startTime} and #{endTime}
+    </if>
+  </select>
+  <select id="selectCountByPort" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	select count(*) from gm_port_param
+ 	where portAddr = #{port} 
+  </select>
+  <update id="updatePortMonitor" parameterType="com.gome.upm.domain.PortMonitor" >
+    update gm_port_param set
+    <if test="id != null" >
+      id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="port != null" >
+      , portAddr = #{port,jdbcType=VARCHAR} 
+    </if>
+    <if test="monitorType != null" >
+      , monitorType = #{monitorType,jdbcType=VARCHAR} 
+    </if>
+    <if test="frequency != null" >
+      , frequency = #{frequency,jdbcType=INTEGER}
+    </if>
+    <if test="timeout != null" >
+      , timeout = #{timeout,jdbcType=INTEGER}
+    </if>
+    <if test="overtimes != null" >
+      , overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      , alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="alarmMethod != null" >
+      , alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      , createTime = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      , updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null" >
+      , status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="survival != null" >
+      , survival = #{survival,jdbcType=INTEGER}
+    </if>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deletePortMonitorById" parameterType="java.lang.Long" >
+    delete from gm_port_param
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="batchDeletePortMonitorByIds" parameterType="java.lang.reflect.Array" >
+    delete from gm_port_param
+    where id in
+    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">  
+            #{item} 
+    </foreach>  
+  </delete>
+</mapper> 

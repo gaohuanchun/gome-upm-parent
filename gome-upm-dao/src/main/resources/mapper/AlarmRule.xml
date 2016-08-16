@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.AlarmRuleMaintainDao" >
+	<resultMap id="BaseResultMap" type="com.gome.upm.domain.AlarmRule" >
+		<id     column="rule_id"     property="ruleId"     jdbcType="INTEGER" />
+	    <result column="app_id"      property="appId"      jdbcType="VARCHAR" />
+	    <result column="uid"         property="uid"        jdbcType="VARCHAR" />
+	    <result column="is_global"   property="isGlobal"   jdbcType="VARCHAR" />
+	    <result column="todo_type"   property="todoType"   jdbcType="VARCHAR" />
+	    <result column="config_args" property="configArgs" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="sts"         property="sts"        jdbcType="VARCHAR" />
+	    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<!-- 基础字段 -->
+	<sql id="Base_Column_List" >
+    	rule_id, app_id, uid, is_global, todo_type, config_args, create_time, sts, modify_time
+    </sql>
+    
+    <select id="queryAlarmRule" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.AlarmRule">
+  		select 
+  		<include refid="Base_Column_List"></include>
+  		from alarm_rule
+  		where 1=1
+  		<if test="uid != null" >
+  			and uid = #{uid, jdbcType=VARCHAR}
+  		</if>
+  		<if test="appId != null">
+  			and app_id = #{appId, jdbcType=VARCHAR} 
+  		</if>
+  	</select>
+    
+    <select id="queryGlobalAlarmRule" resultMap="BaseResultMap" parameterType="java.lang.String">
+  		select 
+  		<include refid="Base_Column_List"></include>
+  		from alarm_rule
+ 		where uid = #{uid} and is_global = '1'
+  	</select>
+  	
+  	<!-- 新增 -->
+ 	<insert id="insertGlobalConfig" parameterType="com.gome.upm.domain.AlarmRule" useGeneratedKeys="true" keyProperty="rule_id">
+	    insert into alarm_rule (rule_id, app_id, uid, is_global, todo_type, config_args, create_time,sts,modify_time)
+	    values (#{ruleId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR},
+	      #{uid,jdbcType=VARCHAR}, #{isGlobal,jdbcType=VARCHAR},
+	      #{todoType,jdbcType=VARCHAR}, #{configArgs,jdbcType=VARCHAR},
+	      #{createTime,jdbcType=TIMESTAMP}, #{sts,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+    
+    <!-- 修改 -->
+   <update id="updateAlarmRule" parameterType="com.gome.upm.domain.AlarmRule" >
+	    update alarm_rule set
+	    <if test="ruleId != null" >
+	      rule_id = #{ruleId,jdbcType=INTEGER} 
+	    </if>
+	    <if test="appId != null" >
+	      , app_id = #{appId,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="sts != null" >
+	      , sts = #{sts,jdbcType=VARCHAR}
+	    </if>
+	    where rule_id = #{ruleId,jdbcType=INTEGER}
+  </update>
+</mapper>

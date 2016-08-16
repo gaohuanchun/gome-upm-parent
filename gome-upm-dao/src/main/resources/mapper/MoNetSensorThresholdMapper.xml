@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoNetSensorThresholdMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    <id column="sensor_id" property="sensorId" jdbcType="INTEGER" />
+    <result column="sensor_threshold" property="sensorThreshold" jdbcType="DOUBLE" />
+    <result column="alia_name" property="aliaName" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="alarm_type" property="alarmType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sensor_id sensorId, sensor_threshold sensorThreshold, alia_name aliaName, state, alarm_time alarmTime,alarm_type alarmType
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_sensor_threshold
+    where sensor_id = #{sensorId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from mo_net_sensor_threshold
+  </select>
+  
+  <select id="selectAll2" resultType="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    select 
+     t.sensor_id sensorId, 
+     t.sensor_threshold sensorThreshold, 
+     t.alia_name aliaName, 
+     t.state, 
+     t.alarm_time alarmTime,
+     t.alarm_type alarmType,
+     s.group_name groupName,
+     s.device_name deviceName,
+     s.sensor_name sensorName,
+     s.state sensorState
+    from mo_net_sensor_threshold t left join mo_net_sensor s on t.sensor_id = s.sensor_id
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mo_net_sensor_threshold
+    where sensor_id = #{sensorId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    insert into mo_net_sensor_threshold (sensor_id, sensor_threshold, alia_name, 
+      state, alarm_time,alarm_type)
+    values (#{sensorId,jdbcType=INTEGER}, #{sensorThreshold,jdbcType=DOUBLE}, #{aliaName,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{alarmTime,jdbcType=TIMESTAMP}, #{alarmType,jdbcType=VARCHAR)
+  </insert>
+  <insert id="insertSelective" parameterType="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    insert into mo_net_sensor_threshold
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sensorId != null" >
+        sensor_id,
+      </if>
+      <if test="sensorThreshold != null" >
+        sensor_threshold,
+      </if>
+      <if test="aliaName != null" >
+        alia_name,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="alarmTime != null" >
+        alarm_time,
+      </if>
+      <if test="alarmType != null" >
+        alarm_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sensorId != null" >
+        #{sensorId,jdbcType=INTEGER},
+      </if>
+      <if test="sensorThreshold != null" >
+        #{sensorThreshold,jdbcType=DOUBLE},
+      </if>
+      <if test="aliaName != null" >
+        #{aliaName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="alarmTime != null" >
+        #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmType != null" >
+        #{alarmType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    update mo_net_sensor_threshold
+
+    <set >
+      <if test="sensorThreshold != null" >
+        sensor_threshold = #{sensorThreshold,jdbcType=DOUBLE},
+      </if>
+      <if test="aliaName != null" >
+        alia_name = #{aliaName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+   	 alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+   	 alarm_type = #{alarmType,jdbcType=VARCHAR}
+    </set>
+    where sensor_id = #{sensorId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gome.upm.domain.prtg.MoNetSensorThreshold" >
+    update mo_net_sensor_threshold
+    set sensor_threshold = #{sensorThreshold,jdbcType=DOUBLE},
+      alia_name = #{aliaName,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
+      alarm_type = #{alarmType,jdbcType=VARCHAR}
+    where sensor_id = #{sensorId,jdbcType=INTEGER}
+  </update>
+</mapper>

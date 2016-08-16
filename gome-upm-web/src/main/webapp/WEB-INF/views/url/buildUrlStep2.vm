@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="${rc.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="${rc.contextPath}/libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="${rc.contextPath}/libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="${rc.contextPath}/libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${rc.contextPath}/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/common-top.css" type="text/css" />
+        <link rel="stylesheet" href="${rc.contextPath}/css/my.css" type="text/css"/>
+            <link rel="stylesheet" href="${rc.contextPath}/css/common-top.css" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="${rc.contextPath}/libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="${rc.contextPath}/libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+      <!-- header start-->
+    #parse("common/header.vm")
+    <!-- header end-->
+
+    <!-- Left side column. contains the logo and sidebar -->
+    #parse("common/leftMenu.vm")
+    <!-- Left side end -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <a href="${rc.contextPath}/index">统一监控平台 </a><a href="${rc.contextPath}/url/get">/ URL存活监控</a><a href="javascript:location.reload();"> / 创建URL存活监控配置点key</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="box" style="margin-top:20px;border: none;">
+                <div class="box-header applicationEditHeader">
+                    <ul>
+                        <!--<li class=""><span class="styleUl ">1</span> 监控点Key</li>-->
+                        <li class="currentCls"><span class="styleUl current">1</span> 监控参数</li>
+                        <li><span class="styleUl">2</span> 报警方式</li>
+                    </ul>
+                </div>
+                <input type="hidden" id="urlKey" value="$!key"/>
+                <input type="hidden" id="urlDesc" value="$!desc"/>
+                <input type="hidden" id="urlApp" value="$!app"/>
+                <div class="list_table" style="padding: 0 10px;">
+                    <h2 class="list_table_title">1.配置URL存活监控参数</h2>
+                    <table id="example1" class="table table-striped table_style">
+                        <tbody>
+                        <tr>
+                            <td class="title_td"><strong class="null_red">*</strong>监控地址</td>
+                            <td>
+                            <input type="text" style="width: 21.3%;" maxlength="255" class="form-control " id="urlAddress" value="$!urlAddress" placeholder="http://www.gome.com.cn">
+                            <span class="error_span" style="display: none;margin-left: 324PX; width:200px;margin-top: -24px;display: block;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title_td"><strong class="null_red">*</strong>访问时间频率</td>
+                            <td >
+                                <select name="" class="form-control" id="accFre" style="width: 21.3%;">
+                                    #if($!accFre == "5")
+                                    <option value="5" selected="selected">5分钟</option>
+                                    #else
+                                    <option value="5">5分钟</option>
+                                    #end
+                                    #if($!accFre == "10")
+                                    <option value="10" selected="selected">10分钟</option>
+                                    #else
+                                    <option value="10">10分钟</option>
+                                    #end
+                                    #if($!accFre == "15")
+                                    <option value="15" selected="selected">15分钟</option>
+                                    #else
+                                    <option value="15">15分钟</option>
+                                    #end
+
+                                </select>
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td class="title_td"><strong class="null_red">*</strong>访问超时时间</td>
+                            <td style="text-align: left">
+                                <input type="text" class="form-control half_td " id="accTimeOut" value="$!accTimeOut" placeholder="5" style="ime-mode:disabled;" onpaste="return false;" onkeyup="this.value=this.value.replace(/[^\d]/g,'');" /> <label style="margin-left: 6px;">秒</label>
+                                <span class="error_span" style="text-decoration:none;display: none"></span>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td class="title_td"><strong class="null_red">*</strong>超时次数</td>
+                            <td  >
+                            	<select class="form-control" id="timeOutNum"  style="width: 21.3%;">
+                            		#if($!timeOutNum==5)
+                                    <option value="5" selected="selected">5次</option>
+                                    #else
+                                    <option value="5" >5次</option>
+                                    #end
+                                    #if($!timeOutNum==10)
+                                    <option value="10" selected="selected">10次</option>
+                                    #else
+                                    <option value="10" >10次</option>
+                                    #end
+                                    #if($!timeOutNum==15)
+                                    <option value="15" selected="selected">15次</option>
+                                    #else
+                                    <option value="15" >15次</option>
+                                    #end
+                                </select>
+                                <!--<input type="text" class="form-control half_td " id="timeOutNum" value="$!timeOutNum" placeholder="5" style="ime-mode:disabled;" onpaste="return false;" onkeyup="this.value=this.value.replace(/[^\d]/g,'');" /> <label style="margin-left: 6px;">次</label>-->
+                                
+                                <span class="error_span" style="text-decoration:none;display: none"></span>
+                            </td>
+                            <!--<td class="title_td"><strong class="null_red">*</strong>报警时间间隔</td>
+                            <td class="tl">
+                                <input type="text" class="form-control half_td " id="alarmInter" value="$!alarmInter" placeholder="5" style="ime-mode:disabled;" onpaste="return false;" onkeyup="this.value=this.value.replace(/[^\d]/g,'');" /> <label style="margin-left: 6px;">分</label>
+                                <span class="error_span" style="text-decoration:none;display: none"></span>
+                            </td>-->
+                        </tr>
+                        <tr style="display:none">
+                            <td class="title_td"><strong class="null_red">*</strong>HTTP请求方式</td>
+                             <td >
+                             <div style="padding-top: 7px;">
+                                 #if($!method == "POST")
+                                 <label class="radio-inline" onclick="change(0);"><input type="radio"  name="method" value="GET" >GET</label>
+                                 <label class="radio-inline" onclick="change(1);"><input type="radio"  name="method" value="POST" checked >POST </label>
+                                 #else
+                                 <label class="radio-inline" onclick="change(0);"><input type="radio"  name="method" value="GET" checked >GET</label>
+                                 <label class="radio-inline" onclick="change(1);"><input type="radio"  name="method" value="POST" >POST </label>
+                                 #end
+                                 <span class="info_span">提示：POST方式用于表单提交，比如用户登录;（-- HEAD方式不下载页面内容 --）</span>
+                                 </div>
+                             </td>
+                             
+                        </tr>
+                       #if($!method == "POST")
+                        <tr id="post_param">
+                            <td class="title_td">POST请求参数</td>
+                            <td>
+                            	<textarea rows="3"  id="postParameter" maxlength="255" style="width: 21.3%;float: left;" class="form-control" placeholder="">$!postParameter</textarea>
+                            	<span class="info_span" style="float: left;line-height: 34px;padding-left: 10px;">提示：当POST请求时可以传的参数</span>
+                            </td>
+                        </tr>
+                         #else
+                         <tr id="post_param" style="display:none">
+                            <td class="title_td">POST请求参数$!method</td>
+                            <td>
+                            	<textarea rows="3"  id="postParameter" maxlength="255" style="width: 21.3%;float: left;" class="form-control" placeholder="">$!postParameter</textarea>
+                            	<span class="info_span" style="float: left;line-height: 34px;padding-left: 10px;">提示：当POST请求时可以传的参数</span>
+                            </td>
+                        </tr>
+                         #end
+                        <tr>
+                            <td class="title_td">匹配响应内容</td>
+                            <td>
+                            	<input type="text" id="resContent" value="$!resContent" maxlength="255" style="width: 21.3%;float: left;" class="form-control" placeholder=""/>
+                            	<span class="info_span" style="float: left;line-height: 34px;padding-left: 10px;">提示：可以通过指定匹配内容来检查响应内容是否正确，为空则不做匹配检查</span>
+                            </td>
+                        </tr>
+                        #if($!resContent=="")
+                        <tr id="include_id" style="display:none">
+                            <td class="title_td"><strong class="null_red">*</strong>匹配方式</td>
+                            <td >
+                            <div style="padding-top: 7px;">
+                                #if($!isContainsCon == "include")
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="include" checked>包含匹配内容</label>
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="exclude"  >不包含匹配内容</span>
+                                #else
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="include"  >包含匹配内容</span>
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="exclude"  checked>不包含匹配内容</label>
+                                #end
+
+                                <span class="info_span">提示：选择对以上匹配内容的匹配方式</span>
+                                </div>
+                            </td>
+                        </tr>
+                        #else
+                        <tr id="include_id" >
+                            <td class="title_td"><strong class="null_red">*</strong>匹配方式</td>
+                            <td >
+                            <div style="padding-top: 7px;">
+                                #if($!isContainsCon == "include")
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="include" checked>包含匹配内容</label>
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="exclude"  >不包含匹配内容</span>
+                                #else
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="include"  >包含匹配内容</span>
+                                <label class="radio-inline"><input type="radio" name="isContainsContent" value="exclude"  checked>不包含匹配内容</label>
+                                #end
+
+                                <span class="info_span">提示：选择对以上匹配内容的匹配方式</span>
+                                </div>
+                            </td>
+                        </tr>
+                         #end
+                         <tr>
+                            <td class="title_td"><strong class="null_red">*</strong>URL请求返回码</td>
+                            <td >
+                                <div style="padding-top: 7px;">
+                                <input type="text" class="form-control" maxlength="100" id="returnCode" value="$!returnCode" placeholder="200,301,302" value="200"  style="width: 21.3%;float: left;" />
+                                </div>
+                                   <span class="info_span" style="padding-left: 10px;">
+                                   	提示：
+                                    1.返回码用于在访问URL后判断是否存活的标准，需要用户按照自己项目实际判断URL存活的返回码进行填写<br>
+                                    <span class="info_span" style="text-indent: 56px;display: inline-block;">
+                                    2.填写了自定义返回码的，会按照填写的返回码进行存活判断
+                                    </span>
+                                    <span class="info_span" >
+                                    3.多个返回码可以用分号隔开,例如:302,301
+                                    </span>
+                                   </span><br>
+								<span class="error_span" id="returnCode_error" style="text-decoration:none;display: none;width:250px;">URL请求返回码不能为空</span>
+                            </td>
+                        </tr>
+						<!--
+                        <tr>
+                            <td class="title_td"><strong class="null_red">*</strong>URL请求返回码</td>
+                            <td colspan="3" class="tl">
+                                <div class="fl">
+                                #if($!isDefaultCode == "2")
+                                <label class="radio-inline"><input type="radio" name="isDefaultCode" id="defaultReturnCode" value="1" />默认返回码</label>
+                                <label class="radio-inline"><input type="radio" name="isDefaultCode" id="customReturnCode" value="2" checked />自定义返回码</label>
+                                <input type="text" class="form-control" id="returnCode"  value="$!returnCode" placeholder="200,300,500" disabled/>
+                                #else
+                                <label class="radio-inline"><input type="radio" name="isDefaultCode" id="defaultReturnCode" value="1" checked/>默认返回码</label>
+                                <label class="radio-inline"><input type="radio" name="isDefaultCode" id="customReturnCode" value="2"/>自定义返回码</label>
+                                <input type="text" class="form-control" id="returnCode"  placeholder="200,300,500" value="200" disabled/>
+                                #end
+                                </div>
+                                <div class="fl" style="width: 500px; margin-left: 30px;">
+                                   <span class="info_span">提示：
+                                    1.返回码用于在访问URL后判断是否存活的标准，需要用户按照自己项目实际判断URL存活的返回码进行填写<br>
+                                    2.填写了自定义返回码的，会按照填写的返回码进行存活判断<br>
+                                    3.多个返回码可以用分号隔开,例如:302;301
+                                   </span>
+                                </div>
+
+                            </td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <form method='post' id="form1" style="display:none">
+                	<input id="submit_id" type="submit" name="submit" style="display:none"/>  
+                </form>
+                <div class="box-footer clearfix applicationEditHeader">
+                    <ul class="paging">
+                        <!--<li><a class="btn btn-primary btn-sm disabled" id="previous-step" href="javascript:void(0)">上一步</a></li>-->
+                        <li><a class="newbtn" id="step2-next">下一步</a></li>
+                        <li><a class="newbtn" href="${rc.contextPath}/url/get">取消</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    
+    <!-- footer start -->
+      #parse("common/footer.vm")
+    <!-- footer end -->
+
+
+    <!-- Control Sidebar -->
+      #parse("common/controlSidebar.vm")
+    <!-- Control Sidebar end-->
+    
+</div><!-- ./wrapper -->
+<!-- jQuery 2.1.3 -->
+<script src="${rc.contextPath}/js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="${rc.contextPath}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="${rc.contextPath}/libs/js/app.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/left_menu.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/url/createStep2.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/util.js" type="text/javascript"></script>
+
+</body>
+</html>

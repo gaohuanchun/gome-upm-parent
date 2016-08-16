@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.AlarmRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.AlarmRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="sendTime" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, type, content, sendTime, pid
+  </sql>
+  
+  <select id="selectAlarmRecordListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	from gm_alarm_record
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>  
+    <if test="conditions.type != null and conditions.type != ''" >
+      and type = #{conditions.type,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.pid != null" >
+      and pid = #{conditions.pid,jdbcType=BIGINT}
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and sendTime between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    <if test="conditions.content != null and conditions.content != ''" >
+      and content like CONCAT('%',#{conditions.content,jdbcType=VARCHAR},'%')
+    </if>
+    order by sendTime desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.AlarmRecord">
+  	select count(*) from gm_alarm_record
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>  
+    <if test="type != null and type != ''" >
+      and type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="pid != null" >
+      and pid = #{pid,jdbcType=BIGINT} 
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and sendTime between #{startTime} and #{endTime}
+    </if>
+    <if test="content != null and content != ''" >
+      and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  <select id="selectAlarmRecordById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_alarm_record 
+ 	where id = #{id} 
+  </select>
+  <select id="selectAlarmRecordListByAlarmRecord" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.AlarmRecord">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_alarm_record 
+  	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>  
+    <if test="type != null and type != ''" >
+      and type = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="pid != null" >
+      and pid = #{pid,jdbcType=BIGINT} 
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and sendTime between #{startTime} and #{endTime}
+    </if>
+    <if test="content != null and content != ''" >
+      and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  
+  <select id="selectAllTypes" resultMap="BaseResultMap">
+  	select distinct type from gm_alarm_record
+  </select>
+</mapper> 

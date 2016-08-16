@@ -1,0 +1,124 @@
+
+<div class="wrapper">
+
+ 
+      <!-- header start-->
+    #parse("common/header.vm")
+    <!-- header end-->
+
+    <!-- Left side column. contains the logo and sidebar -->
+    #parse("common/leftMenu.vm")
+    <!-- Left side end -->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <ol class="breadcrumb">
+                <li><a href="#">统一监控平台</a></li>
+                <li class=""><a href="urlSurvivalMonitor.html">URL存活监控</a></li>
+                <li class="active">创建URL存活监控配置点key</li>
+            </ol>
+        </section>
+                 <!-- step2相关url配置信息 -->
+                <input type="hidden" id="urlKey" value="$!key"/>
+                <input type="hidden" id="urlDesc" value="$!desc"/>
+                <input type="hidden" id="urlAddress" value="$!urlAddress"/>
+                <input type="hidden" id="accFre" value="$!accFre"/>
+                <input type="hidden" id="accTimeOut" value="$!accTimeOut"/>
+                <input type="hidden" id="timeOutNum" value="$!timeOutNum"/>
+                <input type="hidden" id="alarmInter" value="$!alarmInter"/>
+                <input type="hidden" id="method" value="$!method"/>
+                <input type="hidden" id="resContent" value="$!resContent"/>
+                <input type="hidden" id="isContainsCon" value="$!isContainsCon"/>
+                <input type="hidden" id="isDefaultCode" value="$!isDefaultCode"/>
+                <input type="hidden" id="returnCode" value="$!returnCode"/>
+        <!-- Main content -->
+        <section class="content">
+            <div class="box" style="margin-top:20px;">
+                <div class="box-header applicationEditHeader">
+                    <ul>
+                        <li class="currentCls"><span class="styleUl current">1</span> 监控点Key</li>
+                        <li class="currentCls"><span class="styleUl current">2</span> 监控参数</li>
+                        <li class="currentCls"><span class="styleUl current">3</span> 报警方式</li>
+                    </ul>
+                </div>
+                <div class="list_table" style="padding: 0 10px;">
+                    <h2 class="list_table_title">3.填写报警方式</h2>
+                    <table class="table table-bordered applicationEdit">
+                        <tbody>
+                        <tr>
+                            <td class="build_title"><span><strong>*</strong>报警方式</span></td>
+                            <td>
+                                <div style="float:left;">
+                                    <span class="inline_span"><input type="checkbox"/>不报警</span>
+                                    <span class="inline_span"><input type="checkbox" />邮件</span>
+                                    <!--<span class="inline_span"><input type="checkbox"/>短信</span>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="build_title"><span><strong>*</strong>报警联系人</span></td>
+                            <td>
+                                <div style="float:left;">
+                                    <span class="inline_span"><input type="checkbox"/>监控组</span>
+                                    <a href="#" style="text-decoration: underline;color: #53616E;" data-toggle="modal" data-target="#myModal">添加其他</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer clearfix applicationEditHeader">
+                    <ul class="paging">
+                        <li><a class="btn btn-primary btn-sm" href="${rc.contextPath}/url/create/step2">上一步</a></li>
+                        <li><a class="btn btn-primary btn-sm disabled">下一步</a></li>
+                        <li><a class="btn btn-primary btn-sm">完成</a></li>
+                        <li><a class="btn btn-primary btn-sm" href="${rc.contextPath}/url/get">取消</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    
+     <!-- footer start -->
+      #parse("common/footer.vm")
+    <!-- footer end -->
+
+
+    <!-- Control Sidebar -->
+      #parse("common/controlSidebar.vm")
+    <!-- Control Sidebar end-->
+</div><!-- ./wrapper -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">添加自定义联系人信息</h2>
+            </div>
+            <div class="modal-body">
+                <div style="width: 360px;margin: 0 auto;">
+                    <form>
+                        <fieldset>
+                            <legend>【方式一】直接输入联系人erp账号 以逗号分割</legend>
+                            <span style="margin-left: 27px;">ERP账号： <input type="text" style="width: 70%;"></span><br>
+                        </fieldset>
+                        <fieldset>
+                            <legend>【方式二】直接输入联系方式 以逗号分割</legend>
+                            <span style="margin-left: 27px;">RTX：<input type="text" style="width: 70%;"></span><br><br>
+                            <span style="margin-left: 27px;">手机：<input type="text" style="width: 70%;"></span><br><br>
+                            <span style="margin-left: 27px;">邮箱：<input type="text" style="width: 70%;"></span>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

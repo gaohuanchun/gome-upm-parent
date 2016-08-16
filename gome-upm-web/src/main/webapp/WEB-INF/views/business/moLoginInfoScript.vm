@@ -1,0 +1,170 @@
+<script type="text/javascript">
+//5分钟登录
+var waitLoginInfoRun;
+var timeLoginInfoflg = false; //启动及关闭按钮  
+function timeLoginInfoRun(){
+	if(timeLoginInfoflg){return ;}
+	addLoginInfoData();
+	waitLoginInfoRun=setTimeout(timeLoginInfoRun,1000*60*5); //time是指本身,延时递归调用自己,100为间隔调用时间,单位毫秒
+}
+//等待时间----时间价格为intervalTime分钟
+function waitTimeLoginInfo(){
+	//获取结束时间
+	var endTimeNow=new Date();
+	var endTimeStr=endTimeNow.Format('yyyy/MM/dd HH:m5:s0');
+	var wwww=new Date(endTimeStr);
+	//下个触发查询时间--5分钟后
+	wwww=wwww.DateAdd('n',5);
+	//alert(wwww.Format('yyyy-MM-dd HH:mm:ss'));
+	//计算当前时间和下个查询时间的时间差
+	var waitTime=wwww-new Date();
+	//等待时间差
+	setTimeout(function(){
+		timeLoginInfoRun();
+	},waitTime);
+}
+
+
+var loginInfoDate;
+var loginInfoHighChart;
+var timeLoginInfoCon=false;
+function initLoginInfoData(){
+	var obj=getSearchHour(3);
+    var startTimeStr=obj.startTime;
+    var endTimeStr=obj.endTime;
+    reloadLoginInfoData(startTimeStr,endTimeStr,false);
+}
+$(function () {
+	initLoginInfo();
+	initLoginInfoData();
+});
+function addLoginInfoData(){
+	var url="${rc.contextPath}/monitoLogin/getLoginInfoForTime.do";
+	var data='';
+	$.ajax({ 
+		url: url,
+		type:"POST",
+		data:{startTime:loginInfoDate},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var obj=eval(data);
+			loginInfoDate=obj[0];
+			loginInfoHighChart.series[0].addPoint([obj[0], obj[1]], false, true);
+			loginInfoHighChart.redraw();
+     	},
+     	error : function(){
+     	}
+	});
+}
+var options_loginInfo;
+var config_loginInfo={};
+function initLoginInfo(){
+	Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+	options_loginInfo = {
+		chart: {
+            type: 'line',
+            renderTo: 'container_loginInfo',  //图表放置的容器，一般在html中放置一个DIV，获取DIV的id属性值
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 0, //对容器的右内边距
+            animation:true,
+            events: {
+                load: function () {
+                	waitTimeLoginInfo();
+                }
+            }
+        },
+        title: {
+            text: '5分钟登录'
+        },
+        xAxis: {
+        	type: 'datetime',
+            tickPixelInterval: 5,
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+            title: {
+    			style: {
+    				color: '#AAA',
+    				font: 'bolder 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+	                     text: ''
+	                 }
+        },
+        //显示头
+        tooltip: {
+            formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 0);
+            },
+            backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgba(96, 96, 96, .8)'],
+    				[1, 'rgba(16, 16, 16, .8)']
+    			]
+    		},
+    		borderWidth: 0,
+    		style: {
+    			color: '#FFF'
+    		}
+        },
+        credits:{ //右下角超链接设置
+            enabled: false
+        },
+        series:[{
+        	name: '用户',
+        	data:[]
+        }]
+	}
+	copy(config_loginInfo,options_loginInfo);
+}
+function searchLoginInfoData(){
+	timeLoginInfoflg=true;
+	//停止5分钟查询
+	clearTimeout(waitLoginInfoRun);
+	var startTimeStr=$('#startTimeLoginInfo').val();
+	var endTimeStr=$('#endTimeLoginInfo').val();
+	
+	startTimeStr=startTimeStr.replace(/-/g,"/");
+ 	var oDate1 = new Date(startTimeStr);
+ 	startTimeStr=oDate1.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	endTimeStr=endTimeStr.replace(/-/g,"/");
+ 	var oDate2 = new Date(endTimeStr);
+ 	endTimeStr=oDate2.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	reloadLoginInfoData(startTimeStr,endTimeStr,true);
+}
+function reloadLoginInfoData(stLogin,etLogin,waitTimeReload){
+	var payUrl="${rc.contextPath}/monitoLogin/findLoginInfoList.do";
+	$.ajax({
+		url: payUrl,
+		type:"POST",
+		data:{'startTime':stLogin,'endTime':etLogin},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			loginInfoDate=dataList[dataList.length-1][0];
+			copy(options_loginInfo,config_loginInfo);
+			options_loginInfo.series[0].data=dataList;
+			if(waitTimeReload){
+				options_loginInfo.chart.events.load=function(){};
+			}
+			loginInfoHighChart = new Highcharts.Chart(options_loginInfo);
+     	},
+     	error : function(){
+     	}
+	});
+}
+</script>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.UrlMonitorMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.UrlMonitor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <!-- 
+    <result column="access_key" property="key" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+     -->
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="frequency" property="frequency" jdbcType="INTEGER" />
+    <result column="timeout" property="timeout" jdbcType="INTEGER" />
+    <result column="overtimes" property="overtimes" jdbcType="INTEGER" />
+    <result column="alarmInterval" property="interval" jdbcType="INTEGER" />
+    <result column="requestMethod" property="requestMethod" jdbcType="VARCHAR" />
+    <result column="matchMethod" property="matchMethod" jdbcType="VARCHAR" />
+    <result column="matchContent" property="matchContent" jdbcType="VARCHAR" />
+    <result column="returnCode" property="returnCode" jdbcType="VARCHAR" />
+    <result column="alarmMethod" property="alarmMethod" jdbcType="VARCHAR" />
+    <result column="postParameter" property="postParameter" jdbcType="VARCHAR" />
+    <result column="alarmTime" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="survival" property="survival" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, url, frequency,
+    timeout, overtimes, alarmInterval, requestMethod, matchMethod, 
+    matchContent, returnCode, alarmMethod, alarmTime, createTime, updateTime, status, survival,postParameter  
+  </sql>
+  
+  <insert id="insertUrlMonitor" parameterType="com.gome.upm.domain.UrlMonitor" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_url_param (id, url, frequency,
+    timeout, overtimes, alarmInterval, requestMethod, matchMethod, 
+    matchContent, returnCode, alarmMethod, createTime, updateTime, status, survival,postParameter)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{frequency,jdbcType=INTEGER},
+      #{timeout,jdbcType=INTEGER}, #{overtimes,jdbcType=INTEGER},
+      #{interval,jdbcType=INTEGER}, #{requestMethod,jdbcType=VARCHAR},
+      #{matchMethod,jdbcType=VARCHAR}, #{matchContent,jdbcType=VARCHAR},
+      #{returnCode,jdbcType=VARCHAR}, #{alarmMethod,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{status,jdbcType=INTEGER}, #{survival,jdbcType=INTEGER},#{postParameter,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="batchInsertUrlMonitor" parameterType="java.util.List" useGeneratedKeys="true" >
+  	<selectKey resultType="long" keyProperty="id" order="AFTER">  
+        SELECT  
+        LAST_INSERT_ID()  
+    </selectKey>  
+    insert into gm_url_param ( url, frequency,
+    timeout, overtimes, alarmInterval, requestMethod, matchMethod, 
+    matchContent, returnCode, alarmMethod, createTime, updateTime, status, survival,postParameter)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >
+    ( #{item.url,jdbcType=VARCHAR}, #{item.frequency,jdbcType=INTEGER},
+      #{item.timeout,jdbcType=INTEGER}, #{item.overtimes,jdbcType=INTEGER},
+      #{item.interval,jdbcType=INTEGER}, #{item.requestMethod,jdbcType=VARCHAR},
+      #{item.matchMethod,jdbcType=VARCHAR}, #{item.matchContent,jdbcType=VARCHAR},
+      #{item.returnCode,jdbcType=VARCHAR}, #{item.alarmMethod,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.status,jdbcType=INTEGER}, #{item.survival,jdbcType=INTEGER},#{item.postParameter,jdbcType=VARCHAR})
+       </foreach>  
+  </insert>
+  
+  <select id="selectUrlMonitorListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_url_param as url
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and url.id = #{conditions.id,jdbcType=BIGINT} 
+    </if>
+    <if test="conditions.url != null and conditions.url != ''" >
+      and url.url like CONCAT('%',#{conditions.url,jdbcType=VARCHAR},'%')
+    </if>
+	<if test="conditions.frequency != null" >
+      and url.frequency = #{conditions.frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="conditions.timeout != null" >
+      and url.timeout = #{conditions.timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="conditions.overtimes != null" >
+      and url.overtimes = #{conditions.overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.interval != null" >
+      and url.alarmInterval = #{conditions.interval,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.requestMethod != null" >
+      and url.requestMethod = #{conditions.requestMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.matchMethod != null" >
+      and url.matchMethod = #{conditions.matchMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.matchContent != null" >
+      and url.matchContent = #{conditions.matchContent,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.returnCode != null" >
+      and url.returnCode = #{conditions.returnCode,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.alarmMethod != null" >
+      and url.alarmMethod = #{conditions.alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.postParameter != null" >
+      and url.postParameter = #{conditions.postParameter,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.status != null" >
+      and url.status = #{conditions.status,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.survival != null and conditions.survival==1" >
+      and url.survival = 1
+    </if>
+    <if test="conditions.survival != null  and conditions.survival!=1" >
+	      and url.survival in (0,2) 
+	 </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and url.alarmTime between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    order by url.createTime desc
+    <if test="start != null and pageSize != null">
+    	limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER};
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.UrlMonitor">
+  	select count(*) from gm_url_param
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="url != null and url != ''" >
+      and url like CONCAT('%',#{url,jdbcType=VARCHAR},'%')
+    </if>
+	<if test="frequency != null" >
+      and frequency = #{frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="timeout != null" >
+      and timeout = #{timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="overtimes != null" >
+      and overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      and alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="requestMethod != null" >
+      and requestMethod = #{requestMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="matchMethod != null" >
+      and matchMethod = #{matchMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="matchContent != null" >
+      and matchContent = #{matchContent,jdbcType=VARCHAR}
+    </if>
+    <if test="returnCode != null" >
+      and returnCode = #{returnCode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmMethod != null" >
+      and alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="postParameter != null" >
+      and postParameter = #{postParameter,jdbcType=VARCHAR}
+    </if>
+    <if test="survival != null and survival==1" >
+      and survival = #{survival,jdbcType=INTEGER}
+    </if>
+    <if test="survival != null  and survival!=1" >
+	      and survival in (0,2) 
+	 </if>
+   <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and alarmTime between #{startTime} and #{endTime}
+    </if>
+  </select>
+  <select id="selectUrlMonitorById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_url_param 
+ 	where id = #{id} 
+  </select>
+  <select id="selectUrlMonitorListByUrlMonitor" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.UrlMonitor">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_url_param 
+  	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="url != null" >
+      and url like CONCAT('%',#{url,jdbcType=VARCHAR},'%')
+    </if>
+	<if test="frequency != null" >
+      and frequency = #{frequency,jdbcType=INTEGER}  
+    </if>
+    <if test="timeout != null" >
+      and timeout = #{timeout,jdbcType=INTEGER} 
+    </if>
+    <if test="overtimes != null" >
+      and overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      and alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="requestMethod != null" >
+      and requestMethod = #{requestMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="matchMethod != null" >
+      and matchMethod = #{matchMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="matchContent != null" >
+      and matchContent = #{matchContent,jdbcType=VARCHAR}
+    </if>
+    <if test="returnCode != null" >
+      and returnCode = #{returnCode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmMethod != null" >
+      and alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="postParameter != null" >
+      and postParameter = #{postParameter,jdbcType=VARCHAR}
+    </if>
+    <if test="survival != null" >
+      and survival = #{survival,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and createTime between #{startTime} and #{endTime}
+    </if>
+  </select>
+ <select id="selectCountByUrl" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	select count(*) from gm_url_param
+ 	where url = #{url} 
+  </select>
+  <update id="updateUrlMonitor" parameterType="com.gome.upm.domain.UrlMonitor" >
+    update gm_url_param set
+    <if test="id != null" >
+      id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="url != null" >
+      , url = #{url,jdbcType=VARCHAR} 
+    </if>
+    <if test="frequency != null" >
+      , frequency = #{frequency,jdbcType=INTEGER}
+    </if>
+    <if test="timeout != null" >
+      , timeout = #{timeout,jdbcType=INTEGER}
+    </if>
+    <if test="overtimes != null" >
+      , overtimes = #{overtimes,jdbcType=INTEGER}
+    </if>
+    <if test="interval != null" >
+      , alarmInterval = #{interval,jdbcType=INTEGER}
+    </if>
+    <if test="requestMethod != null" >
+      , requestMethod = #{requestMethod,jdbcType=VARCHAR} 
+    </if>
+    <if test="matchMethod != null" >
+      , matchMethod = #{matchMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="matchContent != null" >
+      , matchContent = #{matchContent,jdbcType=VARCHAR}
+    </if>
+    <if test="returnCode != null" >
+      , returnCode = #{returnCode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmMethod != null" >
+      , alarmMethod = #{alarmMethod,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      , createTime = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      , updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null" >
+      , status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="survival != null" >
+      , survival = #{survival,jdbcType=INTEGER}
+    </if>
+    <if test="postParameter != null" >
+      ,postParameter = #{postParameter,jdbcType=VARCHAR}
+    </if>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteUrlMonitorById" parameterType="java.lang.Long" >
+    delete from gm_url_param
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="batchDeleteUrlMonitorByIds" parameterType="java.lang.reflect.Array" >
+    delete from gm_url_param
+    where id in
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">  
+            #{item} 
+    </foreach>  
+  </delete>
+</mapper> 

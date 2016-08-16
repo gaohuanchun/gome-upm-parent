@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.PcInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.PcInfo" >
+    <id column="ipdz" property="ipdz" jdbcType="VARCHAR" />
+    <result column="clip" property="clip" jdbcType="VARCHAR" />
+    <result column="ppsl" property="ppsl" jdbcType="INTEGER" />
+    <result column="ppys" property="ppys" jdbcType="INTEGER" />
+    <result column="gxsj" property="gxsj" jdbcType="VARCHAR" />
+    <result column="zjm" property="zjm" jdbcType="VARCHAR" />
+    <result column="xtbb" property="xtbb" jdbcType="VARCHAR" />
+    <result column="cpuhs" property="cpuhs" jdbcType="VARCHAR" />
+    <result column="cpuxh" property="cpuxh" jdbcType="VARCHAR" />
+    <result column="cpusyl" property="cpusyl" jdbcType="INTEGER" />
+    <result column="memz" property="memz" jdbcType="INTEGER" />
+    <result column="memuse" property="memuse" jdbcType="INTEGER" />
+    <result column="memfree" property="memfree" jdbcType="INTEGER" />
+    <result column="memsyl" property="memsyl" jdbcType="INTEGER" />
+    <result column="swapuse" property="swapuse" jdbcType="INTEGER" />
+    <result column="xtload" property="xtload" jdbcType="REAL" />
+    <result column="vm" property="vm" jdbcType="VARCHAR" />
+    <result column="hjsz" property="hjsz" jdbcType="VARCHAR" />
+    <result column="dds" property="dds" jdbcType="INTEGER" />
+    <result column="tails" property="tails" jdbcType="INTEGER" />
+    <result column="cpio" property="cpio" jdbcType="REAL" />
+    <result column="cpsyl" property="cpsyl" jdbcType="INTEGER" />
+    <result column="jdkv" property="jdkv" jdbcType="VARCHAR" />
+    <result column="dfs" property="dfs" jdbcType="INTEGER" />
+    <result column="jdkvv" property="jdkvv" jdbcType="VARCHAR" />
+    <result column="lessjs" property="lessjs" jdbcType="INTEGER" />
+    <result column="xtqdsj" property="xtqdsj" jdbcType="VARCHAR" />
+    <result column="xtyxsj" property="xtyxsj" jdbcType="VARCHAR" />
+    <result column="xtqdsjsj" property="xtqdsjsj" jdbcType="INTEGER" />
+    <result column="gsjf" property="gsjf" jdbcType="VARCHAR" />
+    <result column="jkrj" property="jkrj" jdbcType="VARCHAR" />
+    <result column="jkrjsl" property="jkrjsl" jdbcType="VARCHAR" />
+    <result column="jkcat" property="jkcat" jdbcType="VARCHAR" />
+    <result column="jkypt" property="jkypt" jdbcType="VARCHAR" />
+    <result column="yyjs" property="yyjs" jdbcType="INTEGER" />
+    <result column="time_wait" property="timeWait" jdbcType="INTEGER" />
+    <result column="close_wait" property="closeWait" jdbcType="INTEGER" />
+    <result column="established" property="established" jdbcType="INTEGER" />
+    <result column="listen" property="listen" jdbcType="INTEGER" />
+    <result column="netip" property="netip" jdbcType="INTEGER" />
+    <result column="netljzs" property="netljzs" jdbcType="INTEGER" />
+    <result column="netrx" property="netrx" jdbcType="INTEGER" />
+    <result column="nettx" property="nettx" jdbcType="INTEGER" />
+    <result column="logjk" property="logjk" jdbcType="VARCHAR" />
+    <result column="ppver" property="ppver" jdbcType="VARCHAR" />
+    <result column="uguest" property="uguest" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ipdz, clip, ppsl, ppys, gxsj, zjm, xtbb, cpuhs, cpuxh, cpusyl, memz, memuse, memfree, 
+    memsyl, swapuse, xtload, vm, hjsz, dds, tails, cpio, cpsyl, jdkv, dfs, jdkvv, lessjs, 
+    xtqdsj, xtyxsj, xtqdsjsj, gsjf, jkrj, jkrjsl, jkcat, jkypt, yyjs, time_wait, close_wait, 
+    established, listen, netip, netljzs, netrx, nettx, logjk, ppver, uguest
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pcinfo
+    where ipdz = #{ipdz,jdbcType=VARCHAR}
+  </select>
+ 
+  
+  <insert id="insertSelective" parameterType="com.gome.upm.domain.PcInfo" >
+    insert into pcinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ipdz != null" >
+        ipdz,
+      </if>
+      <if test="clip != null" >
+        clip,
+      </if>
+      <if test="ppsl != null" >
+        ppsl,
+      </if>
+      <if test="ppys != null" >
+        ppys,
+      </if>
+      <if test="gxsj != null" >
+        gxsj,
+      </if>
+      <if test="zjm != null" >
+        zjm,
+      </if>
+      <if test="xtbb != null" >
+        xtbb,
+      </if>
+      <if test="cpuhs != null" >
+        cpuhs,
+      </if>
+      <if test="cpuxh != null" >
+        cpuxh,
+      </if>
+      <if test="cpusyl != null" >
+        cpusyl,
+      </if>
+      <if test="memz != null" >
+        memz,
+      </if>
+      <if test="memuse != null" >
+        memuse,
+      </if>
+      <if test="memfree != null" >
+        memfree,
+      </if>
+      <if test="memsyl != null" >
+        memsyl,
+      </if>
+      <if test="swapuse != null" >
+        swapuse,
+      </if>
+      <if test="xtload != null" >
+        xtload,
+      </if>
+      <if test="vm != null" >
+        vm,
+      </if>
+      <if test="hjsz != null" >
+        hjsz,
+      </if>
+      <if test="dds != null" >
+        dds,
+      </if>
+      <if test="tails != null" >
+        tails,
+      </if>
+      <if test="cpio != null" >
+        cpio,
+      </if>
+      <if test="cpsyl != null" >
+        cpsyl,
+      </if>
+      <if test="jdkv != null" >
+        jdkv,
+      </if>
+      <if test="dfs != null" >
+        dfs,
+      </if>
+      <if test="jdkvv != null" >
+        jdkvv,
+      </if>
+      <if test="lessjs != null" >
+        lessjs,
+      </if>
+      <if test="xtqdsj != null" >
+        xtqdsj,
+      </if>
+      <if test="xtyxsj != null" >
+        xtyxsj,
+      </if>
+      <if test="xtqdsjsj != null" >
+        xtqdsjsj,
+      </if>
+      <if test="gsjf != null" >
+        gsjf,
+      </if>
+      <if test="jkrj != null" >
+        jkrj,
+      </if>
+      <if test="jkrjsl != null" >
+        jkrjsl,
+      </if>
+      <if test="jkcat != null" >
+        jkcat,
+      </if>
+      <if test="jkypt != null" >
+        jkypt,
+      </if>
+      <if test="yyjs != null" >
+        yyjs,
+      </if>
+      <if test="timeWait != null" >
+        time_wait,
+      </if>
+      <if test="closeWait != null" >
+        close_wait,
+      </if>
+      <if test="established != null" >
+        established,
+      </if>
+      <if test="listen != null" >
+        listen,
+      </if>
+      <if test="netip != null" >
+        netip,
+      </if>
+      <if test="netljzs != null" >
+        netljzs,
+      </if>
+      <if test="netrx != null" >
+        netrx,
+      </if>
+      <if test="nettx != null" >
+        nettx,
+      </if>
+      <if test="logjk != null" >
+        logjk,
+      </if>
+      <if test="ppver != null" >
+        ppver,
+      </if>
+      <if test="uguest != null" >
+        uguest,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ipdz != null" >
+        #{ipdz,jdbcType=VARCHAR},
+      </if>
+      <if test="clip != null" >
+        #{clip,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsl != null" >
+        #{ppsl,jdbcType=INTEGER},
+      </if>
+      <if test="ppys != null" >
+        #{ppys,jdbcType=INTEGER},
+      </if>
+      <if test="gxsj != null" >
+        #{gxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="zjm != null" >
+        #{zjm,jdbcType=VARCHAR},
+      </if>
+      <if test="xtbb != null" >
+        #{xtbb,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuhs != null" >
+        #{cpuhs,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuxh != null" >
+        #{cpuxh,jdbcType=VARCHAR},
+      </if>
+      <if test="cpusyl != null" >
+        #{cpusyl,jdbcType=INTEGER},
+      </if>
+      <if test="memz != null" >
+        #{memz,jdbcType=INTEGER},
+      </if>
+      <if test="memuse != null" >
+        #{memuse,jdbcType=INTEGER},
+      </if>
+      <if test="memfree != null" >
+        #{memfree,jdbcType=INTEGER},
+      </if>
+      <if test="memsyl != null" >
+        #{memsyl,jdbcType=INTEGER},
+      </if>
+      <if test="swapuse != null" >
+        #{swapuse,jdbcType=INTEGER},
+      </if>
+      <if test="xtload != null" >
+        #{xtload,jdbcType=REAL},
+      </if>
+      <if test="vm != null" >
+        #{vm,jdbcType=VARCHAR},
+      </if>
+      <if test="hjsz != null" >
+        #{hjsz,jdbcType=VARCHAR},
+      </if>
+      <if test="dds != null" >
+        #{dds,jdbcType=INTEGER},
+      </if>
+      <if test="tails != null" >
+        #{tails,jdbcType=INTEGER},
+      </if>
+      <if test="cpio != null" >
+        #{cpio,jdbcType=REAL},
+      </if>
+      <if test="cpsyl != null" >
+        #{cpsyl,jdbcType=INTEGER},
+      </if>
+      <if test="jdkv != null" >
+        #{jdkv,jdbcType=VARCHAR},
+      </if>
+      <if test="dfs != null" >
+        #{dfs,jdbcType=INTEGER},
+      </if>
+      <if test="jdkvv != null" >
+        #{jdkvv,jdbcType=VARCHAR},
+      </if>
+      <if test="lessjs != null" >
+        #{lessjs,jdbcType=INTEGER},
+      </if>
+      <if test="xtqdsj != null" >
+        #{xtqdsj,jdbcType=VARCHAR},
+      </if>
+      <if test="xtyxsj != null" >
+        #{xtyxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="xtqdsjsj != null" >
+        #{xtqdsjsj,jdbcType=INTEGER},
+      </if>
+      <if test="gsjf != null" >
+        #{gsjf,jdbcType=VARCHAR},
+      </if>
+      <if test="jkrj != null" >
+        #{jkrj,jdbcType=VARCHAR},
+      </if>
+      <if test="jkrjsl != null" >
+        #{jkrjsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jkcat != null" >
+        #{jkcat,jdbcType=VARCHAR},
+      </if>
+      <if test="jkypt != null" >
+        #{jkypt,jdbcType=VARCHAR},
+      </if>
+      <if test="yyjs != null" >
+        #{yyjs,jdbcType=INTEGER},
+      </if>
+      <if test="timeWait != null" >
+        #{timeWait,jdbcType=INTEGER},
+      </if>
+      <if test="closeWait != null" >
+        #{closeWait,jdbcType=INTEGER},
+      </if>
+      <if test="established != null" >
+        #{established,jdbcType=INTEGER},
+      </if>
+      <if test="listen != null" >
+        #{listen,jdbcType=INTEGER},
+      </if>
+      <if test="netip != null" >
+        #{netip,jdbcType=INTEGER},
+      </if>
+      <if test="netljzs != null" >
+        #{netljzs,jdbcType=INTEGER},
+      </if>
+      <if test="netrx != null" >
+        #{netrx,jdbcType=INTEGER},
+      </if>
+      <if test="nettx != null" >
+        #{nettx,jdbcType=INTEGER},
+      </if>
+      <if test="logjk != null" >
+        #{logjk,jdbcType=VARCHAR},
+      </if>
+      <if test="ppver != null" >
+        #{ppver,jdbcType=VARCHAR},
+      </if>
+      <if test="uguest != null" >
+        #{uguest,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pcinfo
+    <set >
+      <if test="record.ipdz != null" >
+        ipdz = #{record.ipdz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clip != null" >
+        clip = #{record.clip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppsl != null" >
+        ppsl = #{record.ppsl,jdbcType=INTEGER},
+      </if>
+      <if test="record.ppys != null" >
+        ppys = #{record.ppys,jdbcType=INTEGER},
+      </if>
+      <if test="record.gxsj != null" >
+        gxsj = #{record.gxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjm != null" >
+        zjm = #{record.zjm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xtbb != null" >
+        xtbb = #{record.xtbb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpuhs != null" >
+        cpuhs = #{record.cpuhs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpuxh != null" >
+        cpuxh = #{record.cpuxh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpusyl != null" >
+        cpusyl = #{record.cpusyl,jdbcType=INTEGER},
+      </if>
+      <if test="record.memz != null" >
+        memz = #{record.memz,jdbcType=INTEGER},
+      </if>
+      <if test="record.memuse != null" >
+        memuse = #{record.memuse,jdbcType=INTEGER},
+      </if>
+      <if test="record.memfree != null" >
+        memfree = #{record.memfree,jdbcType=INTEGER},
+      </if>
+      <if test="record.memsyl != null" >
+        memsyl = #{record.memsyl,jdbcType=INTEGER},
+      </if>
+      <if test="record.swapuse != null" >
+        swapuse = #{record.swapuse,jdbcType=INTEGER},
+      </if>
+      <if test="record.xtload != null" >
+        xtload = #{record.xtload,jdbcType=REAL},
+      </if>
+      <if test="record.vm != null" >
+        vm = #{record.vm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hjsz != null" >
+        hjsz = #{record.hjsz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dds != null" >
+        dds = #{record.dds,jdbcType=INTEGER},
+      </if>
+      <if test="record.tails != null" >
+        tails = #{record.tails,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpio != null" >
+        cpio = #{record.cpio,jdbcType=REAL},
+      </if>
+      <if test="record.cpsyl != null" >
+        cpsyl = #{record.cpsyl,jdbcType=INTEGER},
+      </if>
+      <if test="record.jdkv != null" >
+        jdkv = #{record.jdkv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dfs != null" >
+        dfs = #{record.dfs,jdbcType=INTEGER},
+      </if>
+      <if test="record.jdkvv != null" >
+        jdkvv = #{record.jdkvv,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lessjs != null" >
+        lessjs = #{record.lessjs,jdbcType=INTEGER},
+      </if>
+      <if test="record.xtqdsj != null" >
+        xtqdsj = #{record.xtqdsj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xtyxsj != null" >
+        xtyxsj = #{record.xtyxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xtqdsjsj != null" >
+        xtqdsjsj = #{record.xtqdsjsj,jdbcType=INTEGER},
+      </if>
+      <if test="record.gsjf != null" >
+        gsjf = #{record.gsjf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jkrj != null" >
+        jkrj = #{record.jkrj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jkrjsl != null" >
+        jkrjsl = #{record.jkrjsl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jkcat != null" >
+        jkcat = #{record.jkcat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jkypt != null" >
+        jkypt = #{record.jkypt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yyjs != null" >
+        yyjs = #{record.yyjs,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeWait != null" >
+        time_wait = #{record.timeWait,jdbcType=INTEGER},
+      </if>
+      <if test="record.closeWait != null" >
+        close_wait = #{record.closeWait,jdbcType=INTEGER},
+      </if>
+      <if test="record.established != null" >
+        established = #{record.established,jdbcType=INTEGER},
+      </if>
+      <if test="record.listen != null" >
+        listen = #{record.listen,jdbcType=INTEGER},
+      </if>
+      <if test="record.netip != null" >
+        netip = #{record.netip,jdbcType=INTEGER},
+      </if>
+      <if test="record.netljzs != null" >
+        netljzs = #{record.netljzs,jdbcType=INTEGER},
+      </if>
+      <if test="record.netrx != null" >
+        netrx = #{record.netrx,jdbcType=INTEGER},
+      </if>
+      <if test="record.nettx != null" >
+        nettx = #{record.nettx,jdbcType=INTEGER},
+      </if>
+      <if test="record.logjk != null" >
+        logjk = #{record.logjk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppver != null" >
+        ppver = #{record.ppver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uguest != null" >
+        uguest = #{record.uguest,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pcinfo
+    set ipdz = #{record.ipdz,jdbcType=VARCHAR},
+      clip = #{record.clip,jdbcType=VARCHAR},
+      ppsl = #{record.ppsl,jdbcType=INTEGER},
+      ppys = #{record.ppys,jdbcType=INTEGER},
+      gxsj = #{record.gxsj,jdbcType=VARCHAR},
+      zjm = #{record.zjm,jdbcType=VARCHAR},
+      xtbb = #{record.xtbb,jdbcType=VARCHAR},
+      cpuhs = #{record.cpuhs,jdbcType=VARCHAR},
+      cpuxh = #{record.cpuxh,jdbcType=VARCHAR},
+      cpusyl = #{record.cpusyl,jdbcType=INTEGER},
+      memz = #{record.memz,jdbcType=INTEGER},
+      memuse = #{record.memuse,jdbcType=INTEGER},
+      memfree = #{record.memfree,jdbcType=INTEGER},
+      memsyl = #{record.memsyl,jdbcType=INTEGER},
+      swapuse = #{record.swapuse,jdbcType=INTEGER},
+      xtload = #{record.xtload,jdbcType=REAL},
+      vm = #{record.vm,jdbcType=VARCHAR},
+      hjsz = #{record.hjsz,jdbcType=VARCHAR},
+      dds = #{record.dds,jdbcType=INTEGER},
+      tails = #{record.tails,jdbcType=INTEGER},
+      cpio = #{record.cpio,jdbcType=REAL},
+      cpsyl = #{record.cpsyl,jdbcType=INTEGER},
+      jdkv = #{record.jdkv,jdbcType=VARCHAR},
+      dfs = #{record.dfs,jdbcType=INTEGER},
+      jdkvv = #{record.jdkvv,jdbcType=VARCHAR},
+      lessjs = #{record.lessjs,jdbcType=INTEGER},
+      xtqdsj = #{record.xtqdsj,jdbcType=VARCHAR},
+      xtyxsj = #{record.xtyxsj,jdbcType=VARCHAR},
+      xtqdsjsj = #{record.xtqdsjsj,jdbcType=INTEGER},
+      gsjf = #{record.gsjf,jdbcType=VARCHAR},
+      jkrj = #{record.jkrj,jdbcType=VARCHAR},
+      jkrjsl = #{record.jkrjsl,jdbcType=VARCHAR},
+      jkcat = #{record.jkcat,jdbcType=VARCHAR},
+      jkypt = #{record.jkypt,jdbcType=VARCHAR},
+      yyjs = #{record.yyjs,jdbcType=INTEGER},
+      time_wait = #{record.timeWait,jdbcType=INTEGER},
+      close_wait = #{record.closeWait,jdbcType=INTEGER},
+      established = #{record.established,jdbcType=INTEGER},
+      listen = #{record.listen,jdbcType=INTEGER},
+      netip = #{record.netip,jdbcType=INTEGER},
+      netljzs = #{record.netljzs,jdbcType=INTEGER},
+      netrx = #{record.netrx,jdbcType=INTEGER},
+      nettx = #{record.nettx,jdbcType=INTEGER},
+      logjk = #{record.logjk,jdbcType=VARCHAR},
+      ppver = #{record.ppver,jdbcType=VARCHAR},
+      uguest = #{record.uguest,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gome.upm.domain.PcInfo" >
+    update pcinfo
+    <set >
+      <if test="clip != null" >
+        clip = #{clip,jdbcType=VARCHAR},
+      </if>
+      <if test="ppsl != null" >
+        ppsl = #{ppsl,jdbcType=INTEGER},
+      </if>
+      <if test="ppys != null" >
+        ppys = #{ppys,jdbcType=INTEGER},
+      </if>
+      <if test="gxsj != null" >
+        gxsj = #{gxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="zjm != null" >
+        zjm = #{zjm,jdbcType=VARCHAR},
+      </if>
+      <if test="xtbb != null" >
+        xtbb = #{xtbb,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuhs != null" >
+        cpuhs = #{cpuhs,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuxh != null" >
+        cpuxh = #{cpuxh,jdbcType=VARCHAR},
+      </if>
+      <if test="cpusyl != null" >
+        cpusyl = #{cpusyl,jdbcType=INTEGER},
+      </if>
+      <if test="memz != null" >
+        memz = #{memz,jdbcType=INTEGER},
+      </if>
+      <if test="memuse != null" >
+        memuse = #{memuse,jdbcType=INTEGER},
+      </if>
+      <if test="memfree != null" >
+        memfree = #{memfree,jdbcType=INTEGER},
+      </if>
+      <if test="memsyl != null" >
+        memsyl = #{memsyl,jdbcType=INTEGER},
+      </if>
+      <if test="swapuse != null" >
+        swapuse = #{swapuse,jdbcType=INTEGER},
+      </if>
+      <if test="xtload != null" >
+        xtload = #{xtload,jdbcType=REAL},
+      </if>
+      <if test="vm != null" >
+        vm = #{vm,jdbcType=VARCHAR},
+      </if>
+      <if test="hjsz != null" >
+        hjsz = #{hjsz,jdbcType=VARCHAR},
+      </if>
+      <if test="dds != null" >
+        dds = #{dds,jdbcType=INTEGER},
+      </if>
+      <if test="tails != null" >
+        tails = #{tails,jdbcType=INTEGER},
+      </if>
+      <if test="cpio != null" >
+        cpio = #{cpio,jdbcType=REAL},
+      </if>
+      <if test="cpsyl != null" >
+        cpsyl = #{cpsyl,jdbcType=INTEGER},
+      </if>
+      <if test="jdkv != null" >
+        jdkv = #{jdkv,jdbcType=VARCHAR},
+      </if>
+      <if test="dfs != null" >
+        dfs = #{dfs,jdbcType=INTEGER},
+      </if>
+      <if test="jdkvv != null" >
+        jdkvv = #{jdkvv,jdbcType=VARCHAR},
+      </if>
+      <if test="lessjs != null" >
+        lessjs = #{lessjs,jdbcType=INTEGER},
+      </if>
+      <if test="xtqdsj != null" >
+        xtqdsj = #{xtqdsj,jdbcType=VARCHAR},
+      </if>
+      <if test="xtyxsj != null" >
+        xtyxsj = #{xtyxsj,jdbcType=VARCHAR},
+      </if>
+      <if test="xtqdsjsj != null" >
+        xtqdsjsj = #{xtqdsjsj,jdbcType=INTEGER},
+      </if>
+      <if test="gsjf != null" >
+        gsjf = #{gsjf,jdbcType=VARCHAR},
+      </if>
+      <if test="jkrj != null" >
+        jkrj = #{jkrj,jdbcType=VARCHAR},
+      </if>
+      <if test="jkrjsl != null" >
+        jkrjsl = #{jkrjsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jkcat != null" >
+        jkcat = #{jkcat,jdbcType=VARCHAR},
+      </if>
+      <if test="jkypt != null" >
+        jkypt = #{jkypt,jdbcType=VARCHAR},
+      </if>
+      <if test="yyjs != null" >
+        yyjs = #{yyjs,jdbcType=INTEGER},
+      </if>
+      <if test="timeWait != null" >
+        time_wait = #{timeWait,jdbcType=INTEGER},
+      </if>
+      <if test="closeWait != null" >
+        close_wait = #{closeWait,jdbcType=INTEGER},
+      </if>
+      <if test="established != null" >
+        established = #{established,jdbcType=INTEGER},
+      </if>
+      <if test="listen != null" >
+        listen = #{listen,jdbcType=INTEGER},
+      </if>
+      <if test="netip != null" >
+        netip = #{netip,jdbcType=INTEGER},
+      </if>
+      <if test="netljzs != null" >
+        netljzs = #{netljzs,jdbcType=INTEGER},
+      </if>
+      <if test="netrx != null" >
+        netrx = #{netrx,jdbcType=INTEGER},
+      </if>
+      <if test="nettx != null" >
+        nettx = #{nettx,jdbcType=INTEGER},
+      </if>
+      <if test="logjk != null" >
+        logjk = #{logjk,jdbcType=VARCHAR},
+      </if>
+      <if test="ppver != null" >
+        ppver = #{ppver,jdbcType=VARCHAR},
+      </if>
+      <if test="uguest != null" >
+        uguest = #{uguest,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ipdz = #{ipdz,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gome.upm.domain.PcInfo" >
+    update pcinfo
+    set clip = #{clip,jdbcType=VARCHAR},
+      ppsl = #{ppsl,jdbcType=INTEGER},
+      ppys = #{ppys,jdbcType=INTEGER},
+      gxsj = #{gxsj,jdbcType=VARCHAR},
+      zjm = #{zjm,jdbcType=VARCHAR},
+      xtbb = #{xtbb,jdbcType=VARCHAR},
+      cpuhs = #{cpuhs,jdbcType=VARCHAR},
+      cpuxh = #{cpuxh,jdbcType=VARCHAR},
+      cpusyl = #{cpusyl,jdbcType=INTEGER},
+      memz = #{memz,jdbcType=INTEGER},
+      memuse = #{memuse,jdbcType=INTEGER},
+      memfree = #{memfree,jdbcType=INTEGER},
+      memsyl = #{memsyl,jdbcType=INTEGER},
+      swapuse = #{swapuse,jdbcType=INTEGER},
+      xtload = #{xtload,jdbcType=REAL},
+      vm = #{vm,jdbcType=VARCHAR},
+      hjsz = #{hjsz,jdbcType=VARCHAR},
+      dds = #{dds,jdbcType=INTEGER},
+      tails = #{tails,jdbcType=INTEGER},
+      cpio = #{cpio,jdbcType=REAL},
+      cpsyl = #{cpsyl,jdbcType=INTEGER},
+      jdkv = #{jdkv,jdbcType=VARCHAR},
+      dfs = #{dfs,jdbcType=INTEGER},
+      jdkvv = #{jdkvv,jdbcType=VARCHAR},
+      lessjs = #{lessjs,jdbcType=INTEGER},
+      xtqdsj = #{xtqdsj,jdbcType=VARCHAR},
+      xtyxsj = #{xtyxsj,jdbcType=VARCHAR},
+      xtqdsjsj = #{xtqdsjsj,jdbcType=INTEGER},
+      gsjf = #{gsjf,jdbcType=VARCHAR},
+      jkrj = #{jkrj,jdbcType=VARCHAR},
+      jkrjsl = #{jkrjsl,jdbcType=VARCHAR},
+      jkcat = #{jkcat,jdbcType=VARCHAR},
+      jkypt = #{jkypt,jdbcType=VARCHAR},
+      yyjs = #{yyjs,jdbcType=INTEGER},
+      time_wait = #{timeWait,jdbcType=INTEGER},
+      close_wait = #{closeWait,jdbcType=INTEGER},
+      established = #{established,jdbcType=INTEGER},
+      listen = #{listen,jdbcType=INTEGER},
+      netip = #{netip,jdbcType=INTEGER},
+      netljzs = #{netljzs,jdbcType=INTEGER},
+      netrx = #{netrx,jdbcType=INTEGER},
+      nettx = #{nettx,jdbcType=INTEGER},
+      logjk = #{logjk,jdbcType=VARCHAR},
+      ppver = #{ppver,jdbcType=VARCHAR},
+      uguest = #{uguest,jdbcType=INTEGER}
+    where ipdz = #{ipdz,jdbcType=VARCHAR}
+  </update>
+</mapper>

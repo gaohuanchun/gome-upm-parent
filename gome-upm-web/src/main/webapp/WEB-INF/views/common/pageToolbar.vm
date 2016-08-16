@@ -1,0 +1,162 @@
+<div class="page">
+   <div class="page_info">
+        <div>
+            <span>当前为：</span>
+            <span class="pageNo">第$!{page.pageNo}页</span>
+            <span class="totalPage">共$!{page.totalPage}页（共$!{page.totalResult}条）</span>
+            <span>显示为：</span>
+            #set($j=($page.pageNo - 1) * $page.pageSize + 1)
+           #if($!i == 0 || $!page.totalResult == 0)
+            <span class="regionPage"> 0 ~ 0 条</span>
+            #else
+            <span class="regionPage"> $!j ~ $!i 条</span>
+            #end
+        </div>
+    </div>
+    <div class="page-number">
+        <ul id="pagination-digg">
+            #if($!page.pageNo > 1)
+            #set($previous = $!page.pageNo - 1)
+            <li>
+            <a href="javascript:void(0)" class="pageNumber" pageNo="1">首页</a>
+            </li>
+            <li>
+            <a class="pageNumber" href="javascript:void(0)" pageNo="$!previous">&lt;&lt;上一页</a>
+            </li>
+            #else
+            <li class="previous-off">
+                                         首页
+            </li>
+            <li class="previous-off">
+            &lt;&lt;上一页
+            </li>
+            #end
+            #set($start=$!page.pageNo - 2)
+            #set($end=$!page.pageNo + 2)
+            #if($!page.pageNo - 2 < 1)
+            #set($start=1)
+            #end
+            #if($!page.pageNo == $!page.totalPage - 1 || $!page.pageNo == $!page.totalPage)
+            #set($start=$!page.totalPage - 4)
+            #end
+            
+            #if($start < 1)
+            #set($start=1)
+            #end
+            
+            
+           #if($!page.pageNo ==1 || $!page.pageNo ==2)
+            #set($end=5)
+            #end
+            #if($!page.pageNo <=5 && $!page.totalPage <=5)
+            #set($end=$!page.totalPage)
+            #end
+            #if($!page.pageNo == $!page.totalPage - 1 || $!page.pageNo == $!page.totalPage)
+            #set($end=$!page.totalPage)
+            #end
+            #if($!page.totalPage == 0)
+            #set($end=1)
+            #end
+
+
+            #foreach($foo in [$!start..$!end])
+            #if($!page.pageNo == $!foo)
+            <li class="active">$!foo</li>
+            #else
+            <li><a class="pageNumber" href="javascript:void(0)" pageNo="$!foo">$!foo</a></li>
+            #end
+            #end
+            #if($!page.pageNo < $!page.totalPage)
+            #set($next = $!page.pageNo + 1)
+            <!--
+            <li><input type="text" class="" id="pageInput" onchange="pageSearch()"></input></li>
+            -->
+            <li>
+            <a class="pageNumber" href="javascript:void(0)" pageNo="$!next">&gt;&gt;下一页</a>
+            </li>
+            <li>
+            <a href="javascript:void(0)" class="pageNumber" pageNo="$!page.totalPage">尾页</a>
+            </li>
+            #else
+            <!--
+            <li><input type="text" class="" id="pageInput" onchange="pageSearch()"></input></li>
+            -->
+            <li class="next-off">
+            &gt;&gt;下一页
+            </li>
+            <li class="next-off">
+                                          尾页
+            </li>
+            #end
+        </ul>
+    </div>
+</div>
+
+<!--
+<div class="page">
+   <div class="page_info">
+        <div>
+            <span>当前为：</span>
+            <span class="pageNo">第$!{page.pageNo}页</span>
+            <span class="totalPage">共$!{page.totalPage}页（共$!{page.totalResult}条）</span>
+            <span>显示为：</span>
+            #set($j=($page.pageNo - 1) * $page.pageSize + 1)
+            #if($!i == 0)
+            <span class="regionPage"> 0 ~ 0 条</span>
+            #else
+            <span class="regionPage"> $!j ~ $!i 条</span>
+            #end
+        </div>
+    </div>
+    <div class="page-number">
+        <ul id="pagination-digg">
+            #if($!page.pageNo > 1)
+            #set($previous = $!page.pageNo - 1)
+            <li>
+            <a href="javascript:void(0)" class="pageNumber" pageNo="1">首页</a>
+            </li>
+            <li>
+            <a class="pageNumber" href="javascript:void(0)" pageNo="$!previous">&lt;&lt;上一页</a>
+            </li>
+            #else
+            <li class="previous-off">
+                                         首页
+            </li>
+            <li class="previous-off">
+            &lt;&lt;上一页
+            </li>
+            #end
+            #set($start=$!page.pageNo - 3)
+            #set($end=$!page.pageNo + 3)
+            #if($!page.pageNo - 3 < 1)
+            #set($start=1)
+            #end
+            #if($!page.pageNo + 3 > $!page.totalPage)
+            #set($end=$!page.totalPage)
+            #end
+            #foreach($foo in [$!start..$!end])
+            #if($!page.pageNo == $!foo)
+            <li class="active">$!foo</li>
+            #else
+            <li><a class="pageNumber" href="javascript:void(0)" pageNo="$!foo">$!foo</a></li>
+            #end
+            #end
+            #if($!page.pageNo < $!page.totalPage)
+            #set($next = $!page.pageNo + 1)
+            <li>
+            <a class="pageNumber" href="javascript:void(0)" pageNo="$!next">&gt;&gt;下一页</a>
+            </li>
+            <li>
+            <a href="javascript:void(0)" class="pageNumber" pageNo="$!page.totalPage">尾页</a>
+            </li>
+            #else
+            <li class="next-off">
+            &gt;&gt;下一页
+            </li>
+            <li class="next-off">
+                                          尾页
+            </li>
+            #end
+        </ul>
+    </div>
+</div>-->

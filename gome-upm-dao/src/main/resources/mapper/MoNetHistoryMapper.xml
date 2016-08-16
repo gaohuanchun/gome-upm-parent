@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoNetHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.prtg.MoNetHistory" >
+    <result column="sensor_id" property="sensorId" jdbcType="INTEGER" />
+    <result column="date_time" property="dateTime" jdbcType="VARCHAR" />
+    <result column="date_time_raw" property="dateTimeRaw" jdbcType="VARCHAR" />
+    <result column="communication_roll" property="communicationRoll" jdbcType="VARCHAR" />
+    <result column="communication_roll_value" property="communicationRollValue" jdbcType="VARCHAR" />
+    <result column="communication_speed" property="communicationSpeed" jdbcType="VARCHAR" />
+    <result column="communication_speed_value" property="communicationSpeedValue" jdbcType="VARCHAR" />
+    <result column="in_communication_roll" property="inCommunicationRoll" jdbcType="VARCHAR" />
+    <result column="in_communication_roll_value" property="inCommunicationRollValue" jdbcType="VARCHAR" />
+    <result column="in_communication_speed" property="inCommunicationSpeed" jdbcType="VARCHAR" />
+    <result column="in_communication_speed_value" property="inCommunicationSpeedValue" jdbcType="VARCHAR" />
+    <result column="out_communication_roll" property="outCommunicationRoll" jdbcType="VARCHAR" />
+    <result column="out_communication_roll_value" property="outCommunicationRollValue" jdbcType="VARCHAR" />
+    <result column="out_communication_speed" property="outCommunicationSpeed" jdbcType="VARCHAR" />
+    <result column="out_communication_speed_value" property="outCommunicationSpeedValue" jdbcType="VARCHAR" />
+    <result column="halt_time" property="haltTime" jdbcType="VARCHAR" />
+    <result column="halt_time_value" property="haltTimeValue" jdbcType="VARCHAR" />
+    <result column="coverage" property="coverage" jdbcType="VARCHAR" />
+    <result column="coverage_raw" property="coverageRaw" jdbcType="VARCHAR" />
+    <result column="cpu_mem_val" property="cpuMemVal" jdbcType="VARCHAR" />
+    <result column="cpu_mem_val_raw" property="cpuMemValRaw" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    sensor_id sensorId, date_time dateTime, date_time_raw dateTimeRaw, communication_roll communicationRoll, communication_roll_value communicationRollValue, 
+    communication_speed communicationSpeed, communication_speed_value communicationSpeedValue, in_communication_roll inCommunicationRoll, in_communication_roll_value inCommunicationRollValue, 
+    in_communication_speed inCommunicationSpeed, in_communication_speed_value inCommunicationSpeedValue, out_communication_roll outCommunicationRoll, out_communication_roll_value outCommunicationRollValue, 
+    out_communication_speed outCommunicationSpeed, out_communication_speed_value outCommunicationSpeedValue, halt_time haltTime, halt_time_value haltTimeValue, 
+    coverage coverage, coverage_raw coverageRaw, cpu_mem_val cpuMemVal, cpu_mem_val_raw cpuMemValRaw, type,create_time createTime
+  </sql>
+  
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    sensor_id sensorId, date_time dateTime,communication_roll communicationRoll
+    from mo_net_history where 1=1
+    <if test="sensorId != null" >
+       and sensor_id = #{sensorId,jdbcType=INTEGER}
+    </if>
+    <if test="sort != null" >
+       order by create_time desc,date_time_raw desc
+    </if>
+     limit #{offset}
+  </select>
+  
+  <delete id="deleteByMap" parameterType="map" >
+    delete from mo_net_history where 1=1
+    <if test="sensorId != null" >
+       and sensor_id = #{sensorId,jdbcType=INTEGER}
+    </if>
+    <if test="beforeDate != null">
+       and <![CDATA[ create_time < #{beforeDate,jdbcType=TIMESTAMP} ]]> 
+    </if>
+  </delete>
+  
+  
+  
+  <insert id="insert" parameterType="com.gome.upm.domain.prtg.MoNetHistory" >
+    insert into mo_net_history (sensor_id, date_time, date_time_raw, 
+      communication_roll, communication_roll_value, 
+      communication_speed, communication_speed_value, 
+      in_communication_roll, in_communication_roll_value, 
+      in_communication_speed, in_communication_speed_value, 
+      out_communication_roll, out_communication_roll_value, 
+      out_communication_speed, out_communication_speed_value, 
+      halt_time, halt_time_value, coverage, 
+      coverage_raw, cpu_mem_val, cpu_mem_val_raw, 
+      type,create_time)
+    values (#{sensorId,jdbcType=INTEGER}, #{dateTime,jdbcType=VARCHAR}, #{dateTimeRaw,jdbcType=VARCHAR}, 
+      #{communicationRoll,jdbcType=VARCHAR}, #{communicationRollValue,jdbcType=VARCHAR}, 
+      #{communicationSpeed,jdbcType=VARCHAR}, #{communicationSpeedValue,jdbcType=VARCHAR}, 
+      #{inCommunicationRoll,jdbcType=VARCHAR}, #{inCommunicationRollValue,jdbcType=VARCHAR}, 
+      #{inCommunicationSpeed,jdbcType=VARCHAR}, #{inCommunicationSpeedValue,jdbcType=VARCHAR}, 
+      #{outCommunicationRoll,jdbcType=VARCHAR}, #{outCommunicationRollValue,jdbcType=VARCHAR}, 
+      #{outCommunicationSpeed,jdbcType=VARCHAR}, #{outCommunicationSpeedValue,jdbcType=VARCHAR}, 
+      #{haltTime,jdbcType=VARCHAR}, #{haltTimeValue,jdbcType=VARCHAR}, #{coverage,jdbcType=VARCHAR}, 
+      #{coverageRaw,jdbcType=VARCHAR}, #{cpuMemVal,jdbcType=VARCHAR}, #{cpuMemValRaw,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gome.upm.domain.prtg.MoNetHistory" >
+    insert into mo_net_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sensorId != null" >
+        sensor_id,
+      </if>
+      <if test="dateTime != null" >
+        date_time,
+      </if>
+      <if test="dateTimeRaw != null" >
+        date_time_raw,
+      </if>
+      <if test="communicationRoll != null" >
+        communication_roll,
+      </if>
+      <if test="communicationRollValue != null" >
+        communication_roll_value,
+      </if>
+      <if test="communicationSpeed != null" >
+        communication_speed,
+      </if>
+      <if test="communicationSpeedValue != null" >
+        communication_speed_value,
+      </if>
+      <if test="inCommunicationRoll != null" >
+        in_communication_roll,
+      </if>
+      <if test="inCommunicationRollValue != null" >
+        in_communication_roll_value,
+      </if>
+      <if test="inCommunicationSpeed != null" >
+        in_communication_speed,
+      </if>
+      <if test="inCommunicationSpeedValue != null" >
+        in_communication_speed_value,
+      </if>
+      <if test="outCommunicationRoll != null" >
+        out_communication_roll,
+      </if>
+      <if test="outCommunicationRollValue != null" >
+        out_communication_roll_value,
+      </if>
+      <if test="outCommunicationSpeed != null" >
+        out_communication_speed,
+      </if>
+      <if test="outCommunicationSpeedValue != null" >
+        out_communication_speed_value,
+      </if>
+      <if test="haltTime != null" >
+        halt_time,
+      </if>
+      <if test="haltTimeValue != null" >
+        halt_time_value,
+      </if>
+      <if test="coverage != null" >
+        coverage,
+      </if>
+      <if test="coverageRaw != null" >
+        coverage_raw,
+      </if>
+      <if test="cpuMemVal != null" >
+        cpu_mem_val,
+      </if>
+      <if test="cpuMemValRaw != null" >
+        cpu_mem_val_raw,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sensorId != null" >
+        #{sensorId,jdbcType=INTEGER},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTimeRaw != null" >
+        #{dateTimeRaw,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationRoll != null" >
+        #{communicationRoll,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationRollValue != null" >
+        #{communicationRollValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationSpeed != null" >
+        #{communicationSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationSpeedValue != null" >
+        #{communicationSpeedValue,jdbcType=VARCHAR},
+      </if>
+      <if test="inCommunicationRoll != null" >
+        #{inCommunicationRoll,jdbcType=VARCHAR},
+      </if>
+      <if test="inCommunicationRollValue != null" >
+        #{inCommunicationRollValue,jdbcType=VARCHAR},
+      </if>
+      <if test="inCommunicationSpeed != null" >
+        #{inCommunicationSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="inCommunicationSpeedValue != null" >
+        #{inCommunicationSpeedValue,jdbcType=VARCHAR},
+      </if>
+      <if test="outCommunicationRoll != null" >
+        #{outCommunicationRoll,jdbcType=VARCHAR},
+      </if>
+      <if test="outCommunicationRollValue != null" >
+        #{outCommunicationRollValue,jdbcType=VARCHAR},
+      </if>
+      <if test="outCommunicationSpeed != null" >
+        #{outCommunicationSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="outCommunicationSpeedValue != null" >
+        #{outCommunicationSpeedValue,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTime != null" >
+        #{haltTime,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTimeValue != null" >
+        #{haltTimeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="coverage != null" >
+        #{coverage,jdbcType=VARCHAR},
+      </if>
+      <if test="coverageRaw != null" >
+        #{coverageRaw,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuMemVal != null" >
+        #{cpuMemVal,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuMemValRaw != null" >
+        #{cpuMemValRaw,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

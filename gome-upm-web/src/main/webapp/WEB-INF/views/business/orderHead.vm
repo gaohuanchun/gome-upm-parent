@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="${rc.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="${rc.contextPath}/libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="${rc.contextPath}/libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="${rc.contextPath}/libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${rc.contextPath}/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/common-top.css" type="text/css" />
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+    <!-- header start-->
+    #parse("common/header.vm")
+    <!-- header end-->
+    
+    <!-- Left side column. contains the logo and sidebar -->
+    #parse("common/leftMenu.vm")
+    <!-- Left side end -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+        	<a href="${rc.contextPath}/index">统一监控平台 </a><a href="${rc.contextPath}/monitoBusiness/gotoOrderHead">/ 订单一览</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content" style="height: 1280px;">
+				<div class="orderSummarySty">
+	        	<div class="leftlayout">
+	        		<div class="lefttopLayout">
+	        			<h2 style="">热销商品排行榜</h2>
+	        			<table class="table hotsellTable">
+	        				<tbody id="hotGood">
+	        				</tbody>
+	        			</table>
+	        			<h2 style="font-size: 15px;">品牌排行榜</h2>
+	        			<div class="rankingList" style="text-align: center;padding: 33px 0px;" id="GoodBrand">
+							<img src="../image/top1.png" />
+							<img style="padding: 0px 13px;" src="../image/top2.png" />
+							<img src="../image/top3.png" />
+						</div>
+	        		</div>
+	        	</div>
+	        	<div class="centerLayout">
+	        		<div class="centertoplayout">
+	        			<h2 style="font-size: 15px;">订单解析</h2>
+	        			<span style="color:#999999;display: block;text-align: center;margin-top: 10px;font-size:18px;">订单量：<span style="color:#9c8ade;" id="order_tal"></span></span>
+	        			<div style="width: 300px;height: 200px;margin: auto;" id="order_analysis"></div>
+						<p style="color:#999999">
+							充值订单：<span style="color:#9c8ade;font-weight: 600;" id="order_pay"></span>
+							<span style="padding: 23px;">
+								非充值订单：<span style="color:#9c8ade;font-weight: 600;" id="order_notpay"></span>
+							</span><br>
+							支付成功订单：<span style="color:#9c8ade;font-weight: 600;" id="order_relpay"></span>
+							<span style="padding: 20px;">
+								妥投成功订单：<span style="color:#9c8ade;font-weight: 600;" id="order_delivery"></span>
+							</span>
+						</p>
+	        		</div>
+	        		<div class="centertoplayout" style="margin-left: 66%;margin-top: -358px;">
+	        			<h2 style="font-size: 15px;">商品属性分类</h2>
+	        			<div style="width: 300px;height: 300px;margin: auto;" id="commodity_property"></div>
+	        		</div>
+	        		<div class="centerbottomLayout">
+	        			<div class="city_title">
+		        			<h2>城市销售榜</h2>
+		        			<div class="pull-right">
+								<div class="form-group" style="margin-right: 15px;">
+									<input type="text" class="form-control" id="startTime_HotCity">
+									<label>至</label>
+									<input type="text" class="form-control lastInput" id="endTime_HotCity">
+									<i class="fa fa-search" onclick="searchHotCity()"></i>
+								</div>
+							</div>
+	        			</div>
+	        			
+	        			<div id="city_sales" style="border-radius: 0px 0px 0px 3px;height:85%;width:70%;padding-left: 30px;background-color:#FFF"></div>
+	        			<div class="hottest">
+	        				<h2>最热城市</h2>
+	        				<div style="width: 159px;background: #f9f9f9;margin: 0px 90px;height: 212px;" id="hotCity">
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div class="rightlayout">
+	        		<div class="righttoplayout">
+	        			<h2>5分钟订单</h2>
+	        			<div id="container_headLoginInfo" style="height:300px;"></div>
+	        		</div>
+	        		<div class="rightbottomlayout">
+	        			<h2>在线支付成功率</h2>
+	        			<div id="pay_success_rate" style="height:300px;"></div>
+	        		</div>
+	        	</div>
+	        </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+      #parse("common/controlSidebar.vm")
+    <!-- Control Sidebar end-->
+    
+</div><!-- ./wrapper -->
+
+
+<!-- 按订单状态查询-->
+#parse("business/orderHeadScript.vm")
+
+<!-- jQuery 2.1.3 -->
+<script src="${rc.contextPath}/js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="${rc.contextPath}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="${rc.contextPath}/libs/js/app.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/left_menu.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/portal/allPort.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/highcharts.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/echarts/echarts-all.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/business/Date.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/business/monito.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/laydate-v1.1/laydate/laydate.js"></script>
+</body>
+</html>

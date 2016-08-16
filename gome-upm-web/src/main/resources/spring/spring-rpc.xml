@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+        ">  
+  
+    <dubbo:application name="gome-sec-web" />  
+    
+    <!-- 云平台 -->
+    <dubbo:registry  protocol="zookeeper" address="10.126.53.10:2182,10.126.53.10:2180,10.126.53.10:2183" ></dubbo:registry> 
+    
+    <!-- UAT -->
+    <!-- <dubbo:registry  protocol="zookeeper"  address="10.58.50.203:2181,10.58.50.204:2181,10.58.50.205:2181" />   -->
+  
+    <!-- 单点登录 -->  
+	<!-- <dubbo:reference id="userSsoFacade" interface="com.gome.sso.facade.IUserSsoFacade" /> -->
+	
+	
+	  <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+    <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.DemoService" />
+    
+  
+  
+</beans>    

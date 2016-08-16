@@ -1,0 +1,19 @@
+	<header class="main-header">
+		<div class="nav_left fl">
+			<a href="${rc.contextPath}/index" class="logo "> <img src="${rc.contextPath}/image/Logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="${rc.contextPath}/logout" onclick="return confirm('确认要退出吗？')" class="dropdown-toggle"> 
+						<span class="">$userName</span> <i style="font-size:16px;padding:5px" class="fa fa-power-off"></i> 
+					</a>
+				</li>
+			</ul>
+		</div>
+	</header>
+    #parse("common/common.vm")

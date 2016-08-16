@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	>
+
+	<bean id="dataSourceOne" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${community.shop.jdbc.driver}" />
+		<property name="url" value="${community.shop.jdbc.url}" />
+		<property name="username" value="${community.shop.jdbc.username}" />
+		<property name="password" value="${community.shop.jdbc.password}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="initialSize" value="4" />
+		<property name="maxActive" value="80" />
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="4" />
+		<property name="maxWait" value="10000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="validationQuery" value="select 1" />
+		<property name="testOnBorrow" value="false" />
+		<property name="numTestsPerEvictionRun" value="3" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<property name="timeBetweenEvictionRunsMillis" value="30000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+	</bean>
+	
+	<bean id="dataSourceTwo" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver2}" />
+		<property name="url" value="${url2}" />
+		<property name="username" value="${username2}" />
+		<property name="password" value="${password2}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="initialSize" value="4" />
+		<property name="maxActive" value="80" />
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="4" />
+		<property name="maxWait" value="10000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="validationQuery" value="select 1" />
+		<property name="testOnBorrow" value="false" />
+		<property name="numTestsPerEvictionRun" value="3" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<property name="timeBetweenEvictionRunsMillis" value="30000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+	</bean>
+	
+	<bean id="dataSourceThree" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver3}" />
+		<property name="url" value="${url3}" />
+		<property name="username" value="${username3}" />
+		<property name="password" value="${password3}" />
+		<property name="initialSize" value="4" />
+		<property name="maxActive" value="80" />
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="4" />
+		<property name="maxWait" value="10000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="validationQuery" value="select * from dual" />
+		<property name="testOnBorrow" value="false" />
+		<property name="numTestsPerEvictionRun" value="3" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<property name="timeBetweenEvictionRunsMillis" value="30000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+	</bean>
+	
+	<bean id="dataSourceFour" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver4}" />
+		<property name="url" value="${url4}" />
+		<property name="username" value="${username4}" />
+		<property name="password" value="${password4}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="initialSize" value="4" />
+		<property name="maxActive" value="80" />
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="4" />
+		<property name="maxWait" value="10000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="validationQuery" value="select * from dual" />
+		<property name="testOnBorrow" value="false" />
+		<property name="numTestsPerEvictionRun" value="3" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<property name="timeBetweenEvictionRunsMillis" value="30000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+	</bean>
+	
+	<bean id="dataSourceFive" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver5}" />
+		<property name="url" value="${url5}" />
+		<property name="username" value="${username5}" />
+		<property name="password" value="${password5}" />
+		<property name="initialSize" value="4" />
+		<property name="maxActive" value="80" />
+		<property name="maxIdle" value="30" />
+		<property name="minIdle" value="4" />
+		<property name="maxWait" value="10000" />
+	</bean>
+</beans>

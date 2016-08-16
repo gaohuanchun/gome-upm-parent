@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.DBConnectionMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.DBConnection" >
+    <result column="DB_TYPE" property="dbType" jdbcType="VARCHAR" />
+    <result column="SERVER_ADDR" property="serverAddr" jdbcType="VARCHAR" />
+    <result column="DB_PORT" property="port" jdbcType="INTEGER" />
+    <result column="INST_NAME" property="instanceName" jdbcType="VARCHAR" />
+    <result column="ACTIVE" property="active" jdbcType="INTEGER" />
+    <result column="TOTAL" property="total" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SAMPLE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    DB_TYPE, SERVER_ADDR, DB_PORT, INST_NAME, ACTIVE, TOTAL, CREATE_TIME, SAMPLE_TIME
+  </sql>
+  
+  <select id="selectDBConnectionListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  select ttt.* from 
+  	(select tt.*, ROWNUM rowno from 
+  	(select t.* from GAMP.DB_CONN_MONITOR t
+  	where 1=1 
+ 	<if test="conditions.dbType != null" >
+      and t.DB_TYPE = #{conditions.dbType,jdbcType=VARCHAR} 
+    </if>
+    <if test="conditions.serverAddr != null" >
+      and t.SERVER_ADDR = #{conditions.serverAddr,jdbcType=VARCHAR} 
+    </if>
+    <if test="conditions.port != null" >
+      and t.DB_PORT = #{conditions.port,jdbcType=INTEGER} 
+    </if>
+    <if test="conditions.instanceName != null" >
+      and t.INST_NAME = #{conditions.instanceName,jdbcType=VARCHAR} 
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and t.CREATE_TIME between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    order by t.CREATE_TIME desc) tt 
+    where ROWNUM &lt;= #{endIndex}) ttt 
+    where ttt.rowno &gt;= #{startIndex}
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.DBConnection">
+  	select count(*) from GAMP.DB_CONN_MONITOR t
+ 	where 1=1 
+ 	<if test="dbType != null" >
+      and t.DB_TYPE = #{dbType,jdbcType=VARCHAR} 
+    </if>
+    <if test="serverAddr != null" >
+      and t.SERVER_ADDR = #{serverAddr,jdbcType=VARCHAR} 
+    </if>
+    <if test="port != null" >
+      and t.DB_PORT = #{port,jdbcType=INTEGER} 
+    </if>
+    <if test="instanceName != null" >
+      and t.INST_NAME = #{instanceName,jdbcType=VARCHAR} 
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and t.CREATE_TIME between #{startTime} and #{endTime}
+    </if>
+  </select>
+  
+  <select id="selectDBConnectionListByConditions" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.DBConnection">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from GAMP.DB_CONN_MONITOR 
+  	where 1=1 
+ 	<if test="dbType != null" >
+      and DB_TYPE = #{dbType,jdbcType=VARCHAR} 
+    </if>  
+    <if test="serverAddr != null" >
+      and SERVER_ADDR = #{serverAddr,jdbcType=VARCHAR}
+    </if>
+    <if test="port != null" >
+      and DB_PORT = #{port,jdbcType=INTEGER}
+    </if>
+     <if test="instanceName != null" >
+      and INST_NAME = #{instanceName,jdbcType=VARCHAR}
+    </if>
+    <if test="active != null" >
+      and ACTIVE = #{active,jdbcType=INTEGER}
+    </if>
+    <if test="total != null" >
+      and TOTAL = #{total,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="selectAllDbTypes" resultMap="BaseResultMap">
+  	select distinct DB_TYPE from GAMP.DB_CONN_MONITOR
+  </select>
+  
+</mapper> 

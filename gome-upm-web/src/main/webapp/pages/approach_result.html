@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+    <header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+            	<li class="treeview">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview active">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview currentli">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        	<a href="#">统一监控平台 / 方法监控</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content contentSty">
+            <div class="input-group" style="width: 400px;margin-bottom: 20px;">
+              	<input type="text" class="form-control" id="key" value="1.0Final.1465980585544.bd8edb5.26060.1.1" >
+              	<span class="input-group-btn">
+                	<a class="btn" href="javascript:void(0);" id="searchBtn">搜索</a>
+              	</span>
+            </div>
+            <div class="approach_txt">
+                <p>traceid：1.0Final.1465980585544.bd8edb5.26060.1.1</p>
+                <p style="padding:10px 0px;">调度入口IP：yushuqiangpc.ds.gome.com.cn/10.144.32.169</p>
+                <p>开始时间：2016-6-15 16:49:45， 1个调用节点，消耗总时长：1371ms</p>
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">trace  tree</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">trace  log</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+
+                    <div class="list_table" style="margin-top:0px;">
+                        <!--<table  class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>服务名</th>
+                                <th>类型</th>
+                                <th>状态</th>
+                                <th>服务/方法</th>
+                                <th>主机信息</th>
+                                <th>时间轴</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a  class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                             <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 80%;color:#333">1371ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 50%;color:#333">371ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 50%;color:#333">371ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 20%;color:#333">71ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 30%;color:#333">122ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td><a href="" class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 60%;color:#333">551ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>-->
+                        <table class="table table-background">
+                            <thead>
+                            <tr>
+                                <th class="t_eft">服务名</th>
+                                <th>类型</th>
+                                <th>状态</th>
+                                <th>服务/方法</th>
+                                <th>主机信息</th>
+                                <th>时间轴</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr_parent">
+                                    <td class="td_first-child"><i class="fa fa-sort-down li_tittle"></i>oms-order-view</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="sub2_tr">
+                                    <td class="sub2">
+                                        oms-order-view-child-child
+                                    </td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub2_tr">
+                                    <td class="t_eft sub2">
+                                        oms-order-view-child-child
+                                    </td>
+                                    <!--<td class="t_eft sub2">oms-order-view-child</td>-->
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="tr_parent">
+                                    <td><i class="fa fa-sort-down li_tittle"></i>oms-order-view</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub2_tr">
+                                    <td class="t_eft sub2">
+                                        oms-order-view-child-child
+                                    </td>
+                                    <!--<td class="t_eft sub2">oms-order-view-child</td>-->
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub2_tr">
+                                    <td class="t_eft sub2">
+                                        oms-order-view-child-child
+                                    </td>
+                                    <!--<td class="t_eft sub2">oms-order-view-child</td>-->
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal"title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="tr_parent">
+                                    <td><i class="fa fa-sort-down li_tittle"></i>oms-order-view</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub1_tr">
+                                    <td class="sub1"><i class="fa fa-sort-down li_tittle"></i>oms-order-view-child</td>
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub2_tr">
+                                    <td class="t_eft sub2">
+                                        <i class="fa fa-sort-down li_tittle"></i>
+                                        oms-order-view-child
+                                    </td>
+                                    <!--<td class="t_eft sub2">oms-order-view-child</td>-->
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="sub2_tr">
+                                    <td class="t_eft sub2">
+                                        oms-order-view-child-child
+                                    </td>
+                                    <!--<td class="t_eft sub2">oms-order-view-child</td>-->
+                                    <td>DUBBO</td>
+                                    <td>FAIL</td>
+                                    <td class="server-td"><a  class="link_a" data-toggle="modal" data-target="#myserverModal" title="rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)">rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</a></td>
+                                    <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169</td>
+                                    <td class="borderRadius">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%;color:#333">1490ms</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div id="portContainer"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <div class="list_table" style="margin-top:0px;">
+                        <h2 class="list_table_title" style="cursor: pointer;border-bottom: 1px solid #C3D8DD"> 0---rest://10.144.32.169:20880/tes...ness(DubboRestInterAParameter)</h2>
+
+                        <table id="example1" class="table table-bordered table-striped tab-pane_td" style="display: none">
+                            <tbody>
+                            <tr><td>服务/方法：</td><td>rest://10.144.32.169:20880/test.gome.gtrace.client.dubborest.interfaces.IDubboRestInterA.doBusiness(DubboRestInterAParameter)</td></tr>
+                            <tr><td>调用类型：</td><td>DUBBO</td></tr>
+                            <tr><td>调用时间：</td><td>1465980585545</td></tr>
+                            <tr><td>花费时间：</td><td>1371毫秒</td></tr>
+                            <tr><td>业务字段：</td><td>服务/方法：</td></tr>
+                            <tr><td>应用Code：</td><td>服务/方法：</td></tr>
+                            <tr><td>主机信息：</td><td>yushuqiangpc.ds.gome.com.cn/10.144.32.169}</td></tr>
+                            <tr><td>调用进程号：</td><td>26060</td></tr>
+                            <tr><td>异常堆栈：</td><td>服务/方法：</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- Modal myserverModal 服务/方法 -->
+<div class="modal fade" id="myserverModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <div class="modal-header" style="border-bottom: none;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+               <table  class=" modal_table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <td>服务/方法：</td>
+                            <td>rest://10.144.32.169:20880/test.gome.gtrace.client.dubborest.interfaces.IDubboRestInterA.doBusiness(DubboRestInterAParameter)</td>
+                        </tr>
+                        <tr>
+                            <td>调用类型：</td>
+                            <td>DUBBO</td>
+                        </tr>
+                        <tr>
+                            <td>花费时间：</td>
+                            <td>1371毫秒</td>
+                        </tr>
+                        <tr>
+                            <td>业务字段：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>应用Code：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>主机信息：</td>
+                            <td>yushuqiangpc.ds.gome.com.cn/10.144.32.169}</td>
+                        </tr>
+                        <tr>
+                            <td>调用进程号：</td>
+                            <td>26060</td>
+                        </tr>
+                        <tr>
+                            <td>异常堆栈：</td>
+                            <td>rest://10.144.32.169:20880/test.gome.gtrace.client.dubborest.interfaces.IDubboRestInterA.doBusiness(DubboRestInterAParameter)</td>
+                        </tr>
+                    </tbody>
+               </table>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/approach_result.js"type="text/javascript"></script>
+<script>
+    $(function(){
+        //显示或隐藏
+        $('.table tr td i.li_tittle').click(showHideSub);
+    });
+
+    //显示或隐藏
+    function showHideSub()
+    {
+        var $tr = $(this).parents('.tr_parent,.sub1_tr');
+        if($tr.hasClass('tr_parent'))
+        {
+            var $st = $tr.nextUntil('.tr_parent').filter('.sub1_tr');
+            $st.toggle();
+            if($st.is(':hidden'))
+            {
+                $tr.nextUntil('.tr_parent').filter('.sub2_tr').hide();
+                $st.find('a:first').removeClass('down');
+            }
+        }else{
+            $tr.nextUntil('.tr_parent,.sub1_tr').filter('.sub2_tr').toggle();
+        }
+        $tr.find('a:first').toggleClass('down');
+    }
+</script>
+
+</body>
+</html>

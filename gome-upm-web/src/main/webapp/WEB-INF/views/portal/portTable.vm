@@ -1,0 +1,177 @@
+                    <table id="example1" class="table table_data table-striped" >
+                        <thead>
+                        <tr>
+                        	<th><input type="checkbox" id="checkAll"/></th>
+                            <th width="50px">序号</th>
+                            
+                            <th>监控点地址</th>
+                            <th width="150px">端口监控类型</th>
+                            <th width="100px">最近状态</th>
+                            <th width="100px">创建时间</th>
+                            <th width="100px">配置状态</th>
+                            <th width="200px">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                             #if($!page.totalResult > 0)
+                        	#set($i = ($page.pageNo - 1) * $page.pageSize)
+                        	#foreach($url in $!page.data)
+                        		#set($i = $i + 1)
+                        		<tr>
+	                               
+	                               <td><input type="checkbox" name="checkbox" value="$!url.id" /></td>
+	                               <td>$!i</td>
+	                               <td>$!url.port</td>
+	                               <td>$!url.monitorType</td>
+
+	                               #if($!url.survival == 1)
+	                                <td class="null_red">存活</td>
+	                               #else
+	                               <td class="null_red">不存活</td>
+	                               #end
+	                               <td>$!url.createTimeStr</td>
+	                               
+	                               #if($!url.status == 1)
+	                               <td class="yes_green">有效</td>
+	                               #else
+	                               <td class="yes_green">无效</td>
+	                               #end
+	                               
+	                               <td >
+	                                    <a href="${rc.contextPath}/portal/report?id=$!url.id" class="operation" style="margin-right: 8px;">明细</a>
+	                                    <a  data-toggle="modal" data-target="#updateMyModal" name="edit_table" class="operation" urlId="$!url.id" style="cursor:pointer;">编辑</a>
+	                                    #if($!url.status == 1)
+	                                    <a   urlId="$!url.id" name="status" class="operation" urlStatus="0" style="cursor:pointer;">禁用</a>
+	                                    #else
+	                                    <a  class="operation" name="status" urlId="$!url.id" urlStatus="1" style="cursor:pointer;">启用</a>
+	                                    #end
+	                                </td>
+                            </tr>
+                       		#end
+                        #end
+                        
+                        
+                        </tbody>
+                    </table>
+                          #parse("common/pagePlugin.vm")
+                          <input type="hidden" value="$!page.conditions.startTime" id="hiddenStartTime"/>
+                          <input type="hidden" value="$!page.conditions.endTime" id="hiddenEndTime"/>
+                          <input type="hidden" value="$!page.conditions.survival" id="hiddenSurvival"/>
+                          <input type="hidden" value="$!page.conditions.url" id="hiddenUrlAddress"/>
+                          
+                          
+                          
+                          
+                          
+<div class="modal fade" id="updateMyModal" tabindex="-1" >
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">编辑信息</h2>
+      </div>
+      <div class="modal-body">
+      	<div style="width: 360px;margin: 0 auto;">
+         <form class="form-horizontal">
+         <input type="hidden" id="hiddenUrlId" />
+         	
+               <div class="box-body">
+                 <div class="form-group">
+                   <label class="col-sm-4 control-label">端口监控类型</label>
+                    <div class="col-sm-8">
+	                    <select id="monitorType" class="form-control">
+	                        <option value="应用服务器">应用服务器</option>
+	                        <option value="数据库服务器">数据库服务器</option>
+	                        <option value="缓存服务器">缓存服务器</option>
+	                        <option value="消息服务器">消息服务器</option>
+	                    </select>
+                    </div>
+              	</div>
+               </div>
+               <div class="form-group">
+                   <label for="address" class="col-sm-4 control-label">监控地址</label>
+                   <div class="col-sm-8">
+                     <input type="text" class="form-control" id="address" placeholder="">
+                   </div>
+                </div>
+               <div class="form-group">
+	               <label class="col-sm-4 control-label">访问时间频率</label>
+	               <div class="col-sm-8">
+	                <select class="form-control" id="urlFrc">
+	                    <option value="5">5分钟</option>
+                       <option value="10">10分钟</option>
+                       <option value="15">15分钟</option> 
+	                </select>
+	               </div>
+	            </div>
+	            
+	           <div class="form-group">
+	              <label class="col-sm-4 control-label" >超时次数</label>
+	              <div class="col-sm-8">
+	                <select class="form-control" id="time_number">
+	                    <option value="5">5次</option>
+	                    <option value="10">10次</option>
+	                    <option value="15">15次</option>
+	                </select>
+	               </div>
+	            </div>
+               
+			<div class="form-group">
+               <label for="ip" class="col-sm-4 control-label">报警方式</label>
+               <div class="col-sm-8">
+                <label class="radio-inline">
+				  <input type="radio" id="warnType1" name="alarmWay" value="no"> 不报警
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" id="warnType2" name="alarmWay" value="email"> 邮件报警
+				</label>
+			               </div>
+			            </div>
+			            <div class="form-group">
+			               <label for="ip" class="col-sm-4 control-label">报警联系人</label>
+			               <div class="col-sm-8">
+			                <label class="checkbox-inline">
+				  <input type="checkbox" id="warnContact" value="option1" checked disabled> 监控组
+				</label>
+               </div>
+            </div>
+             
+             </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <a  class="newbtn" id="modal_btn_submit">确定</a>
+        <a  class="newbtn" data-dismiss="modal">关闭</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="importExcel" tabindex="-1" >
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">导入Excel</h2>
+      </div>
+      <div class="modal-body">
+      	<div style="width: 420px;margin: 0 auto;">
+         <form class="form-horizontal">
+         <input type="hidden" id="hiddenUrlId" />
+         	
+             <div class="form-group">
+               <label for="address" class="col-sm-4 control-label">Excel</label>
+               <div class="col-sm-8">
+                <input type="file" class="form-control" name="fileToUpload" id="excel" placeholder="">
+              </div>
+          	</div>
+               
+             </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <a  class="newbtn"  id="import_submit">确定</a>
+        <a  class="newbtn" id="import_close" data-dismiss="modal">关闭</a>
+      </div>
+    </div>
+  </div>
+</div>

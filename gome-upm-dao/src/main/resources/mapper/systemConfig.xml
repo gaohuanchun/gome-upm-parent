@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.SystemConfigMaintainDao" >
+	<resultMap id="BaseResultMap" type="com.gome.upm.domain.SystemConfig" >
+	    <id column="config_id" property="configId" jdbcType="INTEGER" />
+	    <result column="conf_key" property="confKey" jdbcType="VARCHAR" />
+	    <result column="conf_value" property="confValue" jdbcType="VARCHAR" />
+	    <result column="val_type" property="valueType" jdbcType="VARCHAR" />
+	    <result column="val_desc" property="valueDesc" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="sts" property="sts" jdbcType="VARCHAR" />
+	    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<!-- 基础字段 -->
+	<sql id="Base_Column_List" >
+    	config_id, conf_key, conf_value, val_type, val_desc, create_time, modify_time, sts
+    </sql>
+    
+    <!-- 根据key查询配置 -->
+	<select id="querySystemConfigByKey" resultMap="BaseResultMap">
+		${paramSQL} 
+	</select>
+</mapper>

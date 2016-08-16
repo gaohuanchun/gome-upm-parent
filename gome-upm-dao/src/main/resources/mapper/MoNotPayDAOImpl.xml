@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.MoNotPayDAO">
+	<sql id="oms" >
+	oms_uat
+	</sql>
+	<select id="searchMoNotPayCountByTime" resultType="java.lang.Integer" parameterType="MoOrderNotRechargeBO">
+	    select count(1)
+		from <include refid="oms"></include>.oms_order t
+		WHERE t.created_by_order IS NULL AND t.state NOT IN ('INCOMPLETE','INVISIBLE')
+		and t.site_id != 'chongzhiSite'
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+	      and t.submitted_date between #{startTime} and #{endTime}
+	    </if>
+	</select>
+</mapper>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="${rc.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="${rc.contextPath}/libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="${rc.contextPath}/libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="${rc.contextPath}/libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="${rc.contextPath}/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="${rc.contextPath}/css/common-top.css" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="${rc.contextPath}/libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="${rc.contextPath}/libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+ 
+      <!-- header start-->
+    #parse("common/header.vm")
+    <!-- header end-->
+
+    <!-- Left side column. contains the logo and sidebar -->
+    #parse("common/leftMenu.vm")
+    <!-- Left side end -->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+                <a href="${rc.contextPath}/index">统一监控平台 </a><a href="${rc.contextPath}/portal/get"> / 端口存活监控</a><a href="javascript:location.reload();"> / 创建端口存活监控配置点Key</a>
+        </section>
+                 <!-- step2相关url配置信息 -->
+                <input type="hidden" id="monitorType" value="$!monitorType"/>
+                <input type="hidden" id="overtimes" value="$!overtimes"/>
+                <input type="hidden" id="portalAddress" value="$!portalAddress"/>
+                <input type="hidden" id="frequency" value="$!frequency"/>
+                <input type="hidden" id="isContainsCon" value="$!isContainsCon"/>
+                <input type="hidden" id="isDefaultCode" value="$!isDefaultCode"/>
+                <input type="hidden" id="returnCode" value="$!returnCode"/>
+        <!-- Main content -->
+        <section class="content">
+            <div class="box" style="margin-top:20px;border: none;">
+                <div class="box-header applicationEditHeader">
+                    <ul>
+                        <!--<li class="currentCls"><span class="styleUl current">1</span> 监控点Key</li>-->
+                        <li class="currentCls"><span class="styleUl current">1</span> 监控参数</li>
+                        <li class="currentCls"><span class="styleUl current">2</span> 报警方式</li>
+                    </ul>
+                </div>
+                <div class="list_table" style="padding: 0 10px;">
+                    <h2 class="list_table_title">2.填写报警方式</h2>
+                    <table class="table table-striped table_style">
+                        <tbody>
+                        <tr>
+                            <td class="title_td"><span><strong>*</strong>报警方式</span></td>
+                            <td>
+                                <div style="padding-top: 7px;">
+                                    <label class="radio-inline"><input type="radio" name="alarmWay" value="no" >不报警</label>
+                                    <label class="radio-inline"><input type="radio" name="alarmWay" value="email" checked >邮件报警</label>
+                                    <!--<span class="inline_span" style="display:none"><input type="checkbox"/>短信</span>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title_td"><span><strong>*</strong>报警联系人</span></td>
+                            <td>
+                                <!--<div style="padding-top: 7px;">
+                                    <span class="inline_span"><input type="checkbox" checked disabled/>监控组</span>
+                                    <a href="#" style="text-decoration: underline;color: #53616E; display:none" data-toggle="modal" data-target="#myModal">添加其他</a>
+                                </div>-->
+                                <div style="padding-top: 7px;">
+                                	<label class="checkbox-inline">
+									  <input type="checkbox" id="inlineCheckbox1" checked disabled> 监控组
+									</label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer clearfix applicationEditHeader">
+                    <ul class="paging">
+                        <li><a class="newbtn" id="previous-step">上一步</a></li>
+                        <!--<li><a class="btn btn-primary btn-sm disabled" >下一步</a></li>-->
+                        <li><a class="newbtn" id="btn-submit">完成</a></li>
+                        <li><a class="newbtn" href="${rc.contextPath}/portal/get">取消</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    
+     <!-- footer start -->
+      #parse("common/footer.vm")
+    <!-- footer end -->
+
+
+    <!-- Control Sidebar -->
+      #parse("common/controlSidebar.vm")
+    <!-- Control Sidebar end-->
+</div><!-- ./wrapper -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">添加自定义联系人信息</h2>
+            </div>
+            <div class="modal-body">
+                <div style="width: 360px;margin: 0 auto;">
+                    <form>
+                        <fieldset>
+                            <legend>【方式一】直接输入联系人erp账号 以逗号分割</legend>
+                            <span style="margin-left: 27px;">ERP账号： <input type="text" style="width: 70%;"></span><br>
+                        </fieldset>
+                        <fieldset>
+                            <legend>【方式二】直接输入联系方式 以逗号分割</legend>
+                            <span style="margin-left: 27px;">RTX：<input type="text" style="width: 70%;"></span><br><br>
+                            <span style="margin-left: 27px;">手机：<input type="text" style="width: 70%;"></span><br><br>
+                            <span style="margin-left: 27px;">邮箱：<input type="text" style="width: 70%;"></span>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery 2.1.3 -->
+<script src="${rc.contextPath}/js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="${rc.contextPath}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="${rc.contextPath}/libs/js/app.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/left_menu.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/portal/createStep3.js" type="text/javascript"></script>
+
+</body>
+</html>

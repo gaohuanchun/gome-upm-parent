@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.ThresholdConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.ThresholdConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="server_addr" property="serverAddr" jdbcType="VARCHAR" />
+    <result column="db_name" property="dbName" jdbcType="VARCHAR" />
+    <result column="tbs_name" property="tbsName" jdbcType="VARCHAR" />
+    <result column="disk_group" property="diskGroup" jdbcType="VARCHAR" />
+    <result column="db_port" property="dbPort" jdbcType="VARCHAR" />
+    <result column="inst_name" property="instName" jdbcType="VARCHAR" />
+    <result column="db_type" property="dbType" jdbcType="VARCHAR" />
+    <result column="active" property="active" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="total_mb" property="totalMB" jdbcType="FLOAT" />
+    <result column="used_mb" property="usedMB" jdbcType="FLOAT" />
+    <result column="used_percent" property="usedPercent" jdbcType="FLOAT" />
+    <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+    <result column="alarm_level" property="alarmLevel" jdbcType="INTEGER" />
+    <result column="active_level1_threshold" property="activeLevel1Threshold" jdbcType="INTEGER" />
+    <result column="active_level2_threshold" property="activeLevel2Threshold" jdbcType="INTEGER" />
+    <result column="total_level1_threshold" property="totalLevel1Threshold" jdbcType="INTEGER" />
+    <result column="total_level2_threshold" property="totalLevel2Threshold" jdbcType="INTEGER" />
+    <result column="level1_threshold" property="level1Threshold" jdbcType="FLOAT" />
+    <result column="level2_threshold" property="level2Threshold" jdbcType="FLOAT" />
+    <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, server_addr, db_name,
+    tbs_name, disk_group, db_port, inst_name, db_type, active, total, total_mb, used_mb, used_percent, data_type, 
+    alarm_level, active_level1_threshold, active_level2_threshold, total_level1_threshold, total_level2_threshold, level1_threshold, level2_threshold, alarm_time, create_time, update_time  
+  </sql>
+  
+  <insert id="insertThresholdConfig" parameterType="com.gome.upm.domain.ThresholdConfig" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_threshold_config (id, server_addr, db_name,
+    tbs_name, disk_group, db_port, inst_name, db_type, active, total, total_mb, used_mb, used_percent, data_type, 
+    alarm_level, active_level1_threshold, active_level2_threshold, total_level1_threshold, total_level2_threshold, level1_threshold, level2_threshold, alarm_time, create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{serverAddr,jdbcType=VARCHAR}, #{dbName,jdbcType=VARCHAR},
+      #{tbsName,jdbcType=VARCHAR}, #{diskGroup,jdbcType=VARCHAR},
+      #{dbPort,jdbcType=VARCHAR}, #{instName,jdbcType=VARCHAR},
+      #{dbType,jdbcType=VARCHAR}, #{active,jdbcType=INTEGER},
+      #{total,jdbcType=INTEGER}, #{totalMB,jdbcType=FLOAT},
+      #{usedMB,jdbcType=FLOAT}, #{usedPercent,jdbcType=FLOAT},
+      #{dataType,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=INTEGER},
+      #{activeLevel1Threshold,jdbcType=INTEGER}, #{activeLevel2Threshold,jdbcType=INTEGER},
+      #{totalLevel1Threshold,jdbcType=INTEGER}, #{totalLevel2Threshold,jdbcType=INTEGER},
+      #{level1Threshold,jdbcType=FLOAT}, #{level2Threshold,jdbcType=FLOAT}, #{alarmTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectThresholdConfigListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	from gm_threshold_config
+  	where 1=1 
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>
+    <if test="conditions.serverAddr != null and conditions.serverAddr != ''" >
+      and server_addr = #{conditions.serverAddr,jdbcType=VARCHAR}
+    </if>
+	<if test="conditions.dbName != null and conditions.dbName != ''" >
+      and db_name = #{conditions.dbName,jdbcType=VARCHAR}  
+    </if>
+    <if test="conditions.tbsName != null and conditions.tbsName != ''" >
+      and tbs_name = #{conditions.tbsName,jdbcType=VARCHAR} 
+    </if>
+    <if test="conditions.diskGroup != null and conditions.diskGroup != ''" >
+      and disk_group = #{conditions.diskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.dbPort != null and conditions.dbPort != ''" >
+      and db_port = #{conditions.dbPort,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.instName != null and conditions.instName != ''" >
+      and inst_name = #{conditions.instName,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.dbType != null and conditions.dbType != ''" >
+      and db_type = #{conditions.dbType,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.dataType != null and conditions.dataType != ''" >
+      and data_type = #{conditions.dataType,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.alarmLevel != null" >
+      and alarm_level = #{conditions.alarmLevel,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.activeLevel1Threshold != null" >
+      and active_level1_threshold = #{conditions.activeLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.activeLevel2Threshold != null" >
+      and active_level2_threshold = #{conditions.activeLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.totalLevel1Threshold != null" >
+      and total_level1_threshold = #{conditions.totalLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.totalLevel2Threshold != null" >
+      and total_level2_threshold = #{conditions.totalLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="conditions.level1Threshold != null" >
+      and level1_threshold = #{conditions.level1Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="conditions.level2Threshold != null" >
+      and level2_threshold = #{conditions.level2Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and alarm_time between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+    order by alarm_time desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ThresholdConfig">
+  	select count(*) from gm_threshold_config
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="serverAddr != null and serverAddr != ''" >
+      and server_addr = #{serverAddr,jdbcType=VARCHAR}
+    </if>
+	<if test="dbName != null and dbName != ''" >
+      and db_name = #{dbName,jdbcType=VARCHAR}  
+    </if>
+    <if test="tbsName != null and tbsName != ''" >
+      and tbs_name = #{tbsName,jdbcType=VARCHAR} 
+    </if>
+    <if test="diskGroup != null and diskGroup != ''" >
+      and disk_group = #{diskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="dbPort != null and dbPort != ''" >
+      and db_port = #{dbPort,jdbcType=VARCHAR}
+    </if>
+    <if test="instName != null and instName != ''" >
+      and inst_name = #{instName,jdbcType=VARCHAR}
+    </if>
+    <if test="dbType != null and dbType != ''" >
+      and db_type = #{dbType,jdbcType=VARCHAR}
+    </if>
+    <if test="dataType != null and dataType != ''" >
+      and data_type = #{dataType,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmLevel != null" >
+      and alarm_level = #{alarmLevel,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel1Threshold != null" >
+      and active_level1_threshold = #{activeLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel2Threshold != null" >
+      and active_level2_threshold = #{activeLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel1Threshold != null" >
+      and total_level1_threshold = #{totalLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel2Threshold != null" >
+      and total_level2_threshold = #{totalLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="level1Threshold != null" >
+      and level1_threshold = #{level1Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="level2Threshold != null" >
+      and level2_threshold = #{level2Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and alarm_time between #{startTime} and #{endTime}
+    </if>
+  </select>
+  <select id="selectCountByAlarmLevel" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select count(*) num, data_type from gm_threshold_config
+ 	where alarm_level = #{alarmLevel,jdbcType=INTEGER}
+    group by data_type
+  </select>
+  <select id="selectThresholdConfigById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_threshold_config 
+ 	where id = #{id} 
+  </select>
+  <select id="selectThresholdConfigListByThresholdConfig" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.ThresholdConfig">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_threshold_config 
+  	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="serverAddr != null and serverAddr != ''" >
+      and server_addr = #{serverAddr,jdbcType=VARCHAR}
+    </if>
+	<if test="dbName != null and dbName != ''" >
+      and db_name = #{dbName,jdbcType=VARCHAR}  
+    </if>
+    <if test="tbsName != null and tbsName != ''" >
+      and tbs_name = #{tbsName,jdbcType=VARCHAR} 
+    </if>
+    <if test="diskGroup != null and diskGroup != ''" >
+      and disk_group = #{diskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="dbPort != null and dbPort != ''" >
+      and db_port = #{dbPort,jdbcType=VARCHAR}
+    </if>
+    <if test="instName != null and instName != ''" >
+      and inst_name = #{instName,jdbcType=VARCHAR}
+    </if>
+    <if test="dbType != null and dbType != ''" >
+      and db_type = #{dbType,jdbcType=VARCHAR}
+    </if>
+    <if test="dataType != null and dataType != ''" >
+      and data_type = #{dataType,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmLevel != null" >
+      and alarm_level = #{alarmLevel,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel1Threshold != null" >
+      and active_level1_threshold = #{activeLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel2Threshold != null" >
+      and active_level2_threshold = #{activeLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel1Threshold != null" >
+      and total_level1_threshold = #{totalLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel2Threshold != null" >
+      and total_level2_threshold = #{totalLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="level1Threshold != null" >
+      and level1_threshold = #{level1Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="level2Threshold != null" >
+      and level2_threshold = #{level2Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and alarm_time between #{startTime} and #{endTime}
+    </if>
+  </select>
+  <update id="updateThresholdConfig" parameterType="com.gome.upm.domain.ThresholdConfig" >
+    update gm_threshold_config set
+    <if test="id != null" >
+      id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="serverAddr != null" >
+      , server_addr = #{serverAddr,jdbcType=VARCHAR}
+    </if>
+	<if test="dbName != null" >
+      , db_name = #{dbName,jdbcType=VARCHAR}  
+    </if>
+    <if test="tbsName != null" >
+      , tbs_name = #{tbsName,jdbcType=VARCHAR} 
+    </if>
+    <if test="diskGroup != null" >
+      , disk_group = #{diskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="dbPort != null" >
+      , db_port = #{dbPort,jdbcType=VARCHAR}
+    </if>
+    <if test="instName != null" >
+      , inst_name = #{instName,jdbcType=VARCHAR}
+    </if>
+    <if test="dbType != null" >
+      , db_type = #{dbType,jdbcType=VARCHAR}
+    </if>
+    <if test="active != null" >
+      , active = #{active,jdbcType=INTEGER}
+    </if>
+    <if test="total != null" >
+      , total = #{total,jdbcType=INTEGER}
+    </if>
+    <if test="totalMB != null" >
+      , total_mb = #{totalMB,jdbcType=FLOAT}
+    </if>
+    <if test="usedMB != null" >
+      , used_mb = #{usedMB,jdbcType=FLOAT}
+    </if>
+    <if test="usedPercent != null" >
+      , used_percent = #{usedPercent,jdbcType=FLOAT}
+    </if>
+    <if test="dataType != null" >
+      , data_type = #{dataType,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmLevel != null" >
+      , alarm_level = #{alarmLevel,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel1Threshold != null" >
+      , active_level1_threshold = #{activeLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="activeLevel2Threshold != null" >
+      , active_level2_threshold = #{activeLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel1Threshold != null" >
+      , total_level1_threshold = #{totalLevel1Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="totalLevel2Threshold != null" >
+      , total_level2_threshold = #{totalLevel2Threshold,jdbcType=INTEGER}
+    </if>
+    <if test="level1Threshold != null" >
+      , level1_threshold = #{level1Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="level2Threshold != null" >
+      , level2_threshold = #{level2Threshold,jdbcType=FLOAT}
+    </if>
+    <if test="alarmTime != null" >
+      , alarm_time = #{alarmTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTime != null" >
+      , create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      , update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteThresholdConfigById" parameterType="java.lang.Long" >
+    delete from gm_threshold_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="batchDeleteThresholdConfigByIds" parameterType="java.lang.reflect.Array" >
+    delete from gm_threshold_config
+    where id in
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">  
+            #{item} 
+    </foreach>  
+  </delete>
+  <select id="selectConnTop5" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_threshold_config 
+ 	where data_type = #{dataType} and alarm_level != 0 order by active desc limit 0,5
+  </select>
+  <select id="selectTbsTop5" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_threshold_config 
+ 	where data_type = #{dataType} and alarm_level != 0 order by used_mb desc limit 0,5
+  </select>
+  <select id="selectAlarmLog" parameterType="com.gome.upm.domain.ThresholdConfig" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_threshold_config 
+ 	where 1=1
+ 	<if test="dataType != null and dataType != ''" >
+      and data_type = #{dataType,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmLevel != null" >
+      and alarm_level = #{alarmLevel,jdbcType=INTEGER}
+    </if>
+ 	 order by alarm_time desc
+  </select>
+</mapper> 

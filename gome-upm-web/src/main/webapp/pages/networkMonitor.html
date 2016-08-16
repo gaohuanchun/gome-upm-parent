@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>统一监控平台</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+    <header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+            	<li class="treeview">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview active">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview currentli">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        	<a href="#">统一监控平台 / 网络监控</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+        	<div class="health_index_facility">
+       			<h2>设备信息</h2>
+       			<span class="health_num">健康指数：<span style="color:#9c8ade;">93</span></span>
+       			<div style="width: 320px;height: 250px;margin: auto;" id="network_health_index"></div>
+				<div class="health_status_count_server">
+	        		<span>错误：<a href="networkMonitor-hardwareError.html">1</a></span>
+	        		<span style="margin-left: 30px;">全部：<a href="networkMonitor-allfacility.html">1</a></span>
+	        	</div>
+       		</div>
+       		<div class="health_index_facility">
+       			<h2>端口信息</h2>
+       			<span class="health_num">健康指数：<span style="color:#9c8ade;">93</span></span>
+       			<div style="width: 320px;height: 250px;margin: auto;" id="port_health_index"></div>
+				<div class="health_status_count_server">
+	        		<span>错误：<a href="networkMonitor-portError.html">1</a></span>
+	        		<span style="margin-left: 30px;">全部：<a href="networkMonitor-portAll.html">1</a></span>
+	        	</div>
+       		</div>
+			<div class="pie_item_service">
+                <p id="cpu_use"></p>
+                <p id="memory_use"></p>
+                <p id="port_flow"></p>
+            </div>            
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/highcharts.js" type="text/javascript"></script>
+<script>
+$(function(){
+	//设备信息
+	draw_network_health_index();
+	//端口信息
+	draw_port_health_index();
+    //CPU使用率TOP5
+    drowPie_cpu_use();
+    //内存使用率TOP5
+    drowPie_memory_use();
+    //端口流量TOP5
+    drowPie_port_flow();
+});
+function draw_network_health_index(){
+	$('#network_health_index').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size : 200,
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '健康指数',
+            data: [
+                {
+                 	name:'全部',   
+                    y:93,
+                    color:'#9c8ade'
+                },
+                {
+                    name: '错误',
+                    y: 7,
+                    sliced: true,
+                    selected: true,
+                    color:'#CFCFCF'
+                }
+            ]
+        }]
+    });
+}
+function draw_port_health_index(){
+	$('#port_health_index').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size : 200,
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '健康指数',
+            data: [
+                {
+                 	name:'全部',   
+                    y:93,
+                    color:'#9c8ade'
+                },
+                {
+                    name: '错误',
+                    y: 7,
+                    sliced: true,
+                    selected: true,
+                    color:'#CFCFCF'
+                }
+            ]
+        }]
+    });
+}
+function drowPie_cpu_use(){
+	$('#cpu_use').highcharts({
+        chart: {
+            type: 'column',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: 'CPU使用率TOP5'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'cpu使用率',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9],
+            cursor: 'pointer',
+            events: {
+                click: function (e) {
+                	window.location.href="networkMonitor-detail.html?id=columnGraph";
+           		}
+            }
+        }]
+    });
+}
+function drowPie_memory_use(){
+	$('#memory_use').highcharts({
+        chart: {
+            type: 'column',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: '内存使用率TOP5'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '内存使用率',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9],
+            cursor: 'pointer',
+            events: {
+                click: function (e) {
+                	window.location.href="networkMonitor-detail.html?id=columnGraph";
+           		}
+            }
+        }]
+    });
+}
+function drowPie_port_flow(){
+	$('#port_flow').highcharts({
+        chart: {
+            type: 'column',
+            backgroundColor:"#FFF"
+        },
+        title: {
+            text: '端口流量TOP5'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30',
+				'10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '端口流量',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9],
+            cursor: 'pointer',
+            events: {
+                click: function (e) {
+                	window.location.href="networkMonitor-detail.html?id=columnGraph";
+           		}
+            }
+        }]
+    });
+}
+</script>
+</body>
+</html>

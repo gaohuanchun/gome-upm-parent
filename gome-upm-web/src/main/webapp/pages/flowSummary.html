@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+	<header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+            	<li class="treeview active">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview currentli"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+        	<a href="#">总览 / 流量一览</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+       		<div class="leftGraph" style="margin-right: 40px;">
+        		<div class="pie_item_service_pandect">
+	                <p id="m5_flow"></p>
+	                <p id="pbs_flow"></p>
+	            </div>
+	            <div class="pie_item_service_pandect">
+	                <p id="m5_pbs"></p>
+	                <p id="office_area_pbs"></p>
+	            </div>
+	            <i class="fa fa-chevron-right" id="rightBtn" style="font-size: 50px;color: #999999;margin-right: -23px;margin-top: -280px;cursor: pointer;float: right;"></i>
+	            <div class="pie_item_service_pandect">
+	                <p id="za_pbs"></p>
+	                <p id="dc_pbs"></p>
+	            </div>
+        	</div>
+        	<div class="rightGraph" style="display:none;margin-left: 40px;">
+        		<div class="pie_item_service_pandect">
+	                <p id="bcm_line"></p>
+	                <p id="unionPay_line"></p>
+	            </div>
+	            <i class="fa fa-chevron-left" id="leftBtn" style="font-size: 50px;color: #999999;cursor: pointer;margin-left: -35px;"></i>
+	            <div class="pie_item_service_pandect" >
+	                <p id="noam_line"></p>
+	                <p id="database_heartbeat"></p>
+	            </div>
+        	</div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/highcharts.js" type="text/javascript"></script>
+<script>
+$(function(){
+	$('#rightBtn').on('click',function(){
+		$('.leftGraph').hide();
+		$('.rightGraph').show();
+		//交行专线
+	    drowPie_bcm_line();
+	    //银联专线
+	    drowPie_unionPay_line();
+	    //诺安专线
+	    drowPie_noam_line();
+	    //数据库心跳
+	    drowPie_database_heartbeat();
+	});
+	$('#leftBtn').on('click',function(){
+		$('.leftGraph').show();
+		$('.rightGraph').hide();
+		//M5机房公共流量
+	    drowPie_m5_flow();
+	    //PBS机房公网流量
+	    drowPie_pbs_flow();
+	    //M5-PBS机房万兆裸纤
+	    drowPie_m5_pbs();
+	    //办公区-PBS机房千兆裸纤
+	    drowPie_office_area_pbs();
+	    //左岸公社-PBS机房专线
+	    drowPie_za_pbs();
+	    //DC-PBS机房专线
+	    drowPie_dc_pbs();
+	});
+    //M5机房公共流量
+    drowPie_m5_flow();
+    //PBS机房公网流量
+    drowPie_pbs_flow();
+    //M5-PBS机房万兆裸纤
+    drowPie_m5_pbs();
+    //办公区-PBS机房千兆裸纤
+    drowPie_office_area_pbs();
+    //左岸公社-PBS机房专线
+    drowPie_za_pbs();
+    //DC-PBS机房专线
+    drowPie_dc_pbs();
+    //交行专线
+    drowPie_bcm_line();
+    //银联专线
+    drowPie_unionPay_line();
+    //诺安专线
+    drowPie_noam_line();
+    //数据库心跳
+    drowPie_database_heartbeat();
+});
+function drowPie_m5_flow(){
+	$('#m5_flow').highcharts({
+        title: {
+            text: 'M5机房公共流量'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'M5机房公共流量',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_pbs_flow(){
+	$('#pbs_flow').highcharts({
+        title: {
+            text: 'PBS机房公网流量'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'PBS机房公网流量',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_m5_pbs(){
+	$('#m5_pbs').highcharts({
+        title: {
+            text: 'M5-PBS机房万兆裸纤'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'M5-PBS机房万兆裸纤',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_office_area_pbs(){
+	$('#office_area_pbs').highcharts({
+        title: {
+            text: '办公区-PBS机房千兆裸纤'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '办公区-PBS机房千兆裸纤',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_za_pbs(){
+	$('#za_pbs').highcharts({
+        title: {
+            text: '左岸公社-PBS机房专线'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '左岸公社-PBS机房专线',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_dc_pbs(){
+	$('#dc_pbs').highcharts({
+        title: {
+            text: 'DC-PBS机房专线'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'DC-PBS机房专线',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_bcm_line(){
+	$('#bcm_line').highcharts({
+        title: {
+            text: '交行专线'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '交行专线',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_unionPay_line(){
+	$('#unionPay_line').highcharts({
+        title: {
+            text: '银联专线'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '银联专线',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_database_heartbeat(){
+	$('#database_heartbeat').highcharts({
+        title: {
+            text: '数据库心跳'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '数据库心跳',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+function drowPie_noam_line(){
+	$('#noam_line').highcharts({
+        title: {
+            text: '诺安专线'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        xAxis: {
+            categories: [
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30',
+                '10.22.13.30'
+            ],
+            labels: {
+                rotation: -120, 
+                style: { 
+                     fontSize: '13px', 
+                     fontFamily: 'Verdana, sans-serif',
+                     writingMode:'tb-rl'    //文字竖排样式
+                }
+             }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} MB</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '诺安专线',
+            color:'#9c8ade',
+            data: [49.9, 71.5, 89.4,93.2, 99.9]
+        }]
+    });
+}
+</script>
+</body>
+</html>

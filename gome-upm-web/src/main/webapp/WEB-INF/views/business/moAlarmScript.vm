@@ -1,0 +1,60 @@
+<script type="text/javascript">
+$(function(){
+	//分页搜索
+	$(".pageNumber").unbind("click");
+	$(".pageNumber").bind("click", function(){
+		var page = $(this).attr("pageNo");
+		if(typeof(page) == "undefined"){
+			page = null;
+		}
+		var url="${rc.contextPath}/monitoBusiness/getAlarmDate.do";
+		var alarmType=$('#alarmType').val();
+		$.ajax({
+			url:url,
+			type:'POST',
+			dataType:'html',
+			async:false,
+			async:false,
+			data:{
+				type:alarmType,
+				page:page
+			},
+			cache:false,
+			success:function(data){
+				$(".list_table").empty();
+				$(".list_table").append(data);
+					
+			},
+			error:function(){
+				alert("服务器异常");
+			}
+			
+		});
+	});
+});
+function searchAlarmList(){
+	var url="${rc.contextPath}/monitoBusiness/getAlarmDate.do";
+	var alarmType=$('#alarmType').val();
+	var startTime_alarm=$('#startTime_alarm').val();
+	var endTime_alarm=$('#endTime_alarm').val();
+	$.ajax({
+		url:url,
+		type:'POST',
+		async:true,
+		dataType:'html',
+		data:{
+			type:alarmType,
+			startTime:startTime_alarm,
+			endTime:endTime_alarm
+		},
+		success:function(data){
+			$(".list_table").empty();
+			$(".list_table").append(data);
+		},
+		error:function(){
+			alert("服务器异常");
+		}
+		
+	});
+}
+</script>

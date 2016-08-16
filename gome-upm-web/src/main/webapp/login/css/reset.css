@@ -1,0 +1,80 @@
+body,html{background:#f5f5f5;color:#333;padding: 0; margin: 0;}
+body,button,input,select,textarea{font:14px Microsoft YaHei,tahoma,arial;padding: 0; margin: 0;}
+input{outline:0;}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,menu,nav,section{margin:0;padding:0;font-family:Microsoft YaHei,tahoma,arial}
+header,footer,nav,section,article,aside,dialog,figure,menu{display:block;padding: 0; margin: 0;}
+table{border-collapse:collapse;border-spacing:0;padding: 0; margin: 0;}
+fieldset,img{border:0;padding: 0; margin: 0;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;padding: 0; margin: 0;}
+ol,ul,li{list-style:none;padding: 0; margin: 0;}
+.fn-clear:after{display:block;visibility:hidden;clear:both;font-size:0;content:' '}
+.fn-clear{display:block;/* for IE6 IE7 */overflow:hidden;zoom:1}
+.fn-left,.fn-right{display:inline}
+.clear{overflow:hidden;clear:both;height:0}
+.fn-left{float:left}
+.fn-right{float:right}
+.relative{position:relative}
+.ft-bold{font-weight:700}
+
+a{text-decoration:none}
+a:hover{text-decoration:none}
+
+a.linkBlue,a.linkBlue:hover{ color:#37618f;}
+/* 设置图片视频等自适应调整 */
+img {
+    max-width:100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+/* Text alignment */
+.textL{text-align:left}
+.textR{text-align:right}
+.textC{text-align:center}
+/* font-size */
+.ft12{font-size:12px}
+.ft14{font-size:14px}
+.ft16{font-size:16px}
+.ft18{font-size:18px}
+.ft20{font-size:20px}
+.ft24{font-size:24px}
+
+/*font-color*/
+.ft3{ color:#333;}
+.ft6{ color:#666;}
+.ft9{ color:#999;}
+
+/*padding*/
+.pr20{ padding-right:20px;}
+.plr10{ padding:0 10px;}
+.plr20{ padding:0 20px;}
+.pl20{padding-left:20px;}
+
+
+.pbt30{padding-bottom: 30px;}
+/*margin*/
+.mt10{margin-top: 10px;}
+.mt20{margin-top: 20px;}
+.mt30{margin-top: 30px;}
+.mt40{margin-top: 40px;}
+.mt50{margin-top: 50px;}
+.mt60{margin-top: 60px;}
+
+.mbt20{margin-bottom: 20px;}
+.mbt30{margin-bottom: 30px;}
+.mbt100{margin-bottom: 100px;}
+
+.ml10{margin-left: 10px;}
+.ml20{margin-left: 20px;}
+.ml30{margin-left: 30px;}
+.ml40{margin-left: 40px;}
+.ml50{margin-left: 50px;}
+
+.mr10{margin-right: 10px;}
+.mr20{margin-right: 20px;}
+.mr30{margin-right: 30px;}
+.mr40{margin-right: 40px;}
+
+/* default hide */
+.hide{display:none}
+/**color**/
+.col-fff{color:#fff;}

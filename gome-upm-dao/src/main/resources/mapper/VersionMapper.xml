@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.VersionMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.Version" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pro_url" property="url" jdbcType="VARCHAR" />
+    <result column="pro_version" property="version" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, pro_url, pro_version, create_time, create_user
+  </sql>
+  
+  <insert id="insertVersion" parameterType="com.gome.upm.domain.Version" useGeneratedKeys="true" keyProperty="id">
+    insert into gm_app_version_log (id, pro_url, pro_version, create_time, create_user)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="selectVersionListByPage" resultMap="BaseResultMap" parameterType="com.gome.upm.common.Page">
+  	select
+  	id, pro_url, pro_version, create_time, create_user 
+  	from gm_app_version_log
+ 	where 1=1
+ 	<if test="conditions.id != null" >
+      and id = #{conditions.id,jdbcType=BIGINT} 
+    </if>
+    <if test="conditions.url != null" >
+      and pro_url = #{conditions.url,jdbcType=VARCHAR} 
+    </if>
+    <if test="conditions.version != null" >
+      and pro_version like CONCAT('%',#{conditions.version,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="conditions.createUser != null" >
+      and create_user = #{conditions.createUser,jdbcType=VARCHAR}
+    </if>
+    <if test="conditions.createTime != null" >
+      and update_user = #{conditions.createTime,jdbcType=TIMESTAMP}
+    </if>
+    order by create_time desc
+    <if test="start != null and pageSize != null">
+    	LIMIT #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.Version">
+  	select count(*) from gm_app_version_log
+ 	where 1=1 
+ 	<if test="id != null" >
+      and id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="url != null" >
+      and pro_url = #{url,jdbcType=VARCHAR} 
+    </if>
+    <if test="version != null" >
+      and pro_version like CONCAT('%',#{version,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="createUser != null" >
+      and create_user = #{createUser,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <!-- 
+  <select id="selectVersionById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from gm_itembase 
+ 	where ib_id = #{id}
+  </select>
+  <select id="selectVersionListByVersion" resultMap="BaseResultMap" parameterType="com.gome.manager.domain.Version">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from gm_itembase
+  	where 1=1 
+ 	<if test="id != null" >
+      and ib_id != #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="goodsCode != null" >
+      and goods_no = #{goodsCode,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsName != null" >
+      and goods_name = #{goodsName,jdbcType=VARCHAR}
+    </if>
+    <if test="price != null" >
+      and price = #{price,jdbcType=DOUBLE} 
+    </if>
+	<if test="picPath != null" >
+      and pic_path = #{picPath,jdbcType=VARCHAR} 
+    </if>
+    <if test="description != null" >
+      and description = #{description,jdbcType=VARCHAR}
+    </if>
+    <if test="links != null" >
+      and link_path = #{links,jdbcType=VARCHAR} 
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="categoryId != null" >
+      and category_id = #{categoryId,jdbcType=BIGINT}
+    </if>
+    <if test="createUser != null" >
+      and create_user = #{createUser,jdbcType=VARCHAR}
+    </if>
+    <if test="updateUser != null" >
+      and update_user = #{updateUser,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <update id="updateVersion" parameterType="com.gome.manager.domain.Version" >
+    update gm_itembase set
+    <if test="id != null" >
+      ib_id = #{id,jdbcType=BIGINT} 
+    </if>
+    <if test="goodsCode != null" >
+      , goods_no = #{goodsCode,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsName != null" >
+      , goods_name = #{goodsName,jdbcType=VARCHAR}
+    </if>
+    <if test="price != null" >
+      , price = #{price,jdbcType=DOUBLE}
+    </if>
+	<if test="picPath != null" >
+      , pic_path = #{picPath,jdbcType=VARCHAR} 
+    </if>
+    <if test="links != null" >
+      , link_path = #{links,jdbcType=VARCHAR} 
+    </if>
+    <if test="status != null" >
+      , status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="categoryId != null" >
+      , category_id = #{categoryId,jdbcType=BIGINT}
+    </if>
+    <if test="description != null" >
+      , description = #{description,jdbcType=VARCHAR}
+    </if>
+    <if test="updateUser != null" >
+      , update_user = #{updateUser,jdbcType=VARCHAR}
+    </if>
+    <if test="updateTime != null" >
+      , update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    where ib_id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteVersionById" parameterType="java.lang.Long" >
+    delete from gm_itembase
+    where ib_id = #{id,jdbcType=BIGINT}
+  </delete>
+   -->
+</mapper> 

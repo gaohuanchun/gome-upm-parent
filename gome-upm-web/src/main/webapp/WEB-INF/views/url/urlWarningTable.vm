@@ -1,0 +1,187 @@
+                    <table id="example1" class="table table_data table-striped" >
+                        <thead>
+                        <tr>
+                            <!--<th></th>
+                            <th><input type="checkbox" id="checkAll"/></th>-->
+                            <th>报警时间</th>
+                            <th>监控点地址</th>
+                            <th>最近状态</th>
+                            <th>创建时间</th>
+                            <th>配置状态</th>
+                            <!--<th>操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                             #if($!page.totalResult > 0)
+                        	#set($i = ($page.pageNo - 1) * $page.pageSize)
+                        	#foreach($url in $!page.data)
+                        		#set($i = $i + 1)
+                        		<tr>
+	                               <!--<td>$!i</td>
+	                               <td><input type="checkbox" name="checkbox" value="$!url.id" /></td>-->
+	                               <td class="null_red">$!url.alarmTimeStr</td>
+	                               <td><a href="${rc.contextPath}/url/report?id=$!url.id" class="link_a">$!url.url</a></td>
+
+	                               <td class="null_red">$!url.survivalStr</td>
+	                               <td>$!url.createTimeStr</td>
+	                               
+	                               #if($!url.status == 1)
+	                               <td class="yes_green">有效</td>
+	                               #else
+	                               <td class="yes_green">无效</td>
+	                               #end
+	                               
+	                               <!--<td class="operate-td">
+	                                    <a href="${rc.contextPath}/url/report?id=$!url.id" style="margin-right: 8px;"><i class="fa fa-list-alt"></i>明细</a>
+	                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#updateMyModal" class="editUrl" urlId="$!url.id"><i class="fa fa-edit"></i>编辑</a>
+	                                    #if($!url.status == 1)
+	                                    <a href="javascript:void(0)" class="statusChange" urlId="$!url.id" urlStatus="0"><i class="fa fa-ban"></i>禁用</a>
+	                                    #else
+	                                    <a href="javascript:void(0)" class="statusChange" urlId="$!url.id" urlStatus="1"><i class="fa fa-ban"></i>启用</a>
+	                                    #end
+	                                </td>-->
+                            </tr>
+                       		#end
+                        #end
+                        
+                        
+                        </tbody>
+                    </table>
+                          #parse("common/pagePlugin.vm")
+                          <input type="hidden" value="$!page.conditions.startTime" id="hiddenStartTime"/>
+                          <input type="hidden" value="$!page.conditions.endTime" id="hiddenEndTime"/>
+                          <input type="hidden" value="$!page.conditions.survival" id="hiddenSurvival"/>
+                          <input type="hidden" value="$!page.conditions.url" id="hiddenUrlAddress"/>
+                          
+                          
+                          
+                          
+                          
+<div class="modal fade bs-example-modal-lg" id="updateMyModal" tabindex="-1" >
+  <div class="modal-dialog modal-lg" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">编辑信息</h2>
+      </div>
+      <div class="modal-body">
+         <form class="form-inline" style="margin-left: 70px;">
+         <input type="hidden" id="hiddenUrlId" />
+         	<div class="row" style="margin-top: 10px;margin-left: -3px;">
+               <div class="col-lg-6">
+                 <div class="form-group">
+                   <label for="address" class="control-label">监控地址</label>
+                   <input type="text" class="form-control" id="address" placeholder="监控地址" >
+              	</div>
+               </div><!-- /.col-lg-6 -->
+               <div class="col-lg-6 col-lg-pull-1" style="margin-left: -39px;">
+                  <div class="form-group">
+                   <label class="control-label">访问时间频率</label>
+                   <select class="form-control" style="width: 178px;" id="urlFrc">
+                       <option value="5">5分钟</option>
+                       <option value="10">10分钟</option>
+                       <option value="15">15分钟</option> 
+                   </select>
+               	 </div>
+               </div><!-- /.col-lg-6 -->
+             </div>
+             <div class="row" style="margin-top: 10px;margin-left: -31px;">
+             	<div class="col-lg-6">
+             		<div class="form-group">
+                    	<label for="timeout" class="control-label">访问超时时间</label>
+ 						<input type="text" class="form-control" id="timeout" placeholder="秒">
+                 	</div>
+             	</div>
+             	<div class="col-lg-6 col-lg-pull-1">
+             		<div class="form-group" style="margin-left: 4px;">
+                   		<label for="time_number" class="control-label">超时次数</label>
+                   		<input type="text" class="form-control" id="time_number" placeholder="次">
+                 	</div>
+             	</div>
+             </div>
+             <div class="row" style="margin-top: 10px;margin-left: -31px;">
+             	<div class="col-lg-6">
+             		<div class="form-group">
+                   	<label for="warn_time" class="control-label">报警时间间隔</label>
+                    <input type="text" class="form-control" id="warn_time" placeholder="分">
+                 </div>
+             	</div>
+             	<div class="col-lg-6 col-lg-pull-1">
+             		<div class="form-group" style="margin-left: -26px;">
+                   		<label for="inputContent" class="control-label">HTTP请求方式</label>
+                   		<span class="inline_span"><input type="radio" name="method" value="GET" />GET</span>
+                   		<span class="inline_span"><input type="radio" name="method" value="POST" />POST</span>
+                 	</div>
+             	</div>
+
+             </div>
+             <div class="row" style="margin-top: 10px;margin-left: -31px;">
+             	<div class="col-lg-6">
+             		<div class="form-group" style="margin-left: 30px;">
+                   		<label for="inputContent" class="control-label">响应内容</label>
+                   		<input type="text" class="form-control" id="inputContent" placeholder="">
+                 	</div>
+             	</div>
+             	<div class="col-lg-6 col-lg-pull-1">
+             		<div class="form-group" style="margin-left: -26px;">
+                   		<label for="inputContent" class="control-label">HTTP请求方式</label>
+                   		<span class="inline_span"><input type="radio" name="isContainsContent" value="include" checked/>包含匹配内容</span>
+                   		<span class="inline_span"><input type="radio" name="isContainsContent" value="exclude"  />不包含匹配内容</span>
+                 	</div>
+             	</div>
+             </div>
+
+             <div class="row" style="margin-top: 10px;margin-left: -31px;">
+             	<div class="col-lg-6">
+             		<div class="form-group" style="margin-left: -15px;">
+                   <label for="httpType" class="control-label">URL请求返回码</label>
+                     <label class="radio-inline">
+					  <input type="radio" name="urlBackCode" id="defaultReturnCode"  value="1"> 默认返回码
+					</label>
+					<label class="radio-inline">
+					  <input type="radio" name="urlBackCode" id="customReturnCode" value="2"> 自定义返回码
+					</label>
+                 </div>
+             	</div>
+             	<div class="col-lg-6 col-lg-pull-1">
+             		<div class="form-group" style="margin-left: 53px;">
+                   		<label for="urlBackCode" class="control-label"></label>
+                   		<input type="text" class="form-control" id="urlBackCode" placeholder="" disabled>
+                 	</div>
+             	</div>
+             </div>
+             <div class="row" style="margin-top: 10px;margin-left: -31px;">
+             	<div class="col-lg-6">
+             		<div class="form-group" style="margin-left: 28px;">
+                   <label for="httpType" class="control-label">报警方式</label>
+                     <label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox1" name="alarmWay" value="no"> 不报警
+					</label>
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox2" name="alarmWay" value="email"> 邮件
+					</label>
+					<!--
+					<label class="checkbox-inline">
+					  <input type="checkbox" id="inlineCheckbox3" name="alarmWay" value="mobile"> 短信
+					</label>
+					-->
+                 </div>
+             	</div>
+             	<div class="col-lg-6 col-lg-pull-1">
+             		<div class="form-group" style="margin-left: -15px;">
+                   <label for="warnContact" class="control-label">报警联系人</label>
+                     <label class="checkbox-inline">
+					  <input type="checkbox" id="warnContact" value="option1" checked disabled> 监控组
+					</label>
+                 </div>
+             	</div>
+             </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal_btn_submit">确定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.TbsMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.Tbs" >
+    <result column="SERVER_ADDR" property="serverAddr" jdbcType="VARCHAR" />
+    <result column="DB_NAME" property="dbName" jdbcType="VARCHAR" />
+    <result column="TBS_NAME" property="tbsName" jdbcType="VARCHAR" />
+    <result column="TOTAL_MB" property="totalMB" jdbcType="FLOAT" />
+    <result column="USED_MB" property="usedMB" jdbcType="FLOAT" />
+    <result column="USED_PERCENT" property="usedPercent" jdbcType="FLOAT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="SAMPLE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    SERVER_ADDR, DB_NAME, TBS_NAME, TOTAL_MB, USED_MB, USED_PERCENT, CREATE_TIME, SAMPLE_TIME
+  </sql>
+  
+  <select id="selectTbsListByConditions" resultMap="BaseResultMap" parameterType="com.gome.upm.domain.Tbs">
+  	select 
+  	<include refid="Base_Column_List"></include>  
+    from GAMP.ORACLE_MONITOR_TBS 
+  	where 1=1 
+ 	<if test="serverAddr != null" >
+      and SERVER_ADDR = #{serverAddr,jdbcType=VARCHAR} 
+    </if>  
+    <if test="dbName != null" >
+      and DB_NAME = #{dbName,jdbcType=VARCHAR}
+    </if>
+    <if test="tbsName != null" >
+      and TBS_NAME = #{tbsName,jdbcType=VARCHAR}
+    </if>
+     <if test="totalMB != null" >
+      and TOTAL_MB = #{totalMB,jdbcType=FLOAT}
+    </if>
+    <if test="usedMB != null" >
+      and USED_MB = #{usedMB,jdbcType=FLOAT}
+    </if>
+    <if test="usedPercent != null" >
+      and USED_PERCENT = #{usedPercent,jdbcType=FLOAT}
+    </if>
+  </select>
+  
+</mapper> 

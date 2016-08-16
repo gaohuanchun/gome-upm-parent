@@ -1,0 +1,25 @@
+  <table class="table table-striped table_data">
+  	<thead>
+  		<tr>
+  			<th>序号</th>
+  			<th>端口</th>
+  			<th>状态</th>
+  			<th>备注</th>
+  		</tr>
+  	</thead>
+    <tbody>
+#if($!page.data.size() > 0)
+#set($i = ($page.pageNo - 1) * $page.pageSize)
+#foreach($sensor in $!page.data)
+#set($i = $i + 1)
+<tr>
+  <td>$!i</td>
+  <td><a href="javascript:void(0);" class="link_a portDetails" sensorId="$!sensor.sensorId" deviceId="$!sensor.deviceId">$!sensor.sensorName</a></td>
+  <td>$!sensor.status</td>
+  <td class="portDesc" sensorId="$!sensor.sensorId" title="点击修改备注" remark=""><p>$!sensor.remark</p></td>
+</tr>
+#end
+#end
+  </tbody>
+ </table>
+ #parse("common/pagePlugin.vm")

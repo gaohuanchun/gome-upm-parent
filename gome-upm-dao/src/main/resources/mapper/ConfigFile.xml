@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.AuthFileMaintainDao" >
+	<resultMap id="BaseResultMap" type="com.gome.upm.domain.ConfigFile" >
+	    <id column="config_id" property="config_id" jdbcType="INTEGER" />
+	    <result column="config_key" property="config_key" jdbcType="VARCHAR" />
+	    <result column="value0" property="value0" jdbcType="VARCHAR" />
+	    <result column="value1" property="value1" jdbcType="VARCHAR" />
+	    <result column="value2" property="value2" jdbcType="VARCHAR" />
+	    <result column="value3" property="value3" jdbcType="VARCHAR" />
+	    <result column="value4" property="value4" jdbcType="VARCHAR" />
+	    <result column="key_desc" property="key_desc" jdbcType="VARCHAR" />
+	    <result column="sts" property="sts" jdbcType="VARCHAR" />
+	</resultMap>
+    
+    <!-- 根据key查询配置 -->
+	<select id="queryConfigFileByAuthType" resultMap="BaseResultMap">
+		${paramSQL} 
+	</select>
+</mapper>

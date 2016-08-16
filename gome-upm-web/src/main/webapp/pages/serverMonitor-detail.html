@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UMP</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="../libs/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+
+    <!-- Theme style -->
+    <link href="../libs/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="../libs/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/common-top.css" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="../libs/js/html5shiv.js" type="text/javascript"></script>
+    <script src="../libs/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body class="sidebar-mini skin-black-light">
+<div class="wrapper">
+
+    <header class="main-header">
+		<div class="nav_left fl">
+			<a href="index.html" class="logo "> <img src="../image/logo.png"
+				alt="logo" />
+			</a>
+			<h1>统一监控平台</h1>
+		</div>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Notifications: style can be found in dropdown.less -->
+				<li class="dropdown notifications-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<span class="">Tomas Juce</span> <i class="fa fa-bell-o"></i> 
+					</a>
+					<ul class="dropdown-menu Tomas_dropdown">
+						<li class="header">
+							<span>当前你有 2 个未读消息</span> <a href="#">查看全部</a>
+						</li>
+						<!--drowpdown_con-->
+						<li>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+							<div class="drowpdown_con_item">
+								<ul>
+									<li class="item-txt">· 推出 Android 控制台，完善移动运维平台，推出控制台完善移动运维平台</li>
+									<span class="item_info">发布于: 2016-03-28 11:43:19</span>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</header>
+    
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+            	<li class="treeview">
+					<a href="#"> 
+						<span>总览</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview"><a href="orderSummary.html"> <span>订单一览</span> </a></li>
+						<li class="treeview"><a href="appSummary.html"> <span>应用一览</span> </a></li>
+						<li class="treeview"><a href="flowSummary.html"> <span>流量一览</span> </a></li>
+					</ul>
+				</li>
+				<li class="treeview active">
+					<a href="#"> 
+						<span>统一监控平台</span> 
+						<i class="fa fa-angle-left pull-right"></i> 
+					</a>
+					<ul class="treeview-menu">
+						<li class="treeview currentli">
+							<a href="serverMonitor.html"> 
+								<span>服务器监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="portSurvivalMonitor.html">
+								<span>端口存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="systemProcessSurvivalMonitor.html"> 
+								<span>系统进程存活监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="approach_result.html"> 
+								<span>方法监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="urlSurvivalMonitor.html">
+								<span>URL存活监控</span> 
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="networkMonitor.html"> 
+								<span>网络监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="baseTable.html"> 
+								<span>数据库连接与表空间监控</span>
+							</a>
+						</li>
+						<li class="treeview">
+							<a href="operationMonitor.html"> 
+								<span>业务监控</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+        <div class="left-bg"></div>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <a href="#">统一监控平台 / 服务器监控 / 10.22.13.30</a>
+            <a href="serverMonitor-alarmlog.html" class="newbtn pull-right btnBack">返回</a>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+        	<div class="pie_item_service" style="margin-bottom: 20px;display: inline-block;">
+                <p id="system_load"></p>
+                <p id="cpu_use"></p>
+                <p id="disk"></p>
+                <p id="disk_use"></p>
+                <p id="IO_read_write_speed"></p>
+                <p id="IO_read_write_number"></p>
+                <p id="memory"></p>
+            </div><!--pie_item-->
+			<div class="list_table" style="margin-top: 30px;">
+				<div class="input-group" style="width: 400px;margin-bottom: 20px;">
+                  <input type="text" class="form-control" placeholder="请输入参数名称进行搜索">
+                  <span class="input-group-btn">
+                    <button class="btn newbtn btn-flat" type="button">搜索</button>
+                  </span>
+                </div>
+				<table id="serverDetailList" class="table table-striped table_data">
+					<thead>
+						<tr>
+							<th></th>
+							<th>名称</th>
+							<th>触发器</th>
+							<th>Key</th>
+							<th>间隔</th>
+							<th>历史</th>
+							<th>[统计]趋势</th>
+							<th>状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><a href="serverMonitor-edit.html" class="link_a">ICMP Ping</a>
+							</td>
+							<td class="hoverTrigger" style="text-decoration: underline;">triggers(1)</td>
+							<td>agent.ping</td>
+							<td>300</td>
+							<td>90</td>
+							<td>365</td>
+							<td>
+								<a class="operation" href="javascript:;">启用/禁用</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="list_table itemsDetails"  style="display:none;margin-top: -20px;margin-left: 450px;">
+				<table id="example1" class="table table-striped table_data" style="width: 960px;">
+					 <thead>
+                        <tr>
+                            <th>严重度</th>
+                            <th>名称</th>
+					  		<th>表现</th>
+					  		<th>状态</th>
+                        </tr>
+                     </thead>
+                      <tbody>
+                         <tr>
+                             <td style="background: yellow;">Waring</td>
+                             <td>Igome_linux:Zabbix agent on {HOST.NAME} is unreachable for 10 minutes</td>
+                             <td>{<span style="color: #00AA00;text-decoration: underline;">10.2.46.239:agent.ping</span>.nodata(12m)}=1</td>
+                             <td style="color: red;">Disabled</td>
+                         </tr>
+                     </tbody>
+				</table>
+			</div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+		<div class="pull-right hidden-xs">
+			<b>Version</b> 1.0
+		</div>
+		<strong>Copyright &copy; 2000-2016 <a href="javascript:window.open('http://www.gome.com.cn')" style="color: #999999;">国美在线（gome.com.cn）</a></strong> 版权所有
+	</footer>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.3 -->
+<script src="../js/jQuery/jQuery-2.1.3.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- AdminLTE App -->
+<script src="../libs/js/app.min.js" type="text/javascript"></script>
+<script src="../js/left_menu.js" type="text/javascript"></script>
+<script src="../js/highcharts.js" type="text/javascript"></script>
+<script>
+$(function () {
+	$('.hoverTrigger').hover(function(){
+		$('.itemsDetails').show();
+	},function(){
+		$('.itemsDetails').hide();
+	})
+	system_load();
+	cpu_use();
+	disk();
+	disk_use();
+	io_read_write_speed();
+	io_read_write_number();
+	memory();
+});
+function system_load(){
+	$('#system_load').highcharts({
+        title: {
+            text: '系统负载'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: 'ms'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }]
+    });
+}
+function cpu_use(){
+	$('#cpu_use').highcharts({
+        title: {
+            text: 'CPU使用率(%)'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [70, 60, 95, 14, 18, 21, 25, 50, 70, 83, 65, 90]
+        }]
+    });
+}
+function disk(){
+	$('#disk').highcharts({
+        title: {
+            text: '磁盘'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: 'G'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [100, 300, 500, 400, 150, 450, 350, 600, 800, 1000, 900, 850]
+        }]
+    });
+}
+function disk_use(){
+	$('#disk_use').highcharts({
+        title: {
+            text: '磁盘使用率(%)'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [60, 70, 80, 34, 58, 21, 25, 60, 70, 83, 65, 80]
+        }]
+    });
+}
+function io_read_write_speed(){
+	$('#IO_read_write_speed').highcharts({
+        title: {
+            text: 'IO读写速度'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: 'MB/s'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [800, 750, 950, 450, 820, 210, 520, 650, 330, 830, 390, 960]
+        }]
+    });
+}
+function io_read_write_number(){
+	$('#IO_read_write_number').highcharts({
+        title: {
+            text: 'IO读写次数'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: '次/s'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [7000, 6900, 9500, 1400, 1802, 2150, 2520, 2650, 2330, 1830, 1390, 9600]
+        }]
+    });
+}
+function memory(){
+	$('#memory').highcharts({
+        title: {
+            text: '内存'
+        },
+        credits:{
+			enabled:false
+		},
+        xAxis: {
+            categories: ['14:30', '14:45', '15:00', '15:15', '15:30', '15:45','16:00', '16:15', '16:30', '16:45', '17:00', '17:15']
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            valueSuffix: 'G'
+        },
+        series: [{
+            name: 'ump',
+            color:'#9c8ade',
+            data: [60, 80, 95, 75, 180, 150, 520, 650, 230, 180, 90, 96]
+        }]
+    });
+}
+</script>
+</body>
+</html>

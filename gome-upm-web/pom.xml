@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gome.upm</groupId>
+		<artifactId>gome-upm-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>gome-upm-web</artifactId>
+	<packaging>war</packaging>
+	<name>gome-upm-web Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+		    <groupId>jdk.tools</groupId>
+		    <artifactId>jdk.tools</artifactId>
+		    <version>1.7</version>
+		    <scope>system</scope>
+		    <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>net.sourceforge.jexcelapi</groupId>
+		  <artifactId>jxl</artifactId>
+		  <version>2.6</version>
+		</dependency>
+		<!--poi begin-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <!--poi end-->
+		
+		<dependency>
+			<groupId>com.gome</groupId>
+			<artifactId>userCenter-model</artifactId>
+			<version>${userCenter.model.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.netty</groupId>
+					<artifactId>netty-all</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		<!-- if you enable JSR303 (Bean Validation) in spring. -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<!-- <optional>true</optional> -->
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.openservices</groupId>
+			<artifactId>aliyun-openservices</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+		<!-- spring-redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>gome-upm-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>gome-upm-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>gome-upm-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>gome-upm-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-container-default</artifactId>
+			<version>1.6</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.netty</groupId>	
+					<artifactId>netty</artifactId>		
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.netty</groupId>	
+					<artifactId>netty</artifactId>	
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.6.6</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+        <dependency>
+		  <groupId>redis.gcache</groupId>
+		  <artifactId>gcache</artifactId>
+		  <version>3.0.0-SNAPSHOT</version>
+		  <exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>redis.clients</groupId>
+		  <artifactId>jedis</artifactId>
+		  <version>3.0.0.g-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>gome-upm-web</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+					<include>spring/spring-config.xml</include>
+					<include>spring/**/*.xml</include>
+					<include>log4j.xml</include>
+					<include>log4j.dtd</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<profiles>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<archiveClasses>false</archiveClasses>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.2.11.v20150529</version>
+						<configuration>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+							<webApp>
+								<contextPath>/</contextPath>
+								 <!-- jetty9.2.6的defaultsDescriptor在<webApp>里，早期版本在<configuration>或者<webAppConfig>里 -->
+								  <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+							</webApp>
+							<httpConnector>
+								<port>8888</port>
+							</httpConnector>
+							
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<properties>
+				<!-- db -->
+				<community.shop.jdbc.url>
+                    <![CDATA[jdbc:mysql://10.126.56.22:3306/ump_test?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true]]>
+				</community.shop.jdbc.url>
+				<community.shop.jdbc.driver>com.mysql.jdbc.Driver</community.shop.jdbc.driver>
+				<community.shop.jdbc.username>root</community.shop.jdbc.username>
+				<community.shop.jdbc.password>root</community.shop.jdbc.password>
+
+				<!-- jtest log config -->
+				<community.shop.log.path>/export/Logs/jdlife.mobi/</community.shop.log.path>
+				<community.shop.log.level>info</community.shop.log.level>
+				<community.shop.springmvc.exception.log.name>platformSmart_error
+				</community.shop.springmvc.exception.log.name>
+
+				<sso.server.encrypt.cookie.key>8B6697227CBCA902B1A0925D40FAA00B353F2DF4359D2099
+				</sso.server.encrypt.cookie.key>
+				<sso.client.encrypt.cookie.key>xLyhSVcQGix62o+t2fjZyx+bC+zQZCl2</sso.client.encrypt.cookie.key>
+				<sso.server.cookie.domain>.jdlife.mobi</sso.server.cookie.domain>
+				<sso.server.session.timeout>1800</sso.server.session.timeout>
+				<sso.server.cookie.pin>_pin_</sso.server.cookie.pin>
+				<simple.life.push.access.key>599f8ab13ca14dc5bce74a6cbba52861</simple.life.push.access.key>
+				<simple.life.push.secret.key>b99817f772624368a1fb61bf8f6a9f0337xKcneB</simple.life.push.secret.key>
+				<sso.server.session.timeout>3600</sso.server.session.timeout>
+				<community.shop.root.path>http://jdlife.mobi/</community.shop.root.path>
+
+				<zookeeper.address>
+					10.58.50.203:2181,10.58.50.204:2181,10.58.50.205:2181
+				</zookeeper.address>
+				<dubbo.register.group>gmsc-web</dubbo.register.group>
+				<dubbo.register.version>0.0.1</dubbo.register.version>
+
+				<env>UAT</env>
+				<sso.common.version>1.0.20140815${env}-SNAPSHOT</sso.common.version>
+				<sso.model.version>1.0.20140815${env}-SNAPSHOT</sso.model.version>
+				<sso.facade.version>1.0.20140815${env}-SNAPSHOT</sso.facade.version>
+				<userCenter.common.version>1.0.20140815${env}-SNAPSHOT</userCenter.common.version>
+				<userCenter.facade.version>1.0.20140815${env}-SNAPSHOT</userCenter.facade.version>
+				<userCenter.model.version>1.0.20140815${env}-SNAPSHOT</userCenter.model.version>
+
+				<!-- 短信 -->
+				<ummsg.senderkey>mms.public.test.senderNum</ummsg.senderkey>
+				<ummsg.sms.content>123456</ummsg.sms.content>
+				<ummsg.sms.seed>123456</ummsg.sms.seed>
+
+
+				<redis.node1>10.126.53.10:7000</redis.node1>
+				<redis.node2>10.126.53.10:7001</redis.node2>
+				<redis.node3>10.126.53.10:7002</redis.node3>
+
+				<!-- jss config -->
+				<jss.secretKey>1f3ccef63f224093b49599b9e196e0a7</jss.secretKey>
+				<jss.accessKey>b290ef48089340f59c974458137b3b3f2L1UebBx</jss.accessKey>
+				<jss.storageFiles>jdlife.mobi</jss.storageFiles>
+				<jss.hostName>storage.jcloud.com</jss.hostName>
+				<jss.connectionTimeout>30000</jss.connectionTimeout>
+
+				<!-- mongodb config -->
+				<mongodb.host>192.168.193.115</mongodb.host>
+				<mongodb.port>20011</mongodb.port>
+				<mongodb.dbname>jdlife</mongodb.dbname>
+				<mongodb.username>jdlife</mongodb.username>
+				<mongodb.password>jdlife</mongodb.password>
+
+				<!-- dubbo config -->
+				<user.dubbo.address>10.58.50.203:2181,10.58.50.204:2181,10.58.50.205:2181</user.dubbo.address>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<archiveClasses>false</archiveClasses>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<properties>
+
+				<community.shop.jdbc.url>       
+                   <![CDATA[jdbc:mysql://10.126.56.22:3306/ump_test?useUnicode=true&amp;characterEncoding=utf8]]>
+				</community.shop.jdbc.url>
+				<community.shop.jdbc.driver>com.mysql.jdbc.Driver</community.shop.jdbc.driver>
+				<community.shop.jdbc.username>root</community.shop.jdbc.username>
+				<community.shop.jdbc.password>root</community.shop.jdbc.password>
+
+				<!-- jtest log config -->
+				<community.shop.log.path>/export/Logs/ump/</community.shop.log.path>
+				<community.shop.log.level>info</community.shop.log.level>
+				<community.shop.springmvc.exception.log.name>platformSmart_error
+				</community.shop.springmvc.exception.log.name>
+
+				<!-- the sso server related configurations the encryption key to encrypt -->
+				<!-- cookie used by sso server -->
+				<sso.server.encrypt.cookie.key>EDA3D558B223AC4DCC3DB19675A7D32463FBC6B2C50CAE7B
+				</sso.server.encrypt.cookie.key>
+				<sso.client.encrypt.cookie.key>omdLJagQq7finM4GTyUkfPpn7scQUCtv</sso.client.encrypt.cookie.key>
+				<sso.server.cookie.domain>.jdlife.mobi</sso.server.cookie.domain>
+				<sso.server.session.timeout>1800</sso.server.session.timeout>
+				<sso.server.cookie.pin>_pin_</sso.server.cookie.pin>
+				<simple.life.push.access.key>599f8ab13ca14dc5bce74a6cbba52861</simple.life.push.access.key>
+				<simple.life.push.secret.key>b99817f772624368a1fb61bf8f6a9f0337xKcneB</simple.life.push.secret.key>
+
+				<community.shop.root.path>http://jdlife.mobi/</community.shop.root.path>
+
+				<zookeeper.address>
+					10.58.50.203:2181,10.58.50.204:2181,10.58.50.205:2181
+				</zookeeper.address>
+				<dubbo.register.group>gmsc-web</dubbo.register.group>
+				<dubbo.register.version>0.0.1</dubbo.register.version>
+
+				<env>UAT</env>
+				<sso.common.version>1.0.20140815${env}-SNAPSHOT</sso.common.version>
+				<sso.model.version>1.0.20140815${env}-SNAPSHOT</sso.model.version>
+				<sso.facade.version>1.0.20140815${env}-SNAPSHOT</sso.facade.version>
+				<userCenter.common.version>1.0.20140815${env}-SNAPSHOT</userCenter.common.version>
+				<userCenter.facade.version>1.0.20140815${env}-SNAPSHOT</userCenter.facade.version>
+				<userCenter.model.version>1.0.20140815${env}-SNAPSHOT</userCenter.model.version>
+
+				<ummsg.senderkey>jcloud.lc.userverify</ummsg.senderkey>
+				<ummsg.sms.content>123456</ummsg.sms.content>
+				<ummsg.sms.seed>123456</ummsg.sms.seed>
+
+				<redis.node1>10.126.53.10:7000</redis.node1>
+				<redis.node2>10.126.53.10:7001</redis.node2>
+				<redis.node3>10.126.53.10:7002</redis.node3>
+
+				<!-- jss config -->
+				<jss.secretKey>0f5f87078bf94969bdaa77ced49dfee4</jss.secretKey>
+				<jss.accessKey>4857d33daa7649289f52ef6b7b3cf57aheb21oIO</jss.accessKey>
+				<jss.storageFiles>jdlife.mobi</jss.storageFiles>
+				<jss.hostName>storage.jcloud.com</jss.hostName>
+				<jss.connectionTimeout>30000</jss.connectionTimeout>
+
+				<!-- dubbo config -->
+				<user.dubbo.address>10.58.22.191:2181,10.58.22.192:2181,10.58.22.193:2181,10.58.50.149:2181,10.58.50.150:2181</user.dubbo.address>
+			</properties>
+		</profile>
+	</profiles>
+</project>

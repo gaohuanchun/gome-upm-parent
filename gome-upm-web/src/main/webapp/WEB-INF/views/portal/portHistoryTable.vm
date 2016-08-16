@@ -1,0 +1,133 @@
+                           <input type="hidden" value="$!page.conditions.startTime" id="hiddenUrlStartTime" />
+                           <input type="hidden" value="$!page.conditions.endTime" id="hiddenUrlEndTime" />
+                           <input type="hidden" value="$!page.conditions.survival" id="hiddenUrlSurvival" />
+                           <i class="icon fa fa-bullhorn"></i>
+                           <!-- <span style="color:orange">Key：</span>ump.web&nbsp;&nbsp;-->
+                           <span style="color:orange">URL：</span>$!port.port&nbsp;&nbsp;
+                            <span style="color:orange">配置状态：</span>#if($!port.status == 1)有效#else无效#end&nbsp;&nbsp;<span style="color:orange">监控频率(分钟)：</span>$!port.frequency&nbsp;&nbsp;
+                            <table id="example1" class="table table_data  table-striped">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>访问时间</th>
+                                    <!--<th>访问耗时(ms)</th>-->
+                                    <!--<th>返回码|中文说明</th>-->
+                                    <th>存活状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            #if($!page.totalResult > 0)
+                        	#set($p = ($page.pageNo - 1) * $page.pageSize)
+                        	#set($i = ($page.pageNo - 1) * $page.pageSize)
+                        	#foreach($record in $!page.data)
+                        	#set($p = $p + 1)
+                        	#set($i = $i + 1)
+                        		<tr>
+                                    <td>$!p</td>
+                                    <td>$!record.visitTimeStr</td>
+                                    <!--<td>$!record.visitTake</td>-->
+                                    <!--<td>$!record.returnCode</td>-->
+                                    <td class="yes_green">$!record.survivalStr</td>
+                                </tr>
+                        	#end
+                            #end
+                                
+                                </tbody>
+                            </table>
+                             #parse("common/pageToolbar.vm")
+                            
+                            
+                         <!--<div class="page">
+                            <div class="page_info">
+                                <div>
+                                    <span>当前为：</span>
+                                    <span class="pageNo">第$!page.pageNo页</span>
+                                    <span class="totalPage">共$!page.totalPage页（$!page.totalResult条）</span>
+                                    <span>显示为：</span>
+                                   #set($m=($page.pageNo - 1) * $page.pageSize + 1)
+                                   #set($n=$page.pageNo * $page.pageSize)
+                                    #if($!page.totalResult == 0)
+                                    <span class="regionPage"> 0 ~ 0 条</span>
+                                    #else
+                                    <span class="regionPage"> $!m ~ $!p 条</span>
+                                    #end
+                                    
+                                </div>
+                            </div>
+                            <div class="page-number">
+                               <ul id="pagination-digg">
+                                  
+
+                                      #if($!page.pageNo>1)
+                                      #set($beforeStart1=($page.pageNo - 1))
+                                      <li>
+                                      <a href="javascript:void(0)" class="pageNumberUrl" pageNo="1">首页</a>
+                                      </li>
+                                      <li>
+                                      <a href="javascript:void(0)" class="pageNumberUrl" pageNo="$!beforeStart1">&lt;&lt;上一页</a>
+                                      </li>
+                                      #else
+                                       <li class="previous-off">
+                                                                             首页
+                                       </li>
+                                       <li class="previous-off">
+                                       &lt;&lt;上一页
+                                       </li>
+                                      #end
+                               
+                               
+                                   #set($startPage1=1)
+                                   #set($endPage1=($!page.totalPage))
+                                   #set($tmpPage1=0)
+                                   #if($!endPage1 > 9)
+                                      #if(($!page.pageNo - $!startPage1) > 4)
+                                      #set($startPage1 = ($!page.pageNo - 4))
+                                      #else
+                                      #set($tmpPage1=4-($!page.pageNo - $startPage1))
+                                      #end
+                                      #if(($!endPage1 - $!page.pageNo) > 4)
+                                      #set($endPage1 = ($!page.pageNo + 4 + $!tmpPage1))
+                                      #else
+                                      #set($startPage1 = ($!startPage1 + (4-($!page.totalPage - $!page.pageNo))))
+                                      #end
+                                   #end
+                                                                   
+                               
+                                    #if($!page.totalPage<=1)
+                                    <li class="active">1</li>
+                                    #else
+                                    #foreach($!foo1 in [$!startPage1..$!endPage1])
+                                    #if($!page.pageNo == $!foo1)
+                                    <li class="active">$!foo1</li>
+                                    #else
+                                    <li><a href="javascript:void(0)" class="pageNumberUrl" pageNo="$!foo1">$!foo1</a></li>
+                                    #end
+                                    #end
+                                    #end
+                                    
+                                    #if($!page.pageNo < $!page.totalPage)
+                                    #set($afterNext1=($page.pageNo + 1))
+
+                                    <li>
+                                    <a href="javascript:void(0)" class="pageNumberUrl" pageNo="$!afterNext1">&gt;&gt;下一页</a>
+                                    </li>
+                                    <li>
+                                    <a href="javascript:void(0)" class="pageNumberUrl" pageNo="$!page.totalPage">尾页</a>
+                                    </li>
+                                    #else
+                                    <li class="next-off">
+                                    &gt;&gt;下一页
+                                    </li>
+                                    <li class="next-off">
+                                                                        尾页
+                                    </li>
+                                    #end
+                                   
+									</ul>
+                            </div>
+
+                        </div>-->
+
+
+
+            

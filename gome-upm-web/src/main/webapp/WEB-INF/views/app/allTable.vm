@@ -1,0 +1,37 @@
+<table id="example1" class="table table_data table-striped">
+    <thead>
+	    <tr>
+	        <th></th>
+	        <th style="font-weight:bold;">traceId</th>
+	        <th style="font-weight:bold;">详细</th>
+	    </tr>
+    </thead>
+    <tbody>
+    	#if($!page.totalResult > 0)
+	    	#set($i = ($page.pageNo - 1) * $page.pageSize)
+	    	#foreach($p in $!page.data)
+	    		#set($i = $i + 1)
+	    		<tr>
+					<td>$!i</td>
+					<td>
+						<a style="color:#9C8ADE;text-decoration:underline;" href="javascript:void(0);" onclick="gotoMain('$!p.traceId');">
+							$!p.traceId
+						</a>
+					</td>
+					<td style="text-align:left;font-family:'宋体';font-family:'微软雅黑';font-size: 13px;word-break:break-all;width:90%;">
+						<!--<div style="font-family:'宋体';font-family:'微软雅黑';font-size: 13px;">-->
+						【$!p.applicationId】$!p.viewPointId / 进程号（$!p.processNo）/
+						businessKey（<font color="red">$!p.businessKey</font>） /
+						$!p.address / 消耗时间（$!p.cost ms）/ 类型（$!p.spanType） /
+						调用状态（#if($!p.statusCode == 0)成功#else失败#end）
+						<!--</div>-->
+					</td>
+				</tr>	
+	    	#end
+    	#end
+   </tbody>
+</table>
+#parse("common/pagePlugin.vm")
+<input id="key" type="hidden" value="$!businessKey" />
+
+

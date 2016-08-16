@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:task="http://www.springframework.org/schema/task"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+<task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>  
+<task:executor  id="myExecutor"  pool-size="10"/>  
+<task:scheduler id="myScheduler" pool-size="10"/> 
+<!-- 首页流量一览  -->
+<bean id="netWorkIndexSummary" class="com.gome.upm.service.quartz.NetWorkIndexSummary"/>
+<!-- 网络监控报警 -->
+<bean id="netWorkIndexAlarm" class="com.gome.upm.service.quartz.NetWorkAlarm"/>
+<!-- 网络监控数据初始化-->
+<bean id="netWorkIndexInit" class="com.gome.upm.service.quartz.NetWorkMonitorInit"/> 
+<!-- 删除无用数据 -->
+<bean id="netWorkMonitorDel" class="com.gome.upm.service.quartz.NetWorkMonitorDel"/> 
+</beans>

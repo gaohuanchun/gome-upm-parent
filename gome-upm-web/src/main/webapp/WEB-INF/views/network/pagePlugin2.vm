@@ -1,0 +1,37 @@
+            <div class="page">
+                            <div class="page_info">
+                                <div>
+                                    <span>当前为：</span>
+                                    <span class="pageNo">第$!pageNo页</span>
+                                </div>
+                            </div>
+                            <div class="page-number">
+                               <ul id="pagination-digg">
+	                                  <li>
+		                                  <a href="javascript:void(0)" class="pageNumber" pageNo="1">首页</a>
+		                              </li>
+		                              <li>
+		                                  #set($beforePage = ($!pageNo - 1))
+		                                  <a href="javascript:void(0)" class="pageNumber" pageNo="$!beforeStart">&lt;&lt;上一页</a>
+	                                  </li>
+                                       #set($beforePage = 1)
+                                       #set($endPage = $!pageNo)
+                                       #if($!pageNo > 10)
+                                        #set($beforePage = ($!pageNo - 10))
+                                       #end
+		                                #foreach($!foo in [$!beforePage..$!endPage])
+	                                    	<li><a href="javascript:void(0)" class="pageNumber" pageNo="$!foo">$!foo</a></li>
+	                                    #end
+
+	                                  <li>
+	                                      #set($afterNext = ($!pageNo + 1))
+	                                      <a href="javascript:void(0)" class="pageNumber" pageNo="$!afterNext">&gt;&gt;下一页</a>
+	                                  </li>
+								</ul>
+                            </div>
+
+                        </div>
+
+
+
+            

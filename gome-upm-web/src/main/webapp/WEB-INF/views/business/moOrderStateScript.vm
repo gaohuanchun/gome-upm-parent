@@ -1,0 +1,195 @@
+<script>
+$(function(){
+   	indentOrderState();
+   	
+   	laydate({
+	    elem: '#startTimeOrderState',
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    //min: laydate.now(), //设定最小日期为当前日期
+	    //max: '2099-06-16 23:59:59', //最大日期
+	    istime: true,
+	    istoday: true,
+	    choose: function(date){
+	         //end.min = datas; //开始日选好后，重置结束日的最小日期
+	         //end.start = datas //将结束日的初始值设定为开始日
+	    	//alert("startTime:" + date);
+	    }
+	});
+	
+	laydate({
+	    elem: '#endTimeOrderState',
+	    format: 'YYYY-MM-DD hh:mm:ss',
+	    //min: laydate.now(), //设定最小日期为当前日期
+	    //max: '2099-06-16 23:59:59', //最大日期
+	    istime: true,
+	    istoday: true,
+	    choose: function(date){
+	         //end.min = datas; //开始日选好后，重置结束日的最小日期
+	         //end.start = datas //将结束日的初始值设定为开始日
+	    	//alert("endTime:" + date);
+	    }
+	});
+});
+
+var options_orderState;
+var config_orderState={};
+function indentOrderState(){
+	Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+	options_orderState = {
+        chart: {
+            type: 'line',
+            renderTo: 'container_orderState',
+            animation: Highcharts.svg,
+            animation:true
+        },
+        title: {
+            text: ''
+        },
+        credits:{
+            enabled:false
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 5,
+            //gridLineWidth:1,
+            dateTimeLabelFormats: {
+                second: '%H:%M:%S'
+            },
+            title: {
+    			style: {
+    				color: '#AAA',
+    				font: 'bolder 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 0);
+            },
+            backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgba(96, 96, 96, .8)'],
+    				[1, 'rgba(16, 16, 16, .8)']
+    			]
+    		},
+    		borderWidth: 0,
+    		style: {
+    			color: '#FFF'
+    		}
+        },
+        credits:{ //右下角超链接设置
+            enabled: false
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '订单',
+            data: []
+        }]
+    }
+    copy(config_orderState,options_orderState);
+}
+
+function searchOrderStateData(){
+	var order=$("#orderSId").val();
+	if(order==''){
+		alert('请选择类型');
+		return ;
+	}
+	var state=jQuery("#orderStateId :selected").text();
+	if(state==''){
+		alert('请选择状态');
+		return ;
+	}
+	var startTimeStr=$('#startTimeOrderState').val();
+	var endTimeStr=$('#endTimeOrderState').val();
+	
+	startTimeStr=startTimeStr.replace(/-/g,"/");
+ 	var oDate1 = new Date(startTimeStr);
+ 	startTimeStr=oDate1.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	endTimeStr=endTimeStr.replace(/-/g,"/");
+ 	var oDate2 = new Date(endTimeStr);
+ 	endTimeStr=oDate2.Format('yyyy-MM-dd HH:m5:s0');
+ 	
+ 	reloadOrderStateData(startTimeStr,endTimeStr,state);
+}
+function reloadOrderStateData(startTimeStr,endTimeStr,state){
+	var payUrl="${rc.contextPath}/monitoBusiness/findMoOrderStateList.do";
+	$.ajax({
+		url: payUrl,
+		type:"POST",
+		data:{'startTime':startTimeStr,'endTime':endTimeStr,'state':state},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var dataList=eval(data);
+			copy(options_orderState,config_orderState);
+			options_orderState.series[0].data=dataList;
+			orderStateHighChart = new Highcharts.Chart(options_orderState);
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+
+function orderChange(){
+	var selectv=$("#orderSId").val();
+	getState(selectv);
+}
+function getState(type){
+	jQuery("#orderStateId").empty();
+	if(type==''){
+		alert('请选择类型！');
+		return;
+	}
+	var url="${rc.contextPath}/monitoBusiness/searchOrderStateListByType.do";
+	$.ajax({ 
+		url: url,
+		type:"GET",
+		data:{orderType:type},
+		dataType:"text",
+		cache:false,
+		success: function(data){
+			var list=eval(data);
+			var  options="<option value=''>请选择</option>";
+			jQuery("#orderStateId").append(options);
+			for(var i=0;i<list.length;i++){
+				var  option="<option value='"+list[i].name+"'>"+list[i].type+"</option>";
+				jQuery("#orderStateId").append(option);
+			}
+     	},
+     	error : function(){
+     	}
+	});
+}
+
+function orderStateChange(){
+	var selectv=jQuery("#orderStateId :selected").text();
+	var text=jQuery("#orderStateId").val();
+	if(selectv==''){
+		alert('请选择状态!');
+		return;
+	}
+	//重新加载数据
+	$('#stateName').text(text);
+}
+</script>

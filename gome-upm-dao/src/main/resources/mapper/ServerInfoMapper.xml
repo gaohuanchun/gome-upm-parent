@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gome.upm.dao.ServerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.gome.upm.domain.ServerInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="xmm" property="xmm" jdbcType="VARCHAR" />
+    <result column="bdx" property="bdx" jdbcType="VARCHAR" />
+    <result column="bmd5" property="bmd5" jdbcType="VARCHAR" />
+    <result column="brq" property="brq" jdbcType="VARCHAR" />
+    <result column="xmlj" property="xmlj" jdbcType="VARCHAR" />
+    <result column="ssz" property="ssz" jdbcType="VARCHAR" />
+    <result column="sszid" property="sszid" jdbcType="INTEGER"/>
+    <result column="yypid" property="yypid" jdbcType="VARCHAR" />
+    <result column="yyznc" property="yyznc" jdbcType="VARCHAR" />
+    <result column="yyncsy" property="yyncsy" jdbcType="VARCHAR" />
+    <result column="yyncb" property="yyncb" jdbcType="INTEGER" />
+    <result column="yyqdr" property="yyqdr" jdbcType="VARCHAR" />
+    <result column="yyqdsj" property="yyqdsj" jdbcType="VARCHAR" />
+    <result column="yyzt" property="yyzt" jdbcType="VARCHAR" />
+    <result column="xmip" property="xmip" jdbcType="VARCHAR" />
+    <result column="xmdk" property="xmdk" jdbcType="VARCHAR" />
+    <result column="sfyx" property="sfyx" jdbcType="VARCHAR" />
+    <result column="yyxc" property="yyxc" jdbcType="VARCHAR" />
+    <result column="yycpu" property="yycpu" jdbcType="VARCHAR" />
+    <result column="xmrq" property="xmrq" jdbcType="VARCHAR" />
+    <result column="gxsj" property="gxsj" jdbcType="VARCHAR" />
+    <result column="xmwjm" property="xmwjm" jdbcType="VARCHAR" />
+    <result column="yyjdk" property="yyjdk" jdbcType="VARCHAR" />
+    <result column="ymz" property="ymz" jdbcType="VARCHAR" />
+    <result column="jkyz" property="jkyz" jdbcType="VARCHAR" />
+    <result column="jkcj" property="jkcj" jdbcType="VARCHAR" />
+    <result column="jkcja" property="jkcja" jdbcType="VARCHAR" />
+    <result column="nginxhit" property="nginxhit" jdbcType="INTEGER" />
+    <result column="nginxhita" property="nginxhita" jdbcType="INTEGER" />
+    <result column="nginxgxsj" property="nginxgxsj" jdbcType="VARCHAR" />
+    <result column="yylogjk" property="yylogjk" jdbcType="VARCHAR" />
+    <result column="nginxzt" property="nginxzt" jdbcType="VARCHAR" />
+    <result column="yynets" property="yynets" jdbcType="INTEGER" />
+    <result column="ncfpzs" property="ncfpzs" jdbcType="REAL" />
+    <result column="yylogwj" property="yylogwj" jdbcType="VARCHAR" />
+    <result column="yyloggjc" property="yyloggjc" jdbcType="VARCHAR" />
+    <result column="yyloggjcs" property="yyloggjcs" jdbcType="INTEGER" />
+    <result column="yylogzt" property="yylogzt" jdbcType="VARCHAR" />
+    <result column="yylogcz" property="yylogcz" jdbcType="INTEGER" />
+    <result column="yylogdx" property="yylogdx" jdbcType="VARCHAR" />
+    <result column="ida" property="ida" jdbcType="VARCHAR" />
+    <result column="yylogwjm" property="yylogwjm" jdbcType="VARCHAR" />
+    <result column="yybz" property="yybz" jdbcType="VARCHAR" />
+    <result column="yylogcssj" property="yylogcssj" jdbcType="VARCHAR" />
+    <result column="yyloggjcsz" property="yyloggjcsz" jdbcType="INTEGER" />
+    <result column="yyfbzt" property="yyfbzt" jdbcType="VARCHAR" />
+    <result column="yycjsj" property="yycjsj" jdbcType="VARCHAR" />
+    <result column="bjsj" property="bjsj" jdbcType="VARCHAR" />
+    <result column="bjzt" property="bjzt" jdbcType="VARCHAR" />
+    <association property="pcInfo" javaType="com.gome.upm.domain.PcInfo">
+    	<result column="gsjf" property="gsjf" jdbcType="VARCHAR"/>
+    </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, xmm, bdx, bmd5, brq, xmlj, ssz, yypid, yyznc, yyncsy, yyncb, yyqdr, yyqdsj, yyzt, 
+    xmip, xmdk, sfyx, yyxc, yycpu, xmrq, gxsj, xmwjm, yyjdk, ymz, jkyz, jkcj, jkcja, 
+    nginxhit, nginxhita, nginxgxsj, yylogjk, nginxzt, yynets, ncfpzs, yylogwj, yyloggjc, 
+    yyloggjcs, yylogzt, yylogcz, yylogdx, ida, yylogwjm, yybz, yylogcssj, yyloggjcsz, 
+    yyfbzt, yycjsj,bjsj,bjzt
+  </sql>
+  
+  <!--查询正常的数据-->
+  <select id="selectServerInfoListByPage" resultType="com.gome.upm.domain.ServerInfo" parameterType="com.gome.upm.common.Page">
+  	select si.ssz,si.xmm,si.ida,si.xmrq,si.yyznc,si.yyncsy,si.ncfpzs,si.xmip,
+  	si.yyncb,pi.gsjf "pcInfo.gsjf",si.yyqdsj,si.brq,si.ymz,si.sfyx,si.bjsj,si.bjzt
+    from serverinfo si
+    left join pcinfo pi on pi.ipdz=si.xmip
+    where 1=1 
+      <if test="conditions.xmm != null" >
+        and si.xmm = #{conditions.xmm,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="conditions.sszid != null">
+ 		and si.sszid = #{conditions.sszid,jdbcType=INTEGER}
+ 	</if>
+      
+      <if test="conditions.bjzt != null" >
+        and si.bjzt = #{conditions.bjzt,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and si.bjsj between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+      <if test="start != null and pageSize != null">
+    	LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <!--查询正常的数据-->
+  <select id="selectTotalResultByConditions" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ServerInfo">
+  	select count(*)
+  	from serverinfo si
+  	where 1=1
+  		<if test="xmm != null" >
+        and si.xmm = #{xmm,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="sszid != null">
+ 		and si.sszid = #{sszid,jdbcType=INTEGER}
+ 	</if>
+      
+      <if test="bjzt != null" >
+        and si.bjzt = #{bjzt,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and si.bjsj between #{startTime} and #{endTime}
+    </if>
+  </select>
+  
+  <!--查询非正常的数据-->
+  <select id="selectServerInfoListByPageNotN" resultType="com.gome.upm.domain.ServerInfo" parameterType="com.gome.upm.common.Page">
+  	select si.ssz,si.xmm,si.ida,si.xmrq,si.yyznc,si.yyncsy,si.ncfpzs,si.xmip,
+  	si.yyncb,pi.gsjf "pcInfo.gsjf",si.yyqdsj,si.brq,si.ymz,si.sfyx,si.bjsj,si.bjzt
+    from serverinfo si
+    left join pcinfo pi on pi.ipdz=si.xmip
+    where 1=1 
+      <if test="conditions.xmm != null" >
+        and si.xmm = #{conditions.xmm,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="conditions.sszid != null">
+ 		and si.sszid = #{conditions.sszid,jdbcType=INTEGER}
+ 	</if>
+      
+      <if test="conditions.bjzt != null" >
+        and si.bjzt != #{conditions.bjzt,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="conditions.startTime != null and conditions.startTime != '' and conditions.endTime != null and conditions.endTime != ''" >
+      and si.bjsj between #{conditions.startTime} and #{conditions.endTime}
+    </if>
+      <if test="start != null and pageSize != null">
+    	LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <!--查询非正常的数据-->
+  <select id="selectTotalResultByConditionsNotN" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ServerInfo">
+  	select count(*)
+  	from serverinfo si
+  	where 1=1
+  		<if test="xmm != null" >
+        and si.xmm = #{xmm,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="sszid != null">
+ 		and si.sszid = #{sszid,jdbcType=INTEGER}
+ 	</if>
+      
+      <if test="bjzt != null" >
+        and si.bjzt != #{bjzt,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null and startTime != '' and endTime != null and endTime != ''" >
+      and si.bjsj between #{startTime} and #{endTime}
+    </if>
+  </select>
+  
+  <select id="selectServerInfoListByPageLike" resultType="com.gome.upm.domain.ServerInfo" parameterType="com.gome.upm.common.Page">
+  	select si.ssz,si.xmm,si.ida,si.xmrq,si.yyznc,si.yyncsy,si.ncfpzs,si.xmip,
+  	si.yyncb,pi.gsjf "pcInfo.gsjf",si.yyqdsj,si.brq,si.ymz,si.sfyx,si.bjsj,si.bjzt
+    from serverinfo si
+    left join pcinfo pi on pi.ipdz=si.xmip
+    where 1=1 
+      <if test="conditions.xmm != null" >
+        and si.xmm like CONCAT('%',#{conditions.xmm,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="start != null and pageSize != null">
+    	LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="selectTotalResultByConditionsLike" resultType="java.lang.Integer" parameterType="com.gome.upm.domain.ServerInfo">
+  	select count(*)
+  	from serverinfo si
+  	where 1=1
+  	  <if test="xmm != null" >
+        and si.xmm like CONCAT('%',#{xmm,jdbcType=VARCHAR},'%')
+      </if>
+      
+  </select>
+  
+  <select id="selectSszList" resultType="java.lang.String">
+  	SELECT DISTINCT ssz FROM serverinfo
+  </select>
+  
+ <select id="selectXmmList" resultType="java.lang.String" parameterType="java.lang.Integer">
+ 	select DISTINCT xmm from serverinfo 
+ 	where 1=1 
+ 	<if test="sszid != null">
+ 		and sszid = #{sszid,jdbcType=INTEGER}
+ 	</if>
+ </select>
+ 
+ <select id="selectServerInfosByXmmAndSsz" resultType="com.gome.upm.domain.ServerInfo" parameterType="com.gome.upm.domain.ServerInfo">
+ 	select si.id, si.xmm, si.bdx, si.bmd5, si.brq, si.xmlj, si.ssz, si.yypid, si.yyznc, si.yyncsy, si.yyncb, si.yyqdr, si.yyqdsj, si.yyzt, 
+    si.xmip, si.xmdk, si.sfyx, si.yyxc, si.yycpu, si.xmrq, si.gxsj, si.xmwjm, si.yyjdk, si.ymz, si.jkyz, si.jkcj, si.jkcja, 
+    si.nginxhit, si.nginxhita, si.nginxgxsj, si.yylogjk, si.nginxzt, si.yynets, si.ncfpzs, si.yylogwj, si.yyloggjc, 
+    si.yyloggjcs, si.yylogzt, si.yylogcz, si.yylogdx, si.ida, si.yylogwjm, si.yybz, si.yylogcssj, si.yyloggjcsz, 
+    si.yyfbzt, si.yycjsj,pi.gsjf "pcInfo.gsjf"
+    from serverinfo si
+    left join pcinfo pi on pi.ipdz=si.xmip
+    where 1=1 
+    <if test="xmm != null">
+	     and si.xmm = #{xmm,jdbcType=VARCHAR}
+    </if>
+    <if test="ssz != null">
+    	and si.ssz = #{ssz,jdbcType=VARCHAR}
+    </if>
+     order by si.yyqdsj desc
+ </select>
+ 
+ <select id="selectEliminateIdaList" resultType="java.lang.String">
+ 	select ida from eliminate where lx = 'sl'
+ </select>
+ 
+ <select id="selectEliminateIpdzList" resultType="java.lang.String">
+ 	select ipdz from eliminate where lx = 'ip'
+ </select>
+ 
+ <select id="selectLjbycs" resultType="java.lang.Integer">
+ 	select ljbycs from fbcx where xmm = #{xmm,jdbcType=VARCHAR}
+ 	and sfqy != 'no'
+ </select>
+ 
+ <select id="selectLjfbcs" resultType="java.lang.Integer">
+ 	select ljfbcs from fbcx where xmm = #{xmm,jdbcType=VARCHAR}
+ 	and sfqy != 'no'
+ </select>
+ 
+ <select id="getVmCount" resultType="java.lang.String">
+ 	select vm from pcinfo 
+ 	where ipdz in
+ 		<foreach collection="list" index="index" item="ipdz" open="(" separator="," close=")">
+ 			#{ipdz,jdbcType=VARCHAR}
+ 		</foreach>
+ </select>
+ 
+ <select id="selectSszAndZidList" resultType="com.gome.upm.domain.ServerInfo">
+ 	select DISTINCT ssz,sszid from serverinfo
+ </select>
+ 
+ <select id="getInfomationWithBjzt" resultType="com.gome.upm.domain.ServerInfo">
+ 	select si.id, si.xmm, si.bdx, si.bmd5, si.brq, si.xmlj, si.ssz, si.yypid, si.yyznc, si.yyncsy, si.yyncb, si.yyqdr, si.yyqdsj, si.yyzt, 
+    si.xmip, si.xmdk, si.sfyx, si.yyxc, si.yycpu, si.xmrq, si.gxsj, si.xmwjm, si.yyjdk, si.ymz, si.jkyz, si.jkcj, si.jkcja, 
+    si.nginxhit, si.nginxhita, si.nginxgxsj, si.yylogjk, si.nginxzt, si.yynets, si.ncfpzs, si.yylogwj, si.yyloggjc, 
+    si.yyloggjcs, si.yylogzt, si.yylogcz, si.yylogdx, si.ida, si.yylogwjm, si.yybz, si.yylogcssj, si.yyloggjcsz, 
+    si.yyfbzt, si.yycjsj
+ 	from serverinfo si
+ 	where si.bjzt != 'N'
+ 	
+ </select>
+  
+</mapper>
